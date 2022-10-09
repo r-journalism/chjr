@@ -678,6 +678,6 @@ Decompress and let what you've just learned settle.
 When you're ready to move on to pt. 3 just type this in the console of RStudio:
 
 ```
-learnr::run_tutorial("class_prep_pt3", "adjclass")
+learnr::run_tutorial("1_intro_c", "adjclass")
 ```
 

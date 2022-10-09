@@ -43,7 +43,14 @@ b <- c(300,4000,50)
 
 ## Welcome!
 
-Before we officially get started, please be sure you followed the [setup instructions](https://www.kccourses.org/mod/page/view.php?id=17952) to install R and RStudio on your computer and have already run `learnr::run_tutorial("welcome", "adjclass")` so that you understand how these tutorials work.
+Before we officially get started, please be sure you have the latest versions of R and RStudio installed. 
+
+Also make sure you've installed this by running in the console:
+
+```
+install.packages("usethis")
+usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
+```
 
 Ready? Okay, let's go!
 
@@ -419,5 +426,5 @@ Absorb what you've learned so far. It was a lot.
 When you're ready to move on to pt. 2 just type this in the console of RStudio:
 
 ```
-learnr::run_tutorial("class_prep_pt2", "adjclass")
+learnr::run_tutorial("1_intro_b", "chjr")
 ```
