@@ -3,12 +3,26 @@
 ------------------------------------------------------------------------
 
 Liz Lucas [liz\@ire.org](mailto:liz@ire.org){.email}
+Andrew Ba Tran [andrew.tran\@washpost.com]{.email}
 
 ## Getting Started
 
 Learning to code with a language like R takes some time and effort on your part. We'll be covering a lot of foundation material this week, and sometimes this can feel like a firehouse of obscure information (e.g. what is an atomic vector and how is that different from a list) that you don't know what to do with yet. If you feel that way, that's OK! You will most likely have to go back and look this stuff up again. But it will help you get started today as we start flexing those coding muscles.
 
 You should expect to feel some frustration, because everybody does. Frustration is OK so long as you can persevere through it. When you finally solve the problem and your code works it's a GREAT feeling.
+
+## Get the files
+
+## Before we move on, run these lines in console
+
+```
+install.packages(c("usethis", "tidyverse", "remotes"))
+
+remotes::install_github("r-journalism/chjr", upgrade="always", quiet=TRUE)
+
+usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
+```
+
 
 #### Resources
 -   [Slideshow of R Basics](https://r-journalism.github.io/chjr/01_intro_to_r_rstudio.html#/title-slide) (courtesy of Andrew Ba Tran)
@@ -20,3 +34,8 @@ You should expect to feel some frustration, because everybody does. Frustration 
 #### Practice
 -   To practice creating and working with vectors and doing simple variable assignment, use [R-Basics.Rmd](practice/R-Basics.Rmd)
 -   To practice importing and the basics of data analysis (sorting, filtering, aggregating), use [Importing-and-intro-to-data-analysis.Rmd](practice/Importing-and-intro-to-data-analysis.Rmd)
+
+#### Day 1 walkthroughs
+- `learnr::run_tutorial("1_intro_a", "chjr")`
+- `learnr::run_tutorial("1_intro_b", "chjr")`
+- `learnr::run_tutorial("1_intro_c", "chjr")`
