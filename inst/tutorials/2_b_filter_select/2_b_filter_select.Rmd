@@ -1,0 +1,372 @@
+---
+title: "Class 1: Filter, Select"
+author: "Andrew Ba Tran"
+output: 
+  learnr::tutorial:
+      theme: lumen
+      highlight: espresso
+      progressive: true
+      allow_skip: false
+      includes:
+        before_body: _navbar.html
+runtime: shiny_prerendered
+# Do not index/display tutorial by setting `private: true`
+private: true
+description: >
+  Lessons and exercises on filtering and selecting data
+---
+
+```{css, echo=FALSE}
+.pageContent {
+padding-top: 64px }
+```
+
+```{r setup, include=FALSE}
+packages <- c("tidyverse", "lubridate", "rvest", "httr", "remotes")
+if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
+  install.packages(setdiff(packages, rownames(installed.packages())), repos = "https://cran.us.r-project.org")  
+}
+
+#remotes::install_github("rstudio/gradethis", upgrade="always", quiet=TRUE)
+#remotes::install_github("rstudio/learnr", upgrade="always", quiet=TRUE)
+
+library(tidyverse)
+library(learnr)
+library(gradethis)
+library(lubridate)
+
+df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
+
+incident_types <- count(df, incidentType, name="total")
+incident_types_arranged <- arrange(incident_types, desc(total))
+
+floods <- df %>% filter(incidentType=="Flood")
+floods_adjusted <- floods %>% 
+  mutate(year=year(declarationDate))
+floods_match <- floods_adjusted %>% 
+  mutate(year_match=
+           case_when(year==fyDeclared ~ "Match",
+                     TRUE ~ "Not a match"
+  )) %>% 
+  group_by(year_match) %>% 
+  summarize(total=n())
+floods_match_count <- floods_match %>% 
+  filter(year_match=="Not a match") %>% 
+  pull(total)
+
+```
+
+<span style="color:white">welcome to class!</span>
+
+## Filter
+
+Let's take a look at our data frame **incident_types_arranged** again.
+
+```{r df_view}
+incident_types_arranged
+```
+
+One disaster of note after the three biggest ones is "Biological"-- but I'm going to tell you now to exclude that because those are all related to Covid-19. So consider those outliers to be excluded from your analysis.
+
+Let's do that now with the `filter()` function from **dplyr**.
+
+You can filter based on values in a column/vector with these logical operators:
+
+
+| Operator          | Definition               |
+|:------------------:|:-------------------------:|
+| x `<` y         | Less than                |
+| x `>` y         | Greater than             |
+| x `==` y        | Equal to                 |
+| x `<=` y        | Less than or equal to    |
+| x `>=` y        | Greater than or equal to |
+| x `!=` y        | Not equal to             |
+| x `%in%` c(y,z) | In a group               |
+| `is.na(`x`)`  | Is NA                    |
+| `!is.na(`x`)` | Is not NA                |
+
+
+Equal signs can be confusing
+
+* `==` tests whether the objects on either end are equal. This is often used in filtering data
+* `=` makes an object equal to a value, which is similar to <- but used within a function (can't be used in a filter).
+
+Go ahead and take the data frame **incident_types_arranged** and filter out **Biological** from the `incidentType` column.
+
+Use the `!=` operator which means "not equal to."
+
+Assign the new datframe to a new object called **incident_types_arranged_filtered**.
+
+```{r filter, exercise=TRUE}
+incident_types_arranged_filtered <- incident_types_arranged %>% 
+  filter(_______ != _________)
+
+incident_types_arranged_filtered 
+```
+
+```{r filter-solution}
+incident_types_arranged_filtered <- incident_types_arranged %>% 
+  filter(incidentType != "Biological")
+
+incident_types_arranged_filtered 
+```
+
+```{r filter-hint}
+Make sure what you're filtering for, if a string, is in quotation marks.
+Otherwise, R will think you're looking for some object that might represent something else.
+```
+
+```{r filter-check}
+grade_this_code()
+```
+
+### Filter multiple values
+
+Alright, this one's an amazing filtering tool and you should know about it now.
+
+What if you want to filter multiple items? Well, you'd have to use Boolean logic operators such as:
+
+* `&` means AND, in Boolean logic
+* `|` means OR, in Boolean logic
+* `!` means NOT, in Boolean logic
+
+Let's look for the Tornado and Hurricane and incidents only. 
+
+Since we're looking for either of those, we have to use the OR logic, or the `|` operator.
+
+This code below needs fixing before it can run successfully.
+
+Try running it and deciphering the error message to fix the code.
+
+```{r multiple_filter1, exercise=TRUE}
+incident_types_arranged %>% 
+  filter(incidentType=="Tornado" | incidentType = "Hurricane") 
+```
+
+
+```{r multiple_filter1-solution}
+incident_types_arranged %>% 
+  filter(incidentType=="Tornado" | incidentType == "Hurricane") 
+```
+
+```{r multiple_filter1-hint}
+Is it using the right operators?
+```
+
+```{r multiple_filter1-check}
+grade_this_code()
+```
+
+### %in%
+
+Makes sense?
+
+Now this can get unwieldy if you have a lot of different types to filter by.
+
+That's why you should create an array of the categories you want to filter by and then use the powerful `%in%` operator.
+
+Let's look for Tornadoes, Hurricanes, and Floods. We'll use the `c()` function (as in combine) to create an array of that list.
+
+Plug in the new operator and the object name in the code below.
+
+```{r multiple_filter2, exercise=TRUE}
+disaster_array <- c("Tornado", "Hurricane", "Flood")
+
+incident_types_arranged %>% 
+  filter(incidentType ___ ______________) 
+```
+
+
+```{r multiple_filter2-solution}
+disaster_array <- c("Tornado", "Hurricane", "Flood")
+
+incident_types_arranged %>% 
+  filter(incidentType %in% disaster_array) 
+```
+
+```{r multiple_filter2-hint}
+Objects don't need to be in quotation marks.
+```
+
+```{r multiple_filter2-check}
+grade_this_code()
+```
+
+
+## Missing values
+
+Sometimes your data will have missing values, which will trip up R when making calculations.
+
+Try running the code below and see the differences.
+
+```{r missing_na, exercise=TRUE}
+10+0
+
+10+NA
+```
+
+Adding `NA` to anything will make the entire result `NA` which isn't great. Later, we'll talk about strategies on getting around it. 
+But for now let's just see if there are any in the columns we're interested.
+
+It's also good to know if your data can actually be usable or if it's trash.
+
+The quickest way to check for `NA` values is with the `is.na()` function from Base R. You'll need to run it on a specific column (remember `$`?).
+
+**Note: ** `NA` is different from zeroes, which means the value is actually zero. A zero is not the same as "no value". 
+
+Uncomment and run the first line of code below and then add the comment back and uncomment the other one and run that one.
+
+**Note:** Uncomment means delete the `#` in front of the line of code.
+
+```{r missing, exercise=TRUE}
+#is.na(df$incidentType)
+#sum(is.na(df$incidentType))
+```
+
+
+```{r quiz1, echo=FALSE}
+quiz(caption = "Quiz 1",
+  question("Which one is better?",
+    answer('sum(is.na(df$incidentType)) because the output is a single number', correct=T),
+    answer('is.na(df$incidentType) because I want to see if every single row in the data frame has an NA value or not'),
+    random_answer_order= TRUE
+  ))
+```
+
+Alright, so this question is pretty subjective. There are times when you'll want to see which row in the data frame has an `NA`. 
+
+But for now, let's just focus on the number: 0. That's good!
+
+Now, we can proceed with some sense of security.
+
+## Select
+
+The Base R function `nrow()` will tell you how many rows there are in a dataframe.
+
+```{r nrow, exercise=TRUE}
+nrow(df)
+```
+
+And `colnames()` will tell you what the column names are.
+
+```{r colnames, exercise=TRUE}
+colnames(df)
+```
+
+This is relevant because sometimes you'll want to create a data frame with a limited amount of columns.
+
+Maybe because it's easier to read and scroll through or it'll free up memory on your computer.
+
+The **dplyr** verb you'll need to use is `select()`
+
+You simply insert the column names you want. And you won't need to put the column names in quotes (unless there's a space in the column name).
+
+Try it below with the correct function name.
+
+```{r select, exercise=TRUE}
+df_narrow <- df %>% 
+  ______(femaDeclarationString, state, declarationDate, 
+         fyDeclared, designatedArea, incidentType)
+
+colnames(df_narrow)
+```
+
+```{r select-solution}
+df_narrow <- df %>% 
+  select(femaDeclarationString, state, declarationDate, 
+         fyDeclared, designatedArea, incidentType)
+
+colnames(df_narrow)
+```
+
+```{r select-hint}
+What's the verb?
+```
+
+```{r select-check}
+grade_this_code()
+```
+
+
+## Slice
+
+Okay, for the rest of this week's class let's see if we can look for a story from the data.
+
+Recently, there's been a pretty devastating flood in Kentucky, so let's focus on that topic.
+
+Can you write the code from mostly scratch? What the function is called and what operator you need to use and the proper syntax for the keyword you're isolating the data frame to?  
+
+Start with the original `df` object and pipe.
+
+```{r floods, exercise=TRUE}
+floods <- df %>% 
+  __________________________
+```
+
+
+```{r floods-solution}
+floods <- df %>% 
+  filter(incidentType=="Flood")
+```
+
+```{r floods-hint}
+What's the verb/function that filters to flood?
+
+What is it you're filtering for and what column are you looking in?
+  
+Quotation marks? Case sensitivity?
+```
+
+```{r floods-check}
+grade_this_code()
+```
+
+Let's take a look at the five most-recent flooding declared disasters with a new function, `slice()`
+
+If you give it a number, it will slice out that specific row in the data.
+
+If you give it a range, like `1:10` it will slice out rows 1 through 10.
+
+Give it a try below. Get rows 1 through 5.
+
+```{r slice, exercise=TRUE}
+rev_chron_floods <- floods %>% 
+  arrange(desc(declarationDate)) %>% 
+  _____(___)
+
+rev_chron_floods
+```
+
+
+```{r slice-solution}
+rev_chron_floods <- floods %>% 
+  arrange(desc(declarationDate)) %>% 
+  slice(1:5)
+
+rev_chron_floods
+```
+
+```{r slice-hint}
+function starts with an *s*.
+Don't forget the ":"
+```
+
+```{r slice-check}
+grade_this_code()
+```
+
+
+## Class I - Part 3
+
+Stop this tutorial in the `Render` tab of RStudio (press the stop button).
+
+You're getting the hang of it now!
+
+Now give yourself a break. You're almost there.
+
+When you're ready to move on the last section of the week just type this in the console of RStudio:
+
+```
+learnr::run_tutorial("2_c_mutate_summarize", "chjr")
+```
+

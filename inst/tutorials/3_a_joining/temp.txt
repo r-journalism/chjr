@@ -1,0 +1,476 @@
+---
+title: "Class 2: Joining data"
+author: "Andrew Ba Tran"
+output:
+  learnr::tutorial:
+      theme: lumen
+      highlight: espresso
+      progressive: true
+      allow_skip: false
+      includes:
+        before_body: _navbar.html
+runtime: shiny_prerendered
+# Do not index/display tutorial by setting `private: true`
+private: true
+description: >
+  How to join data.
+---
+
+```{r setup, include=FALSE}
+packages <- c("tidyverse", "lubridate", "rvest", "httr", "remotes")
+if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
+  install.packages(setdiff(packages, rownames(installed.packages())), repos = "https://cran.us.r-project.org")
+}
+
+#remotes::install_github("rstudio/gradethis", upgrade="always", quiet=TRUE)
+#remotes::install_github("rstudio/learnr", upgrade="always", quiet=TRUE)
+
+library(tidyverse)
+library(learnr)
+library(gradethis)
+library(lubridate)
+library(readxl)
+library(janitor)
+myurl <- "https://www.cdc.gov/nchs/data/data_acces_files/NCHSURCodes2013.xlsx"
+download.file(myurl, (tf1 <- tempfile(fileext = ".xlsx")), mode = "wb")
+
+designations <- readxl::read_excel(tf1)
+
+```
+
+<span style="color:white">welcome to class!</span>
+
+## Intro
+
+```{r glimpse}
+glimpse(designations)
+```
+
+There are spaces in the column names
+If we wanted to work on specific columns in the dataframe, we'd have to reference them with `` around thme
+for example
+
+```{r head}
+head(designations$`FIPS code`)
+```
+
+That's annoying
+so let's clean it up and get rid of the spaces so we don't have to use the ``
+we'll use the clean_names() function from the janitor package
+
+```{r janitor}
+#install.package("janitor")
+library(janitor)
+
+designations <- clean_names(designations)
+
+glimpse(designations)
+```
+
+```{r head2}
+head(designations$fips_code)
+```
+
+same as before but now the column names have no spaces and letters are all lowercase for simplicity
+
+```{r summaries}
+df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
+
+glimpse(df)
+
+df_narrow <- df %>%
+  select(femaDeclarationString, state, declarationDate, fyDeclared, designatedArea, fipsStateCode, fipsCountyCode, incidentType)
+```
+
+## stringr
+
+str_c
+
+```{r str_c}
+df_narrow <- df_narrow %>%
+  mutate(GEOID=str_c(fipsStateCode, fipsCountyCode))
+
+glimpse(df_narrow)
+```
+
+Hm, statewide ends with 000
+Let's get rid of those
+We know how to filter, but what about the equivalent of not equal to? !=
+
+```{r nrow}
+nrow(df_narrow)
+df_narrow <- df_narrow %>%
+  filter(fipsCountyCode!="000")
+nrow(df_narrow)
+
+```
+
+Why is it "000" and not 000? Because if you glimpse(df_narrow), you'll see fipsCountyCode is considered a string, not a number
+So quotes indicate these are a string and not a number
+
+
+We went from 63032 to 61560
+
+What's the percent change?
+
+(new-old)/old
+
+(61560-63032)/63032*100
+
+dropped 2 percent. not that many relatively speaking
+
+## joins
+
+ok, let's join but we're going to fail a few times
+let me walk you through how and why it's important that your data be in the right condition
+
+```{r joined}
+df_joined <- left_join(df_narrow, designations)
+```
+
+What error did you get?
+
+> Error: `by` must be supplied when `x` and `y` have no common variables.ℹ use by = character()` to perform a cross-join.
+
+we need to tell them what columns to join on that the keys match
+we want to join by county!
+but do we choose county name or the county id?
+
+```{r glimpses}
+glimpse(df_narrow)
+glimpse(designations)
+```
+
+What do we want to join on?
+we could try county name, but df_narrow's designatatedArea with designation's county_name
+but the naming is inconsistent. Let me show you
+
+```{r joinagain}
+df_joined <- left_join(df_narrow, designations, by=c("designatedArea"="county_name"))
+glimpse(df_joined)
+
+sum(is.na(df_joined$x2013_code))
+# 61,544 blanks
+nrow(df_narrow)
+# 61,560 total denominator
+```
+
+
+```{r math}
+sum(is.na(df_joined$x2013_code)) / nrow(df_narrow) *100
+
+# that's 99% fail rate
+```
+
+maybe we can clean it up more?
+First, let's get rid of the parenthesis so we turn Clay (County) in df_narrow's designatedArea into Clay County so it could matchw ith desgination's county_name
+
+```{r join_clean}
+df_joined <- df_narrow %>%
+  mutate(county_name=str_replace(designatedArea, "\\(", ""),
+         county_name=str_replace(county_name, "\\)", "")) %>%
+  left_join(designations)
+
+sum(is.na(df_joined$x2013_code))
+# ok, 4,273 failed to join this time
+
+sum(is.na(df_joined$x2013_code)) / nrow(df_joined)*100
+# alright only 1.6% is missing!
+```
+
+```{r df_joined}
+nrow(df_joined)
+# hey, wait, why are there 272,845 rows now?
+nrow(df_narrow)
+# the original data set had 61,560 rows. How did it grow?
+```
+
+when data grows after a join, that means there were duplicates in the new data set
+
+The most common county name is Washington
+
+
+```{r duplicates}
+designations %>%
+  filter(str_detect(county_name, "Washington")) %>%
+  nrow()
+
+```
+
+So there are 31 states with their own "Washington County"
+
+This means whenever we there's a "Washington County" in the original data frame
+
+Joining means it will match 31 different rows to each instance
+
+```{r df_narrow}
+df_narrow %>%
+  filter(str_detect(designatedArea, "Washington")) %>%
+  nrow()
+
+df_narrow %>%
+  filter(str_detect(designatedArea, "Washington")) %>%
+  summarize(different_states=n_distinct(state))
+```
+
+In 32 different states, Washington Counties were hit by 595 disasters
+If we joined that to the 31 states with their own Cashington County
+That's 595*31, which would inflate the count of disasters to 18,445
+
+Okay, so let's join by two columns then!
+
+```{r multiple_columns}
+df_joined <- df_narrow %>%
+  mutate(county_name=str_replace(designatedArea, "\\(", ""),
+         county_name=str_replace(county_name, "\\)", "")) %>%
+  left_join(designations, by=c("county_name"="county_name", "state"="state_abr"))
+
+nrow(df_joined)
+```
+
+
+Okay! we preserved the original size of the dataframe to 61,560 rows
+no duplicates!
+
+```{r sumjoin}
+sum(is.na(df_joined$x2013_code))
+# ok, 4,292 failed to join this time
+
+sum(is.na(df_joined$x2013_code)) / nrow(df_joined)*100
+# alright only 7% is missing!
+```
+
+What's missing?
+
+```{r joined_missing}
+df_joined_missing <- df_joined %>%
+  filter(is.na(x2013_code))
+
+head(df_joined_missing$county_name, 10)
+```
+
+Wards, Districts, County-equivalent, Municipios
+maybe that's why?
+
+```{r challenging}
+designations %>% filter(str_detect(county_name, "Anchorage")) %>% pull(county_name)
+df_narrow %>% filter(str_detect(designatedArea, "Anchorage")) %>% pull(designatedArea)
+```
+
+Yup. One state's Borough is another's County depending on the government agency
+
+We'll have to clean this up by hand but that will take too long
+
+there's a faster way (slightly)
+
+let's look again at the data
+
+```{r glimpseagain}
+glimpse(df_narrow)
+glimpse(designations)
+```
+
+Okay, instead of county names how about the ids for the county? GEOID and fips
+
+```{r join_geoid}
+df_joined <- left_join(df_narrow, designations, by=c("GEOID"="fips_code"))
+```
+
+Dang, another error
+What this time?
+
+>Error: Can't join on `x$GEOID` x `y$GEOID` because of incompatible types.
+>ℹ `x$GEOID` is of type <character>>.
+>ℹ `y$GEOID` is of type <double>>.
+
+Aha, that's because the GEOID in the df_narrow is a string
+and the fips_code in designations is a number
+
+Let's try to fix that
+
+```{r designations_fixed_again}
+designations_fixed <- designations %>%
+  mutate(GEOID=as.character(fips_code))
+```
+
+
+we don't need to specify the column names this time because we created a new column with the correct name
+
+```{r specify}
+df_joined <- left_join(df_narrow, designations_fixed)
+
+sum(is.na(df_joined$x2013_code))
+
+sum(is.na(df_joined$x2013_code)) / nrow(df_joined)*100
+```
+
+shoot, 13% fail rate
+
+what's going on?
+
+where were the fails?
+which disasters did not have a matching designation?
+
+```{r failed_again}
+df_joined_anti<- anti_join(df_narrow, designations_fixed)
+```
+
+where did these fail?
+let's pick a county where this failed
+the first county name
+
+```{r first_fail}
+df_joined_anti$designatedArea[1]
+```
+
+okay, let's do a full_join to see the fails and look up "Alpine"
+
+```{r troubleshooting}
+df_joined_full<- full_join(df_narrow, designations_fixed) %>%
+  filter(str_detect(designatedArea, "Alpine") | str_detect(county_name, "Alpine"))
+
+glimpse(df_joined_full)
+```
+
+Look at where the rows aren't syncing up
+do you notice where things aren't aligned?
+
+it's in the GEOID column
+in df_narrow, the GEOID is 06003 and in designations_fixed, the geoid is 6003
+both technically the same but because it's missing the leading 0, the join failed!
+
+
+so! we need to make sure the GEOID in designations has a leading zero!
+we'll need to use nchar() and case_when()
+
+```{r join_journey}
+designations_fixed <- designations_fixed %>%
+  mutate(GEOID=case_when(
+    nchar(GEOID)==4 ~ str_c("0", GEOID),
+          TRUE ~ GEOID)
+  )
+```
+
+```{r join_journey2}
+df_joined<- left_join(df_narrow, designations_fixed)
+
+sum(is.na(df_joined$x2013_code))
+
+sum(is.na(df_joined$x2013_code)) / nrow(df_joined)*100
+```
+
+
+okay, that's 3.5 % missing. That's pretty good
+
+what's in common about the missing values?
+
+```{r common_missing}
+no_match <- df_joined %>%
+  filter(is.na(x2013_code))
+
+table(no_match$state)
+```
+
+aha, AS, FM, GU, PR
+those are all territories
+we'll just ignore those for now
+
+```{r x2013}
+df_joined <- df_joined %>%
+  filter(!is.na(x2013_code))
+```
+
+
+now that we've got designations!
+
+let's add some language to describe what they are
+
+1. Metro - Counties in metro areas of 1 million population or more
+2. Metro - Counties in metro areas of 250,000 to 1 million population
+3. Metro - Counties in metro areas of fewer than 250,000 population
+4. Nonmetro - Urban population of 20,000 or more, adjacent to a metro area
+5. Nonmetro - Urban population of 20,000 or more, not adjacent to a metro area
+6. Nonmetro - Urban population of 2,500 to 19,999, adjacent to a metro area
+```{r joined_urban_rural}
+df_joined <- df_joined %>%
+  mutate(code=case_when(
+    x2013_code==1 ~ "1. Metro - Large",
+    x2013_code==2 ~ "2. Metro - Medium",
+    x2013_code==3 ~ "3. Metro - Small",
+    x2013_code==4 ~ "4. Rural - Large",
+    x2013_code==5 ~ "5. Rural - Medium",
+    x2013_code==6 ~ "6. Rural - Small"
+  ))
+```
+
+```{r glimpse3}
+glimpse(df_joined)
+```
+
+What's the percent breakdown of all counties?
+
+```{r counties}
+designation_percent <- designations %>%
+  mutate(code=case_when(
+    x2013_code==1 ~ "1. Metro - Large",
+    x2013_code==2 ~ "2. Metro - Medium",
+    x2013_code==3 ~ "3. Metro - Small",
+    x2013_code==4 ~ "4. Rural - Large",
+    x2013_code==5 ~ "5. Rural - Medium",
+    x2013_code==6 ~ "6. Rural - Small"
+  )) %>%
+  count(code, name="counties") %>%
+  mutate(percent=counties/sum(counties)*100)
+
+designation_percent
+```
+
+what's the percent breakdown of all disasters?
+
+```{r breakdown}
+df_joined %>%
+  count(code, name="counties") %>%
+  mutate(percent=counties/sum(counties)*100)
+```
+
+wow, that's pretty close!
+
+What about hurricanes? Copy and pate the code above but throw in a filter
+df_joined %>%
+  filter(incidentType=="Hurricane") %>%
+  count(code, name="counties") %>%
+  mutate(percent=counties/sum(counties)*100)
+
+# to make it easier to compare, let's join it with the designations_percent data frame
+# we'll need to rename some columns so there are no conflicts
+df_joined %>%
+  filter(incidentType=="Hurricane") %>%
+  count(code, name="counties_disaster") %>%
+  mutate(percent_disaster=counties_disaster/sum(counties_disaster)*100) %>%
+  left_join(designation_percent)
+
+# Just eyeballing it, it looks like there's a larger share of metro areas that are hit by disasters
+# let's just throw in a mutate column to track that
+df_joined %>%
+  filter(incidentType=="Hurricane") %>%
+  count(code, name="counties_disaster") %>%
+  mutate(percent_disaster=counties_disaster/sum(counties_disaster)*100) %>%
+  left_join(designation_percent) %>%
+  mutate(diff=percent_disaster-percent)
+
+
+
+
+## Class II - Part 2
+
+Stop this tutorial in the `Render` tab of RStudio (press the stop button).
+
+Congrats, you made it this far. You've earned a break.
+
+Turn off your monitor and soak it all in.
+
+When you're ready to move on to pt. 2 just type this in the console of RStudio:
+
+```
+learnr::run_tutorial("class_1_b_filter_select", "adjclass")
+```

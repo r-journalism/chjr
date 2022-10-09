@@ -1,0 +1,471 @@
+---
+title: "Class 1: Exploring data"
+author: "Andrew Ba Tran"
+output: 
+  learnr::tutorial:
+      theme: lumen
+      highlight: espresso
+      progressive: true
+      allow_skip: false
+      includes:
+        before_body: _navbar.html
+runtime: shiny_prerendered
+# Do not index/display tutorial by setting `private: true`
+private: true
+description: >
+  First steps in exploring data
+---
+
+
+```{css, echo=FALSE}
+.pageContent {
+padding-top: 64px }
+```
+
+```{r setup, include=FALSE}
+packages <- c("tidyverse", "lubridate", "rvest", "httr", "remotes")
+if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
+  install.packages(setdiff(packages, rownames(installed.packages())), repos = "https://cran.us.r-project.org")  
+}
+
+#remotes::install_github("rstudio/gradethis", upgrade="always", quiet=TRUE)
+#remotes::install_github("rstudio/learnr", upgrade="always", quiet=TRUE)
+
+library(tidyverse)
+library(learnr)
+library(gradethis)
+library(lubridate)
+
+df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
+
+incident_types <- count(df, incidentType, name="total")
+incident_types_arranged <- arrange(incident_types, desc(total))
+
+floods <- df %>% filter(incidentType=="Flood")
+floods_adjusted <- floods %>% 
+  mutate(year=year(declarationDate))
+floods_match <- floods_adjusted %>% 
+  mutate(year_match=
+           case_when(year==fyDeclared ~ "Match",
+                     TRUE ~ "Not a match"
+  )) %>% 
+  group_by(year_match) %>% 
+  summarize(total=n())
+floods_match_count <- floods_match %>% 
+  filter(year_match=="Not a match") %>% 
+  pull(total)
+
+```
+
+<span style="color:white">welcome to class!</span>
+
+## Intro
+
+
+In this lesson, we're going to start exploring data with the package **dplyr.**
+
+* It's designed to work with data frames, which is what journalists are used to
+* Great for data exploration and transformation
+* Intuitive to write and easy to read, especially when using the “chaining” syntax of pipes
+
+These are the functions/data analysis verbs we'll be going over:
+
+* filter()
+* select()
+* arrange()
+* mutate()
+* summarize() plus group_by()
+
+First, let's bring in the data.
+
+## Importing
+
+**We're going to play around with historical FEMA disaster declaration data.**
+
+First steps when analyzing data in R.
+
+Bring in the appropriate packages.
+
+Let's start out with **tidyverse** which is a suite of packages that are consistently used to import, wrangle, and visualize data. It's one package that installs, like nearly a dozen other ones such as **readr**, **dplyr**, **tidyr** and **ggplot2**. The **lubridate** package is for dealing with dates.
+
+And we'll also need to bring the data in. 
+
+You can download it and import it locally, but if it's a csv, you can just link to it and R will download it for you in the function.
+
+Use the function from the **readr** package to import the csv from the URL.
+
+```{r importing, warning=F, message=F, exercise=TRUE}
+library(tidyverse)
+library(lubridate)
+
+#https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2
+df <- ________("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
+```
+
+```{r importing-solution}
+library(tidyverse)
+library(lubridate)
+
+#https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2
+df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
+```
+
+```{r importing-hint}
+function starts with an *r*.
+two words separated with a "_"
+```
+
+```{r importing-check}
+grade_this_code()
+```
+
+## Exploring steps
+
+What to do when you first get a data set? Poke around and see what you're working with.
+
+Use the function on the **df** object you imported into your R environment.
+
+We want to look at all the columns available to work with in the data. In Excel, you could just open up the file and click and scroll around but this time we want to do it within the R environment.
+
+```{r glimpse, exercise=TRUE}
+________df_
+```
+
+```{r glimpse-hint}
+Starts with a *g*
+Also, don't forget that functions need parentheses.
+```
+
+```{r glimpse-solution}
+glimpse(df)
+```
+
+```{r glimpse-check}
+grade_this_code()
+```
+
+## Range
+
+Alright, we know that there are 24 different columns and 63,167 rows (each one a different disaster declaration) in this data set. That's a lot to work with!
+
+We also see in the `<>` what type of data is within each of the columns (you can't mix).
+
+* `<chr>` for characters or strings
+* `<dbl>` for numbers
+* `<dttm>` for date times
+
+So `glimpse()` only gave us a sample of the first few values in each column. 
+
+Next, we can drill down into individual columns we're interested in.
+
+**incidentBeginDate** could be useful if we want to track incidents overtime.
+
+We should check how far back and how recent the incidents are.
+
+Use a function on the **df** object to determine the range of dates for incidents.
+
+```{r range, exercise=TRUE}
+_____df_incidentBeginDate_
+```
+
+```{r range-solution}
+range(df$incidentBeginDate)
+```
+
+```{r range-hint}
+function starts with an *r*.
+Also, in Base R, to focus on a single column in a data frame, 
+you need a dollar sign between the data frame name and column name
+```
+
+```{r range-check}
+grade_this_code()
+```
+
+## Table
+
+Did any other columns catch your eye?
+
+Hopefully **incidentType** did. 
+
+Let's next get a sense of what type of disasters are listed in this data set.
+
+In Base R, the quick way to do this is to use the function `table()` around a column and data frame.
+
+Try using the function below on the column `incidentType`.
+
+```{r types, exercise=TRUE}
+### Using base R
+table(df_____________)
+
+```
+
+```{r types-solution}
+table(df$incidentType)
+```
+
+```{r types-hint}
+In Base R, you need a special character between the data frame name and column name
+```
+
+```{r types-check}
+grade_this_code()
+```
+
+## Count
+
+Alright, you can see Biological, Chemical, Coastal Storm, etc...
+
+It might take sometime to figure out which is the most... Since it's ordered alphabetical.
+
+So `table()` is a quick exploratory command from Base R but if you want to save it as a dataframe, then the **dplyr** method is better. 
+
+Use the `count()` function on **df**. Because we're using a function from the **dplyr** library, which is part of the tidyverse suite of packages, then we don't need to use a `$` to focus on the specific column `incidentType`.
+
+The function is structured so that the first argument in the function is always the data frame and second one is the column in the data frame, separated with a comma.
+
+Try the `count()` function here on the `incidentType` column of **df**.
+
+```{r count, exercise=TRUE}
+incident_types <- _____(df, _________)
+
+incident_types
+```
+
+```{r count-solution}
+incident_types <- count(df, incidentType)
+
+incident_types
+```
+
+```{r count-hint}
+These are how tidy functions are structured:
+function_name(dataframe_name, column_name)
+```
+
+```{r count-check}
+grade_this_code()
+```
+
+Okay, great. The default new column is named "n".
+
+We can change that by adding an extra argument to the `count()` function: `name="name_of_column"`
+
+Fill out the code below but call the new column you're creating "total".
+
+```{r count2, exercise=TRUE}
+incident_types <- _____(df, _________, name="______")
+
+incident_types
+```
+
+```{r count2-solution}
+incident_types <- count(df, incidentType, name="total")
+
+incident_types
+```
+
+```{r count2-hint}
+You're passing it a string so make sure the 
+column name is in between quotation marks
+```
+
+```{r count2-check}
+grade_this_code()
+```
+
+
+## Arrange
+
+Great! Now we're looking at table instead of a cluster of incident types.
+
+This is much easier to scan.
+
+But we're still dealing with alphabetically sorted incidents. 
+
+We need to look at which disaster types have occurred most often over time.
+
+We're going to use a new function called `arrange()`
+
+We have the new object data frame with the counts of incidents that you called **incident_types**.
+
+We just need to use the `arrange()` function on the dataframe, specifically the new column you created called `total`.
+
+```{r arrange, exercise=TRUE}
+incident_types_arranged <- arrange(__________, _____)
+
+incident_types_arranged
+```
+
+```{r arrange-solution}
+incident_types_arranged <- arrange(incident_types, total)
+
+incident_types_arranged
+```
+
+```{r arrange-hint}
+Is your first argument in arrange() the name of the 
+newer dataframe you created using count()?
+  
+Also, you don't need to put "total" in quotation marks this time!
+Because column names aren't strings. They're objects.
+```
+
+```{r arrange-check}
+grade_this_code()
+```
+
+### Arrange descending
+
+Okay, this isn't what we wanted. This is going in ascending order, aka, least to most.
+
+We need most to least!
+
+So we need to adjust the `arrange()` function with the `desc()` function wrapped around the column you're sorting on. 
+
+You're nesting functions.
+
+Adjust your code from before but use the `desc()` formula, too.
+
+```{r arrange2, exercise=TRUE}
+incident_types_arranged <- arrange(__________, ____(_____))
+
+incident_types_arranged
+```
+
+```{r arrange2-solution}
+incident_types_arranged <- arrange(incident_types, desc(total))
+
+incident_types_arranged
+```
+
+```{r arrange2-hint}
+Is your first argument in arrange() the name of the 
+newer dataframe you created using count()?
+  
+Also, you don't need to put "total" in quotation marks this time!
+Because column names aren't strings. They're objects.
+```
+
+```{r arrange2-check}
+grade_this_code()
+```
+
+## Pipes
+
+Great job!
+
+We see that Severe Storms are the most-common disaster types declared.
+
+Then, hurricanes and floods.
+
+Here's the code that got you to this point:
+
+```{r recap, eval=F}
+df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
+
+incident_types <- count(df, incidentType, name="total")
+incident_types_arranged <- arrange(incident_types, desc(total))
+```
+
+This is fine... but it could be more efficient and easier to read.
+
+As I mentioned before, all the functions from in the tidyverse all structured similarly: The first argument is always the data frame.
+
+It takes in a data frame and spits out a data frame.
+
+We're going to use a tidyverse operator called *pipes* or `%>%`.
+
+By using a pipe `%>%`, the following line of code can leave out the first argument!
+
+Because a pipe is passing on the result forward. Like the improv concept "Yes, and then"
+
+This is what it looks like in action.
+
+```{r pipes, exercise=TRUE}
+# old code
+#incident_types <- count(df, incidentType, name="total")
+#incident_types_arranged <- arrange(incident_types, desc(total))
+
+#incident_types_arranged
+
+# new code with pipes
+
+incident_types_arranged <- df %>% 
+  count(incidentType, name="total") %>% 
+  arrange(desc(total))
+
+incident_types_arranged
+```
+
+So readable and simple, right?
+
+Please look at the two chunks of code and see how they're different but do the same thing.
+
+Do this and the result `%>% goes into this and something happens to it `%>%` and then something else.
+
+This is the basis for all scripted data analysis. It's a grammar. 
+
+You never start with something and immediately get the end result.
+
+Every step is built on the step that came before. Eventually you get to the end result.
+
+Here’s the shortcut to type %>% in RStudio:
+
+Mac: Cmd + Shift + M
+Windows: Ctrl + Shift + M
+Why “M”? I think it’s because the pipe was first introduced in the magrittr package by Stefan Milton Bache.
+
+**I am going to use pipes interchangeably in this walk through now.**
+
+But first, can you redo this code below using pipes? We're counting up the states with the most declared disasters in the data set.
+
+```{r pipes_test, exercise=TRUE}
+#states_count <- count(df, name="total")
+#states_count_sorted <- arrange(desc(total))
+
+#states_count_sorted
+
+states_count_sorted <- df %>% 
+  __________
+  __________
+
+states_count_sorted
+```
+
+
+```{r pipes_test-solution}
+#states_count <- count(df, name="total")
+#states_count_sorted <- arrange(desc(total))
+
+#states_count_sorted
+
+states_count_sorted <- df %>% 
+  count(state, name="total") %>% 
+  arrange(desc(total))
+
+states_count_sorted
+```
+
+```{r pipes_test-hint}
+After a pipe, the first argument (the data frame name) is implicit and doesn't need to be typed out
+```
+
+```{r pipes_test-check}
+grade_this_code()
+```
+
+
+## Class I - Part 2
+
+Stop this tutorial in the `Render` tab of RStudio (press the stop button).
+
+Congrats, you made it this far. You've earned a break.
+
+Turn off your monitor and soak it all in.
+
+When you're ready to move on to pt. 2 just type this in the console of RStudio:
+
+```
+learnr::run_tutorial("2_b_filter_select", "chjr")
+```
