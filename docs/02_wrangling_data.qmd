@@ -1,0 +1,638 @@
+---
+title: "Wrangling Data<br /><br /><br />"
+author: "2022 Data Health Fellowship"
+format:
+  revealjs: 
+    theme: beige
+title-slide-attributes:
+    data-background-image: "slide_images/usc.jpg"
+    data-background-size: contain
+    data-background-opacity: "number"
+---
+
+
+## Exploring {background-color="white" background-image="slide_images/dplyr_wrangling.png" background-size="100%" }
+
+## dplyr
+
+**dplyr** verbs/functions for wrangling data:
+
+:::{.incremental}
+* arrange()
+* filter()
+* select()
+* mutate()
+* summarize()
+* group_by()
+:::
+
+
+## Importing data
+
+```{r import}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+
+library(readr)
+
+df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv") 
+
+df
+```
+
+# First steps in exploring data
+
+## Glimpse
+```{r glimpse_again}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+#| 
+library(dplyr)
+
+glimpse(df)
+```
+
+## range()
+
+```{r range1}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+
+range(1, 4, 6, 22, 2002)
+```
+
+:::{.fragment}
+And then on a column
+:::
+
+:::{.fragment}
+```{r range2}
+
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+
+
+range(df$incidentBeginDate)
+```
+:::
+
+
+## table()
+
+
+```{r table1}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+table(df$state)
+```
+
+
+
+## count()
+
+```{r count1}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+counted <- count(df, state)
+
+counted
+```
+---
+
+## count() named column
+
+```{r count2}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+counted <- count(df, state, name="disasters")
+
+counted
+```
+
+
+## arrange() illustrated
+
+![](slide_images/arrange.png)
+
+## arrange() syntax
+
+![](slide_images/arrange_syntax.png)
+
+## arrange() in action
+```{r arrange1}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+arrange(counted, disasters)
+```
+
+
+## arrange() descending
+
+```{r arrange2}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+arrange(counted, desc(disasters))
+```
+
+
+# Pipes
+
+**%>%**
+
+![](slide_images/pipe.png)
+
+## Without Pipes
+
+```{r pipes1}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+counted <- count(df, state, name="disasters")
+sorted_count <- arrange(counted, desc(disasters))
+
+sorted_count
+```
+
+## With Pipes
+
+```{r pipes2, warning=F, message=F}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  count(state, name="disasters") %>% 
+   arrange(desc(disasters))
+```
+
+## Verbs so far
+
+**dplyr** verbs/functions for wrangling data:
+
+* **arrange()**
+* filter()
+* select()
+* mutate()
+* **summarize() (pretty much count())**
+* group_by()
+
+# Your turn
+
+Run this to go through the exercises
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+learnr::run_tutorial("2_a_exploring", "chjr")
+```
+
+
+## filter()
+
+
+![](slide_images/filter.png)
+
+
+## filter() operators
+
+
+You can filter based on values in a column/vector with these operators:
+
+* `>` `<` greater than, less than
+* `>=` `<=` greater than or equal to, less than or equal to
+* `==` tests whether the objects on either end are equal
+* `!=` not equal to
+* `%in%` equals (one value match out of multiple options)
+
+## Filtering data 1
+
+```{r import2, warning=F, message=F}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+#| 
+glimpse(df)
+```
+
+## Filtering data 2
+
+```{r filter}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+#| 
+df %>% 
+  filter(incidentType=="Hurricane")
+```
+
+## Extra operators
+
+**Filter multiple values**
+
+What if you want to filter multiple items? Well, you'd have to use Boolean logic operators such as:
+
+* `&` means AND, in Boolean logic
+* `|` means OR, in Boolean logic
+* `!` means NOT, in Boolean logic
+
+## Illustrated {background-color="white" background-image="slide_images/dplyr_filter.jpg" background-size="100%" }
+
+## Multiple Filter in action 1
+
+```{r filter2}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df
+```
+
+## Multiple Filter in action 2
+
+```{r filter2b}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  filter(incidentType=="Hurricane" | incidentType == "Fire")
+```
+
+## %in% 
+
+```{r filter3, warning=F, message=F}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+
+disaster_list <- c("Flood", "Hail", "Typhoon")
+
+df %>% 
+  filter(incidentType %in% disaster_list)
+```
+
+## select()
+
+Look at the column names.
+---
+```{r colnames}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+colnames(df)
+```
+
+## Select three
+
+```{r select}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType)
+```
+
+## slice()
+
+
+```{r my_fill1}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  arrange(desc(declarationDate)) %>% 
+  filter(incidentType=="Flood") %>% 
+  select(state, declarationDate, designatedArea)
+```
+
+
+## slice() 1
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  arrange(desc(declarationDate)) %>% 
+  filter(incidentType=="Flood") %>% 
+  select(state, declarationDate, designatedArea) %>% 
+  slice(1) 
+```
+
+## slice() 2
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  arrange(desc(declarationDate)) %>% 
+  filter(incidentType=="Flood") %>% 
+  select(state, declarationDate, designatedArea) %>% 
+  slice(2) 
+```
+
+## slice() through
+
+```{r}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  arrange(desc(declarationDate)) %>% 
+  filter(incidentType=="Flood") %>% 
+  select(state, declarationDate, designatedArea) %>% 
+  slice(1:5)
+```
+
+## verbs so far
+
+**dplyr** verbs/functions for wrangling data:
+
+* **arrange()**
+* **filter()**
+* **select()**
+* mutate()
+* summarize()
+* group_by()
+
+
+# Your turn
+
+Run this to go through the exercises
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+learnr::run_tutorial("2_b_filter_select", "chjr")
+```
+
+
+```{r glimpse, warning=F, message=F, include=F}
+glimpse(df)
+```
+
+
+## mutate()
+
+## mutate() {background-color="white" background-image="slide_images/dplyr_mutate.png" background-size="100%" }
+
+
+## glimpse again
+```{r lubridate}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+library(lubridate)
+```
+
+```{r glimpsed}
+glimpse(df)
+```
+
+* extract year! month! day!
+* also convert strings into date format recognized by R
+
+## mutate() I
+
+```{r date}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df 
+```
+
+
+## mutate() II
+
+```{r date2}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) 
+```
+
+
+## mutate() III
+
+```{r date3}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate))
+```
+
+
+## summarize() I
+
+```{r summarize}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df 
+```
+
+## summarize() II
+
+```{r summarize2}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  summarize(disasters=n())
+```
+
+## group_by() I
+
+```{r group_by}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate))
+```
+
+## group_by() II
+
+```{r group_by2}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate)) %>% 
+  group_by(state) %>% 
+  summarize(disasters=n())
+```
+
+## group_by() III
+
+```{r group_by3}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate)) %>% 
+  group_by(incidentType) %>% 
+  summarize(disasters=n())
+```
+
+## group_by() IV
+
+
+```{r group_by4}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate)) %>% 
+  group_by(state, incidentType) %>% 
+  summarize(disasters=n())
+```
+
+## group_by() V
+
+
+```{r group_by5}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate)) %>% 
+  group_by(state, incidentType, year) %>% #ROTATE
+  summarize(disasters=n())
+```
+
+
+
+
+
+## case_when() {background-color="white" background-image="slide_images/dplyr_case_when.png" background-size="100%" }
+
+
+## case_when() I
+```{r case_when}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate))
+```
+
+## case_when() II
+
+```{r case_when2}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate)) %>% 
+  mutate(year_group=case_when(
+    year < 1960 ~ "1950 - 1959",
+    year >=1960 & year < 1969 ~ "1960-1969",
+    year >=1970 & year < 1979 ~ "1970-1979",
+    year >=1980 & year < 1989 ~ "1980-1989",
+    year >=1990 & year < 1999 ~ "1990-1999",
+    year >=2000 & year < 2009 ~ "2000-2009",
+    year >=2010 & year < 2019 ~ "2010-2019",
+    TRUE ~ "2020+"
+  ))
+```
+
+
+## case_when() III
+
+```{r case_when3}
+#| warning: FALSE
+#| message: FALSE
+#| echo: TRUE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate)) %>% 
+  mutate(year_group=case_when(
+    year < 1960 ~ "1950 - 1959",
+    year >=1960 & year < 1969 ~ "1960-1969",
+    year >=1970 & year < 1979 ~ "1970-1979",
+    year >=1980 & year < 1989 ~ "1980-1989",
+    year >=1990 & year < 1999 ~ "1990-1999",
+    year >=2000 & year < 2009 ~ "2000-2009",
+    year >=2010 & year < 2019 ~ "2010-2019",
+    TRUE ~ "2020+"
+  ))  %>% 
+  group_by(year_group) %>% 
+  summarize(disasters=n())
+```
+
+
+## case_when() III
+
+```{r case_when3}
+#| warning: FALSE
+#| message: FALSE
+#| echo: FALSE
+df %>% 
+  select(femaDeclarationString, state, 
+         declarationDate, incidentType) %>% 
+  mutate(year=year(declarationDate)) %>% 
+  mutate(year_group=case_when(
+    year < 1960 ~ "1950 - 1959",
+    year >=1960 & year < 1969 ~ "1960-1969",
+    year >=1970 & year < 1979 ~ "1970-1979",
+    year >=1980 & year < 1989 ~ "1980-1989",
+    year >=1990 & year < 1999 ~ "1990-1999",
+    year >=2000 & year < 2009 ~ "2000-2009",
+    year >=2010 & year < 2019 ~ "2010-2019",
+    TRUE ~ "2020+"
+  ))  %>% 
+  group_by(year_group) %>% 
+  summarize(disasters=n())
+```
+
+
+## Wrangling recap
+
+**dplyr** verbs/functions for wrangling data:
+
+* **arrange()**
+* **filter()**
+* **select()**
+* **mutate()**
+* **summarize()**
+* **group_by()**
+
+# Your turn
+
+Run this to go through the exercises
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+learnr::run_tutorial("2_c_mutate_summarize", "chjr")
+```
+

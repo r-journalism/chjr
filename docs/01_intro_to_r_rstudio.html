@@ -451,7 +451,9 @@
 <pre><code>remotes::install_github("r-journalism/chjr", upgrade="always", quiet=TRUE)
 
 install.packages("usethis")
-usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")</code></pre>
+usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
+
+</code></pre>
 </section>
 <section id="reproducibility-save-your-scripts" class="slide level2">
 <h2>Reproducibility: Save your scripts</h2>
@@ -503,7 +505,7 @@ setwd("C:/Documents/chj-r")</code></pre>
 <h2>Best practices</h2>
 <p><strong>Fixed versus Relative directories</strong></p>
 <p>Works but not great:</p>
-<pre><code>df &lt;- read_csv("C:/Documents/chj-r/data/spreadsheet.csv")</code></pre>
+<pre><code>df &lt;- read_csv("C:/Documents/chjr/data/spreadsheet.csv")</code></pre>
 <p>Ideal:</p>
 <pre><code>df &lt;- read_csv("data/spreadsheet.csv")</code></pre>
 <p>Because it’s transportable and reproducible and relative to the folder that has the data and the project.</p>
@@ -1202,7 +1204,7 @@ Levels: 1001 1002 1003 1004</code></pre>
       }</style></aside>
 <p><code>read_excel()</code> again But this time we’ll add <code>skip=2</code> so it skips the first rows when bringing in the data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>df_xl <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/StatisticsSummary.xls"</span>, <span class="at">sheet=</span><span class="dv">1</span>, <span class="at">skip=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>df_xl <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"slides_data/StatisticsSummary.xls"</span>, <span class="at">sheet=</span><span class="dv">1</span>, <span class="at">skip=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="dealing-with-ugly-imports-1" class="slide level2">
@@ -1350,9 +1352,9 @@ $ clinicals            &lt;dbl&gt; NA, 7, 9, 11, 9, 12, 19, 20, 13, 21, 27, 25, 
 <h2>Done</h2>
 <p>Take a long break, you deserve it! Go stretch!</p>
 <p>To run through everything we’ve learned in tutorial form, run these:</p>
-<pre><code>learnr::run_tutorial("class_prep_pt1", "chjr")
-learnr::run_tutorial("class_prep_pt2", "chjr")
-learnr::run_tutorial("class_prep_pt3", "chjr")</code></pre>
+<pre><code>learnr::run_tutorial("1_intro_a", "chjr")
+learnr::run_tutorial("1_intro_b", "chjr")
+learnr::run_tutorial("1_intro_c", "chjr")</code></pre>
 <div class="footer footer-default">
 
 </div>

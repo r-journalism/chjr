@@ -60,6 +60,8 @@ remotes::install_github("r-journalism/chjr", upgrade="always", quiet=TRUE)
 
 install.packages("usethis")
 usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
+
+
 ```
 
 ## Reproducibility: Save your scripts
@@ -126,7 +128,7 @@ Within RStudio, you can also set the working directory via the menu *Tools > Set
 Works but not great:
 
 ```
-df <- read_csv("C:/Documents/chj-r/data/spreadsheet.csv")
+df <- read_csv("C:/Documents/chjr/data/spreadsheet.csv")
 ```
 
 Ideal:
@@ -499,7 +501,7 @@ Type this:
 
 ::: {.fragment}
 ```{r, eval=F}
-#| echo: true
+#| echo: TRUE
 as.character(sample_df$race)
 ```
 :::
@@ -922,7 +924,7 @@ But this time we’ll add `skip=2` so it skips the first rows when bringing in t
 ```{r}
 #| echo: TRUE
 #| eval: FALSE
-df_xl <- read_excel("data/StatisticsSummary.xls", sheet=1, skip=2)
+df_xl <- read_excel("slides_data/StatisticsSummary.xls", sheet=1, skip=2)
 ```
 
 ## Dealing with ugly imports
@@ -1039,9 +1041,9 @@ Take a long break, you deserve it! Go stretch!
 To run through everything we've learned in tutorial form, run these:
 
 ```
-learnr::run_tutorial("class_prep_pt1", "chjr")
-learnr::run_tutorial("class_prep_pt2", "chjr")
-learnr::run_tutorial("class_prep_pt3", "chjr")
+learnr::run_tutorial("1_intro_a", "chjr")
+learnr::run_tutorial("1_intro_b", "chjr")
+learnr::run_tutorial("1_intro_c", "chjr")
 ```
 
 
