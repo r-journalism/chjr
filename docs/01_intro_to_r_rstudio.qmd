@@ -56,7 +56,10 @@ A *viewer* is on the bottom right, where there are tabs to flip through the **Fi
 ## Before we move on, run these lines in console
 
 ```
-learnr::run_tutorial("01_intro", "chj-r")
+remotes::install_github("r-journalism/chjr", upgrade="always", quiet=TRUE)
+
+install.packages("usethis")
+usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
 ```
 
 ## Reproducibility: Save your scripts
@@ -450,7 +453,7 @@ When importing that data in from a spreadsheet, R will most often interpret it a
 # Your turn
 
 ```
-learnr::run_tutorial("01_intro", "chj-r")
+learnr::run_tutorial("class_prep_pt2", "chjr")
 ```
 
 Click on "Factors" on the left and run through the exercises in that specific section.
@@ -1032,4 +1035,14 @@ We'll talk about other functions from the **dplyr** package tomorrow.
 ## Done
 
 Take a long break, you deserve it! Go stretch!
+
+To run through everything we've learned in tutorial form, run these:
+
+```
+learnr::run_tutorial("class_prep_pt1", "chjr")
+learnr::run_tutorial("class_prep_pt2", "chjr")
+learnr::run_tutorial("class_prep_pt3", "chjr")
+```
+
+
 
