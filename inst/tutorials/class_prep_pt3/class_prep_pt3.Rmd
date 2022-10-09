@@ -23,7 +23,7 @@ padding-top: 64px }
 ```
 
 ```{r setup, include=FALSE}
-packages <- c("tidyverse", "lubridate", "rvest", "httr", "remotes")
+packages <- c("tidyverse", "lubridate", "rvest", "httr", "remotes", "knitr")
 if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
   install.packages(setdiff(packages, rownames(installed.packages())), repos = "https://cran.us.r-project.org")  
 }
@@ -352,6 +352,5 @@ question("What is the function from the janitor package that eliminates spaces a
 
 ## Done!
 
-Take a long break and I'll see you when class officially begins.
-
+Great job. 
 

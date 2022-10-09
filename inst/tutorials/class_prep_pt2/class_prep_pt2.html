@@ -186,14 +186,14 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
       </button>
        <div style="padding-top:5px; padding-bottom:5px; padding-right:10px; float:left;"><a href="#" class="navbar-left"><img src="https://r-journalism.com/images/avatar.png" height="40px"></a></div>
 
-     <a class="navbar-brand" href="https://journalismcourses.org">Adv Data Journalism: Doing More with R</a>
+     <a class="navbar-brand" href="https://learn.r-journalism.com/en/">CHJ - R</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="https://journalismcourses.org">Intro pt II</a></li>
+        <li><a href="https://learn.r-journalism.com/en/">Intro pt II</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="https://journalismcourses.org">journalismcourses.org</a></li>
+        <li><a href="https://learn.r-journalism.com/en/">r-journalism.com</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -210,14 +210,14 @@ code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
       </button>
        <div style="padding-top:5px; padding-bottom:5px; padding-right:10px; float:left;"><a href="#" class="navbar-left"><img src="https://r-journalism.com/images/avatar.png" height="40px"></a></div>
 
-     <a class="navbar-brand" href="https://journalismcourses.org">Adv Data Journalism: Doing More with R</a>
+     <a class="navbar-brand" href="https://learn.r-journalism.com/en/">CHJ - R</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="https://journalismcourses.org">Intro pt II</a></li>
+        <li><a href="https://learn.r-journalism.com/en/">Intro pt II</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="https://journalismcourses.org">journalismcourses.org</a></li>
+        <li><a href="https://learn.r-journalism.com/en/">r-journalism.com</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -265,8 +265,8 @@ m</code></pre>
 <p>The base way to tell R that something is a date-time combination is with the function <code>strptime()</code> <strong>Note: This is the complicated way</strong></p>
 <div class="sourceCode" id="section-cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="section-cb4-1"><a href="#section-cb4-1" aria-hidden="true" tabindex="-1"></a>date1 <span class="ot">&lt;-</span> <span class="fu">strptime</span>(<span class="fu">c</span>(<span class="st">&quot;20100225230000&quot;</span>, <span class="st">&quot;20100226000000&quot;</span>, <span class="st">&quot;20100226010000&quot;</span>), <span class="at">format=</span><span class="st">&quot;%Y%m%d%H%M%S&quot;</span>)</span>
 <span id="section-cb4-2"><a href="#section-cb4-2" aria-hidden="true" tabindex="-1"></a>date1</span></code></pre></div>
-<pre><code>## [1] &quot;2010-02-25 23:00:00 EST&quot; &quot;2010-02-26 00:00:00 EST&quot;
-## [3] &quot;2010-02-26 01:00:00 EST&quot;</code></pre>
+<pre><code>## [1] &quot;2010-02-25 23:00:00 PST&quot; &quot;2010-02-26 00:00:00 PST&quot;
+## [3] &quot;2010-02-26 01:00:00 PST&quot;</code></pre>
 <p>A vector is created with <code>c()</code> and the numbers between the quotation marks are strings, because that’s what the <code>strptim()</code> function requires.</p>
 <p>That’s followed by the argument <strong>format</strong> that defines how the character string should be read. In this instance, the year is denoted first (%Y), then the month (%M) and second (%S). You don’t have to specify all of them, as long as the format corresponds to the character string.</p>
 <p>In this course, we’ll be using a less messy way to deal with dates using the package <strong>lubridate</strong>.</p>
@@ -1562,16 +1562,16 @@ learnr:::store_exercise_cache(structure(list(label = "burgers", global_setup = s
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "first_question-1", 
     question = structure("What kind of class is the variable id?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_169790d", 
+    "character")), answers = list(structure(list(id = "lnr_ans_83cafb5", 
         option = "character", value = "character", label = structure("character", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_80622e", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fbdfde1", 
         option = "number", value = "number", label = structure("number", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b90302a", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d1efd0f", 
         option = "factor", value = "factor", label = structure("factor", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ffe4f3c", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cf0d13a", 
         option = "date", value = "date", label = structure("date", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -1582,7 +1582,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "first_question-1-answer", question = "first_question-1"), 
     loading = NULL, random_answer_order = TRUE, allow_retry = FALSE, 
-    seed = 1061652411.50563, options = list()), class = c("learnr_radio", 
+    seed = 684071059.681455, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
