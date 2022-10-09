@@ -1,0 +1,139 @@
+---
+title: "Finding the story in salaries data"
+output: 
+html_notebook: default
+---
+
+# Introduction
+
+Now you'll put into practice the functions you've learned so far to interrogate some salary data from Bloomington, IN that came from a records request. We have cleaned up the data a little for the purposes of this class.
+
+First, if you open up Bloomington_Salaries.xlsx in Excel, you'll see that it has two tabs: one with the data, an another with notes on the Source. This is best practice for keeping track of when and where you received data. But you only want to import the first tab into R for analysis.
+
+For this exercise, load `tidyverse` and `readxl`
+
+```{r}
+
+```
+
+There are many functions available in `readxl`, the one you'll use now is read_excel(). This function has an optional argument called "sheet" which allows you to specify, numerically, which sheet or sheets you want to import. Just import the first one.
+
+```{r}
+
+```
+
+*Remember: if you want to refer to this data table later and pipe it into functions, you need to save it to a variable.*
+
+Take a look at the salaries data: click on the variable in your Environment. Take a minute or two to look at the data: What is one row of data? What columns of information do you have?
+
+Use a function called `str()` to see the structure of our data table.
+
+```{r}
+
+```
+
+Note that there are `NA`s in the overtime_oncall, hourly_rate, and salary_2021 columns. `NA`s are *NULL* values, not blanks.
+
+# Practice
+
+**Start with some basic questions (create your own code chunks to answer them).**
+
+How many employees in our data? (You may already know the answer to this, but write some code anyway!)
+
+Who made the most in total compensation? Who made the least? (Hint: use arrange() to sort your data)
+
+Who made the most in overtime/oncall pay?
+
+What do you see in the results? What questions does that spark for you, a journalist? What questions might you have for the city?
+
+What is the total payroll for the city? Reminder: when you're no longer asking questions with regard to specific employees, your unit of analysis has changed. If you want to look at payroll for the whole city, you need to do some aggregating. In this case, we want to sum up payroll for the entire data set
+
+What is the total overtime/oncall pay?
+
+> *Here NAs (NULLs) will trip you up. If you sum a column with NAs in it, R will return an NA. So you need to exclude the NAs in your summing. Thankfully there is an EASY way to do this; the sum() function will take an additional argument: `na.rm=T`, which means remove NAs. Adding it looks like this: `sum(column_name, na.rm=T)`*
+>
+> *That's why it's important to take note of NAs in your data! Anytime you want to sum a column with NAs, you need to include this argument in the aggregate function: `na.rm=T`*
+
+What's the average and median salary for 2021? Hourly rate? (Note: both of these have NAs, so code accordingly)
+
+# Getting to know your data
+
+There's a very useful function in tidyverse for assessing what's in a particular column. For example, if you are familiar with SQL, this is the equivalent of the "golden query." If you regularly use spreadsheets, this is the equivalent of putting a column in the Rows box and calculating the count() function on each group. The function is `count()`. Try it out on the job_title column.
+
+```{r}
+
+```
+
+You see a list of all unique job titles and how many times each value appears in the data (i.e. how many rows have that value in the `job_title` column). The `count()` function automatically labels the values column `n`. Re-sort the results to see which job titles are the most common.
+
+```{r}
+
+```
+
+Try using the count() function on department. How clean are the department names?
+
+```{r}
+
+```
+
+See if any employees are in here more than once. You wouldn't expect them to be since each row is one employee. Count the last name and first name to see how often each unique combination shows up, and then arrange our results by the descending count.
+
+```{r}
+
+```
+
+Use `filter()` to look at the rows for Emily Herr. What can we learn about her work. Does it make sense that she's in here twice, or is this potentially an error in the data?
+
+```{r}
+
+```
+
+# Asking questions
+
+**Create your own code chunks to answer the following questions.**
+
+How many people work for the police department?
+
+What's the average total compensation for a police employee?
+
+Calculate the average compensation for each job title within the Police department:
+
+How does the average police compensation compare to other departments? Calculate the average compensation by department (hint: use `group_by()` )
+
+> Just like a pivot table in Excel, you can add more calculations to this to give us more context. Right now you're looking at the **average compensation** by department. Adding more calculations -- **total compensation** by department and the **number of employees** in each department - looks like this: `summarise(total = sum(total_compensation), avg = mean(total_compensation), n = n())`
+
+Find the same calculations for the job titles. For each job title, calculate the following:
+
+-   Average compensation
+-   Total compensation
+-   Number of people with that job title
+
+Arrange your results by the job title that has the highest average compensation.
+
+Add one more layer to this. It makes sense that there are some jobs held by one person that pay a lot (ie. mayor, chief) so let's filter our results to only show us [jobs held by at least 10 people]{.underline}. Do this by using `filter()` after you do your calculations.
+
+Dig into the job titles a bit. So far we have only looked at exact matches, but text fields can have some (or a lot of) variation in them. For example, lots of jobs could have the word 'Director' in them.
+
+> To find every job title with that word in it, use a function called `grepl()` ***INSIDE*** `filter()`. This performs a very basic search. Note: `grepl()` is very powerful and this is a very basic use case: `filter(grepl("Director", job_title))`
+
+Store all the directors in their own table so we can run more queries against them.
+
+Which department pays the highest average salary to people with director in their job title?
+
+Return to the original salaries data frame. Use filter and grepl to find all the people who work in the various Utilities departments. Store these employees to their own data frame called **utilities**.
+
+Which job in the various Utilities department pays the best? (This question is intentionally vague! Think about the various calculations you can do and pick one -- or multiple -- to try to come up with a conclusion.)
+
+# Extra practice!
+
+1.  What do people with the word 'Specialist' in their job title make in total compensation, on average?
+
+2.  What do interns make?
+
+3.  Which department paid out the most in overtime/on-call pay?
+
+4.  Which department has the most employees paid hourly?
+
+5.  For police employees, find the percent of their total compensation comes from overtime for each employee.
+
+    Do this in two steps: First, create a data frame called police of just employees who work for the police department. If you do this correctly, you will see police show up in your Environment sidebar. Then, using this new police dataframe, you will use mutate() to add a column and do a percent of total calculation.

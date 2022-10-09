@@ -1,0 +1,128 @@
+---
+title: "Importing and intro to data analysis"
+output: 
+html_notebook: default
+---
+
+### Part 1: setup
+
+Load the tidyverse set of packages. **Always load your packages at the top of your script.**
+
+```{r setup}
+
+```
+
+Next up, load the csv `mcd_opioid_deaths.csv` (in the data folder) into your environment. Remember that you have to tell RStudio where the file is, relative to your .RProj file. You also have to assign it to a variable so that it can be stored in your environment.
+
+```{r}
+
+```
+
+Your variable should appear under a "Data" heading in our environment. Click on it and it will show you the table in a new tab (next to the name of this script).
+
+### Step 2: Assess your data
+
+A note about this dataset: it comes from the CDC WONDER Multiple Cause of Death data, and is a count of opioid-related deaths since 1999, by state, year and age group. Each row is one state, for one year, and one age group. You'll also see the word "unreliable" in the "notes" column whenever the death count is below 20.
+
+Take a look at the data using `glimpse()`:
+
+```{r}
+
+```
+
+Note the data types for each column: will these work for the kind of analysis you want to do? Are the numbers stored as numbers, etc.
+
+### Step 3: Sorting
+
+Next sort your data by the "year" to see the earliest year in the data:
+
+```{r}
+
+```
+
+The earliest year is indeed 1999. To re-arrange and see the latest year on top, add the `desc()` function, nested in the `arrange()` function:
+
+```{r}
+
+```
+
+The dataset goes through 2020, so we have 22 years of data.
+
+Sort the dataset to see which state/year/age-group combination had the most deaths.
+
+```{r}
+
+```
+
+### Step 4: Filter
+
+Next try out `filter()`, which allows you to only view certain rows of your data based on some criteria you set. So, for example, if you only want to see data for California, you can filter for the "California" in the state column. Also, make your own code chunk!
+
+*A couple things to remember: in R you must use two equals signs `==` for testing to see if something is equal to something else. Also, R is almost always case sensitive: when typing column names (state), matching exact values ("California"), and even in function names.*
+
+Try filtering for your home state (or a different state).
+
+Now add another filter: look for records from your state in 2020. When adding criteria to a filter, you need to specify an operator: AND:`&` or OR:`|`. Do you want both criteria to be true (&) or do you want one or the other to be true (\|). In this case, we want both to be true.
+
+*Remember: numbers never go in double quotes.*
+
+Now string two functions together. You can pipe your dataset through two (or more!) functions. Keep in mind that this works linearly: the first function will do its work, and the output is piped into the next function.
+
+Find out which age group had the most deaths in your state in 2020. First pipe your dataset into the `filter()` function, and copy the filter code from above. Then pipe it into the `arrange(desc())` functions:
+
+Try looking at records in your state for a different year. Did the age group with the most deaths change?
+
+Which state had the most deaths for the age group "25-34 years" in 2020?
+
+### Step 5: Transform
+
+You've likely spotted a problem with our analysis so far. Looking at overall deaths isn't a fair way to compare states or compare age groups, since they have different population sizes. You have population information for each age group in each state each year, so you can use that to calculate a rate, which will be a fairer comparison. Death rates are often expressed as "per 100,000 people", and the math formula for that is: `deaths / population * 100000`
+
+Create a new column called "death_rate" using the mutate() function, using the above formula.
+
+*Note that when you run this, the data with the new column prints to the console below the code chunk, but the underlying variable "deaths" hasn't changed (check your environment: it still says 5032 obs. of 6 variables). In order to save this new column, you need to overwrite the existing variable with the assignment operator `<-`*
+
+Sort your data by the new death rate column to see the largest death rate on top.
+
+Filter for your state in 2020 and see which age group has the highest death rate.
+
+### Step 6: Aggregating
+
+Now that we've practiced sorting and filtering, let's turn to the third pillar of data analysis: aggregating. In R we use a lot of the same summary functions as spreadsheets: `sum()`, `mean()`, `median()`. R uses "mean" instead of "average." These functions are part of base R, so they don't inherently work with tidyverse's piping scheme, so we use the tidyverse `summarise()` function to receive the output and work with the summary functions. To calculate the total number of opioid-related deaths in the data, use `summarise()` and `sum()` together, and we'll give the new aggregated data the name `total_deaths`.
+
+Just for practice, try switching out sum() with mean(). This will tell us the average death count for each age group in each state in each year (which isn't necessarily meaningful).
+
+Narrow it down a bit. Calculate the average deaths for 25-34 year-olds, across all states and years (Hint: use filter() to isolate that one age group before piping into the summarise() function.)
+
+Another common summary statistics we use in data analysis is the count of rows. The function for counting rows in R is `n()`, and doesn't require any arguments. We could use it here to count how many rows there are in total (which we already know)
+
+Or how many rows there are in one state.
+
+Not super meaningful for this dataset, but an important function to know.
+
+Suppose you want to see how many deaths there are in each state, rather than just one? If you use spreadsheets much, hopefully what comes to mind is: pivot table! You want to group your data based on whatever value is in the state column, and then calculate total deaths for each group (state). The function for this is `group_by()`. Note: if you only use the `group_by()` function, R will create groups in the background of your data, but the output won't look any different:
+
+```{r}
+deaths %>% group_by(state)
+```
+
+But notice that next to the box that says "A tibble: 5032 x 7" is a box that says "Groups: state [51]". It has done the grouping in the background, and there are 51 groups (50 states and D.C.). Pipe this into a `summarise()` function and it will act on the groups rather than the whole dataset.
+
+To re-sort your results and bring the state with the most deaths to the top, add `arrange(desc())` to your code:
+
+Find the age group with the most deaths.
+
+Here again is the problem where comparing raw deaths isn't that meaningful. To fairly compare states by comparing death rates, we need to add up all the deaths by state, the population by state, and then calculate a new death rate. You CANNOT use the existing death_rate column to find the death_rate by state. Start by doing this just for 2020: create a new table that contains the sum of all deaths and the sum of all population by state. Call it "state_deaths".
+
+*A note about readable code: sometimes it helps to have each function on its own line. When you do this, make sure the pipe ( %\>% ) is at the end of the line, not the beginning:*
+
+```{r}
+variable %>% 
+  function1(args) %>% 
+  function2(args) %>% 
+  function3(args)
+```
+
+Now, calculate a death rate for this new dataset.
+
+Which state had the highest death rate in 2020?

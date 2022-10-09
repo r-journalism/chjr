@@ -1,0 +1,47 @@
+---
+title: "R Basics"
+output: 
+html_notebook: default
+---
+
+# Practice the basics
+
+Below you'll practice writing some basic R.
+
+-   Remember that you can run code line by line using keyboard shortcuts: on a Mac, it's `cmd+return`. (note: sometimes your code will cover more than one line. This will run a *complete* set of code that has a natural stopping point. This will likely make more sense later).
+
+-   You can run all the code in a particular `{r} chunk` with the Mac keyboard shortcut `cmd+shift+return`. This will run *all* the code in a chunk.
+
+-   You can also run code in a code chunk by using the green "play" button in the upper-right corner.
+
+Create a *character vector* that lists your five favorite foods (or movies, TV shows, books, albums, whatever) and then print that vector.
+
+```{r}
+
+```
+
+If you haven't already, save that vector to a variable (so that it shows up in your environment).
+
+```{r}
+
+```
+
+Now pull out the one item in that vector that is *truly* your favorite.
+
+```{r}
+
+```
+
+Create a *numeric vector* with every whole number between 10 and 20.
+
+```{r}
+
+```
+
+Sum up all the numbers in the vector you just created.
+
+```{r}
+
+```
+
+Create your first code chunk using `cmd+option+i` (or whatever it is on your PC). In it, create two variables that are each numbers, then add them together.
