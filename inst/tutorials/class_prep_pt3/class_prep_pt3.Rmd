@@ -1,0 +1,357 @@
+---
+title: "Class prep: Importing, exporting data"
+author: "Andrew Ba Tran"
+output: 
+  learnr::tutorial:
+      theme: lumen
+      highlight: espresso
+      progressive: true
+      allow_skip: false
+      includes:
+        before_body: _navbar.html
+runtime: shiny_prerendered
+# Do not index/display tutorial by setting `private: true`
+private: true
+description: >
+  Lessons and exercises to catch you up what R is and how to use it.
+---
+
+
+```{css, echo=FALSE}
+.pageContent {
+padding-top: 64px }
+```
+
+```{r setup, include=FALSE}
+packages <- c("tidyverse", "lubridate", "rvest", "httr", "remotes")
+if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
+  install.packages(setdiff(packages, rownames(installed.packages())), repos = "https://cran.us.r-project.org")  
+}
+
+#remotes::install_github("rstudio/gradethis", upgrade="always", quiet=TRUE)
+#remotes::install_github("rstudio/learnr", upgrade="always", quiet=TRUE)
+
+
+library(learnr)
+library(gradethis)
+```
+
+<span style="color:white">welcome to class!</span>
+
+## CSV files
+
+Comma separated files are the most common way to save spreadsheets that doesn't require a paid program from Microsoft to open.
+
+### What a csv file looks like
+
+CSV file names end with a **.csv**
+
+![](images/csv1.png?classes=shadow){width=100%}
+
+
+### What a csv file looks like on the inside**
+
+This explains the values separated with commas part of the file name.
+
+![](images/csv2.png?classes=shadow){width=100%}
+
+## Importing CSV files
+
+- Importing CSV is part of base R, no package needed
+- But we're going to use a package anyway, **readr**
+
+**Two ways to get data**
+
+* If you have the URL address
+    * If the csv file exists on the internet, you don’t have to download it to your local machine and then import it, you can import it to R directly from the web using the link
+* If you have the file on your computer
+
+### Get the URL
+
+If you have the link to a CSV file, right click [the link](https://data.ct.gov/Health-and-Human-Services/Admissions-to-DMHAS-Addiction-Treatment-by-Town-Ye/iyru-82zq/data) of the data and click **Copy Link Address**. This data set can be found on the [Connecticut Open Data Portal](https://data.ct.gov/Health-and-Human-Services/Admissions-to-DMHAS-Addiction-Treatment-by-Town-Ye/iyru-82zq/).
+
+![](images/rightclick.png?classes=shadow){width=100%}
+
+### read.csv()
+
+The Base R function to import a CSV file is `read.csv()`. Just put the URL address in quotation marks and add the `stringsAsFactors=F` (In this code we're using the function `head()`-- this returns 6 rows by default, but we want to look at 10, so we’ll specify that when we call the function head(data, 10))
+
+Click `RUN CODE` to import the data from a  website and look at the first 10 rows.
+
+```{r segment1, exercise=TRUE}
+df_csv <- read.csv("https://data.ct.gov/api/views/iyru-82zq/rows.csv?accessType=DOWNLOAD", stringsAsFactors=F)
+
+head(df_csv, 10)
+```
+
+
+### Other way: Download it first
+
+When you right click on the link, instead of clicking **Copy Link Address**-- this time, click **Save Link As...**
+
+![](images/downloading.png?classes=shadow){width=100%}
+
+Save to your working directory.
+
+After saving to the directory, click on the circle arrow on the right to refresh the files to make sure it's there.
+
+![](images/directory.png?classes=shadow){width=100%}
+
+### Recall: How to change directories in RStudio
+
+Either by typing `setwd("/directory/where/you/want")` or by clicking in the menu up top **Session > Set Working Directory > Choose Directory...**
+
+![](images/setwd.png?classes=shadow){width=100%}
+
+### Importing local csv data
+
+Just like before, except instead of the URL, it's the name of the file.
+
+**Note:** This will only work if the working directory is set to where the csv file is.
+
+```{r segment2, exercise=TRUE}
+df_csv <- read.csv("data/Admissions_to_DMHAS_Addiction_Treatment_by_Town__Year__and_Month.csv", stringsAsFactors=F)
+```
+
+
+### stringsAsFactors=F
+
+Why? 
+
+Blame statisticians.
+
+Back when R was created the users weren't using it as we use it now, with all these different strings.
+
+**What happens when you don't use `stringsAsFactors=F`**
+
+```{r segment3b}
+df_csv <- read.csv("data/Admissions_to_DMHAS_Addiction_Treatment_by_Town__Year__and_Month.csv")
+str(df_csv)
+```
+
+
+
+### Using read_csv() from the readr package
+
+**readr** is a package that read rectangular data quickly and assumes characters are strings and not factors by default.
+
+```{r segment4}
+## If you don't have readr installed yet, uncomment and run the line below
+#install.packages("readr")
+library(readr)
+df_csv <- read_csv("data/Admissions_to_DMHAS_Addiction_Treatment_by_Town__Year__and_Month.csv")
+```
+
+As you can see, the `read_csv()` function interpreted the **MonthYear** and **Town** columns as characters and not as Factors as `read.csv()` did.
+
+## Exporting CSV files
+
+When you're done analyzing or transforming your data, you can save your dataframe as a CSV file with `write_csv()` from the **readr** package.
+
+```{r export1, eval=F}
+# Pass the write_csv() function the name of the dataframe and what you want to call the file
+write_csv(df_csv, "transformed_data.csv")
+```
+
+The file will save to your working directory, but you can specify sub directories with the function.
+
+```{r export2, eval=F}
+# Pass the write_csv() function the name of the dataframe and what you want to call the file
+write_csv(df_csv, "data/transformed_data.csv")
+```
+
+### Exporting data frames with `NA` 
+
+Weird quirk alert: Exported files will include `NA`s so to replace them, pass the variable `na="whatever"`. 
+
+```{r export3, eval=F}
+# This replaces the NAs with blanks
+write_csv(df_csv, "data/transformed_data.csv", na="")
+```
+
+
+## Your turn
+
+
+```{r quiz1, echo=FALSE}
+quiz(caption = "Quiz 1",
+  question("If you import a CSV with read.csv(), what argument do you pass to make sure strings are not interpreted as factors?",
+    answer('read.csv("data.csv", stringsAsFactors=F)', correct=T),
+    answer('read.csv("data.csv", interpretStrings=T)'),
+    answer('read.csv("data.csv", factors=F)'),
+    answer('read.csv("data.csv", strings=T)'),
+    random_answer_order= TRUE
+  ),
+  question("When exporting a csv, how do you get rid of NAs with the readr package?",
+    answer('write_csv(df_csv, "data/transformed_data.csv", na="")', correct = TRUE),
+    answer('write.csv(df_csv, "data/transformed_data.csv", na="")'),
+    answer('write_csv(df_csv, "data/transformed_data.csv", NA="")'),
+    answer('write.csv(df_csv, "data/transformed_data.csv", is.na=F)'),
+    random_answer_order= TRUE
+  )
+)
+```
+
+
+## Importing an Excel file
+
+Excel spreadsheets are unique in that they can contain multiple spreadsheets as a workbook.
+
+### What an Excel file looks like
+
+Excel file names end with a **.xls** or **.xlsx**
+
+![](images/excel1.png?classes=shadow){width=100%}
+
+### What an Excel file looks like on the inside
+
+Weird, right? Definitely difficult to parse.
+
+![](images/excel2.png?classes=shadow){width=100%}
+
+What I do sometimes (often) is save a sheet from Excel as a .csv file.
+
+That's a short cut. But if you want to be transparent and really deal with the raw data then:
+
+## Importing Excel files
+- Importing Excel is complicated, **readxl package** is needed
+- There are more other packages that handle Excel files and can build extra sheets, but we won't be needing them for this instance
+
+First, install the `readxl` package if you have not yet done so. 
+
+That will have `readxl` as part of the group of packages.
+
+```{r segment3a}
+## If you don't have readxl installed, uncomment the line below and run it 
+#install.packages("readxl")
+library(readxl)
+```
+
+Unlike a csv, you can't just copy and paste the URL for an Excel sheet. 
+
+You gotta download the file first.
+
+Visit this link of [Excel data link](https://www.dropbox.com/scl/fi/sf7rjfsstsm1520z0xhum/StatisticsSummary.xls?dl=0&rlkey=j8frar23albdjx1b006onm48s) on Dropbox and click **Download**
+
+
+
+### read_excel()
+
+Excel spreadsheets have multiple sheets and it's best to explore what it looks like in Excel first because `read_excel()` requires specific sheets to be referred to when importing.
+
+Give it a shot with the first sheet.
+
+```
+df_xl <- read_excel("data/StatisticsSummary.xls", sheet=1)
+```
+
+Check it
+
+```
+View(df_xl)
+```
+
+![](images/excel_imported.png?classes=shadow){width=100%}
+
+
+**This isn't right**. 
+
+## Dealing with ugly data
+
+The problem with Excel files is that people love to format it in ways that make it look nice in Excel but makes no sense in R.
+
+### read_excel() again
+
+
+But this time we'll add `skip=2` so it skips the first rows when bringing in the data.
+
+```{r skip}
+df_xl <- read_excel("data/StatisticsSummary.xls", sheet=1, skip=2)
+```
+
+Much better
+
+```
+View(df_xl)
+```
+
+![](images/excel_imported2.png?classes=shadow){width=100%}
+
+*Notice that the column names are preserved with spaces and symbols.*
+
+
+
+```{r df_xl}
+# the colnames() function lists the column names of the dataframe
+colnames(df_xl)
+```
+
+So how would one refer to the data in the columns with spaces
+
+If we did it like normal with the `$` to pull the column we'd try
+
+```{r df_xl_col_fail, error=T}
+head(df_xl$Other Cases)
+```
+
+See, spaces won't work. This is how to deal with columns with spaces-- add the back tick next to the 1 button on your keyboard.
+
+```{r df_xl_col_pass, error=T}
+head(df_xl$`Other Cases`)
+```
+
+It's some extra finger work that you might be okay with if it was in a limited basis.
+
+However, in anticipation of the work we're going to be doing, we should go ahead and simplify the column names so there are no characters or spaces. We're going to load a new package called **[janitor](http://sfirke.github.io/janitor/)**. Its job is to exclusively clean names.
+
+```{r janitor, warning=F, message=F}
+#install.packages("janitor")
+
+library(janitor)
+
+df_xl <- clean_names(df_xl)
+
+colnames(df_xl)
+```
+
+Compare the column names from this to the ones above. There are no capitalization and the spaces are replaced with `_` and this will be much easier to work with in R.
+
+## Exporting to Excel
+
+It's preferable to save data frames as CSVs because it's more open and doesn't require a paid program for others to open.
+
+But sometimes it's more economical to push out a bunch of sheets into one workbook (that's the perk of Excel, after all).
+
+We won't get into that now but if you're curious, you can explore that in the the links below.
+
+* [Using the xlsx package](http://www.sthda.com/english/wiki/writing-data-from-r-to-excel-files-xls-xlsx)
+* [Reading and importing Excel files into R](https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r)
+
+
+## Your turn again
+
+
+```{r quiz2, echo=FALSE}
+quiz(caption = "Quiz 2",
+  question("If you import an Excel file and it has 5 buffer rows at the top before the real data starts, how do you deal with that using the **readxl** package?",
+    answer('read_excel("stats.xls", sheet=1, skip=5)', correct=T),
+    answer('read_excel("stats.xls", sheet=1, row=5)'),
+    answer('read_excel("stats.xls", sheet=1, row=6)'),
+    answer('read_excel("stats.xls", sheet=1, row=4)'),
+    random_answer_order= TRUE
+  ),
+question("What is the function from the janitor package that eliminates spaces and lowercases the text in the column names?",
+    answer('clean_names()', correct = TRUE),
+    answer('make.names()'),
+    answer('fix_columns()'),
+    answer('janitor()'),
+    random_answer_order= TRUE
+  )
+)
+```
+
+## Done!
+
+Take a long break and I'll see you when class officially begins.
+
+

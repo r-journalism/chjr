@@ -1,0 +1,36 @@
+Package: chjr
+Type: Package
+Title: Center for Health Journalism R walkthroughs
+Version: 0.1.0
+Author: Andrew Ba Tran
+Maintainer: The package maintainer <abtran@gmail.com>
+Description: Tutorials for USC's CHJ R class
+Encoding: UTF-8
+LazyData: true
+Imports:
+  devtools,
+  tidyverse,
+  knitr,
+  lubridate,
+  rvest,
+  knitr,
+  remotes,
+  usethis,
+  flair,
+  DT,
+  readxl,
+  janitor,
+  flair,
+  usethis,
+  jsonlite,
+  viridis,
+  utils
+Remotes:
+  rstudio/gradethis,
+  rstudio/learnr
+License: MIT + file LICENSE
+URL: https://journalismcourses.org
+VignetteBuilder:: knitr
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.1

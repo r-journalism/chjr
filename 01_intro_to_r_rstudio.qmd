@@ -1,0 +1,1035 @@
+---
+title: "Intro to R and RStudio<br /><br /><br />"
+author: "2022 Data Health Fellowship"
+format:
+  revealjs: 
+    theme: beige
+title-slide-attributes:
+    data-background-image: "slide_images/usc.jpg"
+    data-background-size: contain
+    data-background-opacity: "number"
+---
+
+# Tour of R and RStudio
+
+## Welcome {background-color="white" background-image="slide_images/left.png" background-size="100%" }
+<p></p>
+<p></p>
+
+::: {.notes}
+R is just a programming language and can be open in any coding program like Sublime or Visual Code Studio. But we're going to focus on using R in the environment known as RStudio because it easily shows all the different parts, like plots and objects, well.
+:::
+
+::: {.fragment}
+When you first open RStudio, the app is divided into three sections.
+:::
+
+::: {.fragment}
+Most sections have tabs for even more additional ways to view different sorts of things.
+:::
+
+::: {.fragment }
+The tall section on the left is the *console* and that's where you can type in R code to execute.
+:::
+
+
+## Environment and History {background-color="white" background-image="slide_images/top-right.png" background-size="100%" }
+<p></p>
+<p></p>
+
+::: {.fragment }
+In the top right section, there's the **Environment** tab where you can see the data or objects you are currently working on.
+:::
+
+::: {.fragment }
+At first this section is empty because you have not loaded any data yet.
+:::
+
+::: {.fragment }
+There's also a tab in the top right section for **History**-- this is where RStudio keeps track of the commands you run in the console.
+:::
+
+## Files, Plots, Packages, Help, Viewer {background-color="white" background-image="slide_images/bottom-right.png" background-size="100%" }
+
+A *viewer* is on the bottom right, where there are tabs to flip through the **Files** and folder structure of your computer (like in Finder or Explorer), the **Plots** (diagrams) when they've been generated, your list of available R **Packages**, **Help** information etc.
+
+## Before we move on, run these lines in console
+
+```
+learnr::run_tutorial("01_intro", "chj-r")
+```
+
+## Reproducibility: Save your scripts
+
+There's a difference between quick, on-the-fly analysis and analysis you want to rerun later on.
+
+The code you type out and run in console can be copied and pasted and saved in scripts and R Markdown files. Scripts end with .R file extension and R Markdown files, which mixes both R code and Markdown code, end with .Rmd.
+
+## R scripts versus R Markdown
+
+![](slide_images/four-panes copy.png?classes=shadow){width=100%}
+
+## R Scripts {background-color="white" background-image="slide_images/rscript.png" background-size="100%" }
+
+## RMarkdown {background-color="white" background-image="slide_images/rmd.png" background-size="100%" }
+
+## New script
+
+
+To create a new script go through the menu *File > New File > R Script* or through the green plus button on the top left. 
+
+![](slide_images/new.png?classes=shadow){width=25%}
+
+
+The file extensions for these files when saved ends with **.R**
+
+
+## Run code
+
+
+Any code we type in here can be run in the console. Highlight and hit the `Run` button.
+
+![](slide_images/run_code.png?classes=shadow){width=100%}
+
+
+# Best habits for new projects
+
+Your *working directory* is the folder on your computer in which you are currently working. When you ask R to open a certain file, it will look in the working directory for this file, and when you tell R to save a data file or figure, it will save it in the working directory.
+
+Before you start working, please set your working directory to where all your data and script files are or should be stored.
+
+## Working directory
+
+This is an example of setting a working directory to a manual directory on your computer.
+
+```
+# On a mac, it'd look like this
+setwd("~/projects/chj-r")
+
+# On a PC, it might look like this
+setwd("C:/Documents/chj-r")
+```
+
+## Working directory
+
+Within RStudio, you can also set the working directory via the menu *Tools > Set Working Directory*
+
+![](slide_images/setwd.png?classes=shadow){width=70%}
+
+## Best practices
+
+**Fixed versus Relative directories**
+
+Works but not great:
+
+```
+df <- read_csv("C:/Documents/chj-r/data/spreadsheet.csv")
+```
+
+Ideal:
+
+```
+df <- read_csv("data/spreadsheet.csv")
+```
+
+Because it's transportable and reproducible and relative to the folder that has the data and the project.
+
+How?
+
+## New project
+
+![](slide_images/new1.png?classes=shadow){width=70%}
+
+
+## New project
+
+![](slide_images/new2.png?classes=shadow){width=70%}
+
+
+## New project
+
+![](slide_images/new3.png?classes=shadow){width=70%}
+
+
+
+## New project
+
+![](slide_images/new4.png?classes=shadow){width=70%}
+
+
+
+## New project
+
+![](slide_images/new5.png?classes=shadow){width=70%}
+
+
+## Easier to share your work
+
+![](slide_images/github.png?classes=shadow){width=70%}
+
+# Your turn
+
+* Create a new R project called "chj-r-2022"
+* Create a new folder within the project for your "data"
+* Start a new R script and save it as "01_script"
+* Start a new R Markdown file and save it as "02_markdown"
+
+# R basics
+
+
+## Syntax
+
+You must follow pretty specific syntax rules for it to work. 
+
+* R is case-sensitive
+* Can enter commands at prompt `>` or in batch
+* Comments are preceded by `#`
+    * This is important to use often in your code for documentation
+* Statements are lines of code such as functions and object assignments
+* Enters in code (as in a new line) or semi-colons will separate statements
+
+
+## Libraries/Packages
+
+::: {.notes}
+One of the many benefits of R is that it is open source and free. This means users like you and me can create code that we use code that people in the data community created to make everyone’s lives easier.
+
+These shared code snippets can help you do something as simple as combining spreadsheets in a folder or something as complicated as seasonally adjusting data in a time series.
+
+They are organized in so-called packages or libraries.
+
+To get a list of all installed packages, go to the packages window or type library() in the console window. If the box in front of the package name is ticked in the packages window, the package is loaded and the functions within it are ready to be called.
+
+There are many more packages available on the R website. If you want to install and use a package (for example, the packaged called “dplyr”) you should:
+
+You can do a lot of statistical analysis in R without any additional libraries— this is called base R.
+
+But other users have created libraries with functions that solve common problems. R package users download only the libraries that they need for an individual project.
+:::
+
+
+
+* Install the package: click `install packages` in the packages window and type `dplyr` 
+  * or type `install.packages("dplyr")` in the consol.
+* Load the package: Check box in front of `dplyr` or 
+  * type `library(dplyr)` in the console window.
+* Install "unofficial" packages off of Github: 
+  * `devtools::install_github("DeveloperName/PackageName")`
+  
+  
+## Environment and objects
+
+Save your data.
+
+Assign values to an object name with either a `=` or `<-`.
+
+If you type this in console:
+
+```
+a <- 4
+```
+
+`a` is now saved up in the `Environment` tab in RStudio.
+
+You can do calculations with `a` now.
+
+Try multiplying `a` with any number.
+
+```
+a * _
+```
+## Scalars and vectors
+
+Like in many other programs, R organizes numbers in scalars (a single number 0-dimensional), vectors (a row of numbers, also called arrays - `-dimensional) and matrices (which we won’t get into now).
+
+The `a` you defined was scalar.
+
+To define a vector with the numbers 3,4, and 5, you need the function `c()` which is short for concatenate.
+
+Type this and run in console and explain how it appears in `Environment`.
+
+```
+b <- c(3,4,5)
+b
+```
+
+## Functions
+
+If you would like to compute the average of all the elements in the vector `b` from the example above:
+
+Please type out and run:
+
+```
+(300+4000+50)/3
+```
+
+
+## Functions
+
+That would take forever each time.
+
+Functions do things to data. R is built on them. Some functions come with R, like `median()` or `summary()` and others come as part of packages that others have created.
+
+The function to calculate average is `mean()` (with a question mark)
+
+Type this in console
+
+```
+?mean()
+```
+
+R will show you how to use functions. Put a question mark in front of any function to pull up basic documentation.
+
+## Functions
+
+Within the parenthesis, you provide *arguments*.
+
+Arguments give extra information to the function. In this case, the argument `x` says of which set of numbers (scalar or vector) the mean should computed.
+
+Sometimes the name of the argument is **not** necessary:
+
+Type these out in console and hit enter between each line.
+
+```
+a
+mean(x=a)
+
+b
+mean(b)
+```
+
+## Missing values
+
+::: {.notes}
+When you work with real data, you will encounter missing values because instrumentation failed or human error.
+
+---
+
+maybe the largest value occurred during the weekend when you didn’t measure. Therefore, R will say that it doesn’t know what the largest value of `j` is
+:::
+When a data is not available, you’ll often find an NA instead of a number.
+
+Type this out and press enter
+
+```
+j <- c(1,2,NA)
+```
+
+Computing statistics of incomplete data sets is strictly not possible.
+
+Type this
+
+```
+max(j)
+```
+
+## Missing values
+
+If you don’t mind about the missing data and want to compute the statistics anyway, you can add the argument `na.rm=TRUE` to most formulas (Should I remove the `NA`s? Yes)
+
+```
+max(j, na.rm=T)
+```
+
+`NA`s will also affect any sort of math if you’re not careful
+
+```
+sum(j)
+# compared to
+sum(j, na.rm=T)
+```
+
+## Data types
+
+Data is more than just numbers
+
+Sometimes data we work with can be specified as something else, like characters and strings (text and sentences) or Boolean values like **TRUE** or **FALSE** or even dates.
+
+**YOUR TURN**
+
+Type this in your console and run
+
+```
+m <- 14
+
+m
+```
+
+What is the output?
+
+
+## Numbers
+
+Alright, now type this (`str()` is short for "structure")
+
+```
+str(m)
+```
+
+Next
+
+```
+m + 7
+```
+
+## Characters/string
+
+Type these in and tell me what you get
+
+```
+m <- "14
+
+m + 7
+
+str(m)
+```
+
+## Characters/string
+
+This will be the bulk of a lot of your early errors because of how R may classify data-- incorrectly.
+
+Numbers might be treated like characters or characters like numbers (Looking at you, county census codes)
+
+## Characters/string
+
+Let’s assign “apples” to m.
+
+```
+m <- "apples"
+```
+
+To tell R that something is a character string, you should type the text between quotation marks, otherwise R will start looking for a defined variable with the same name. See what happens.
+
+```
+n <- pears
+```
+
+## Characters/string
+
+Because there was no `"` around pears then R assumed that **pears** was an object to be found in the `Environment`. And you were trying to also assign an object named `n` the same value as what you had assigned to pears. But it didn’t exist in the environment so it failed.
+
+That’s why `"` around characters/strings are important.
+
+## TRUE / FALSE and Dates
+
+Either of the below works and you don't need to put it in quotation marks like you would a string.
+
+```
+x <- TRUE
+
+y <- T
+```
+
+**Dates**
+
+```
+z <- "01/01/2022"
+
+z
+
+str(z)
+```
+
+There is a special way to make R recognize this as a date. We'll come back to this on day 3.
+
+## Factors
+
+Okay, these are kinda complicated. They’re like text but in order. All R sees is the order, not the text.
+
+Data structure specifying categorical (nominal) or ordered categorical (ordinal) variables
+
+* Tells R how to handle that variable in analyses
+* Very important and misunderstood
+* Any variable that is categorical or ordinal should usually be stored as a factor.
+
+
+For example, Race might be input as “White”, “Black”, and “Hispanic”
+
+When importing that data in from a spreadsheet, R will most often interpret it as a Factor.
+
+# Your turn
+
+```
+learnr::run_tutorial("01_intro", "chj-r")
+```
+
+Click on "Factors" on the left and run through the exercises in that specific section.
+
+![](slide_images/exercise.png?classes=shadow){width=100%}
+
+
+## Converting between types
+
+Copy and paste this into your console
+
+```{r}
+#| echo: true
+
+sample_df <- data.frame(id=c(1001,1002,1003,1004), 
+                        name=c("Steve", "Pam", "Jim", "Dwight"), 
+                        age=c(26, 65, 15, 7), 
+                        race=c("White", "Black", "White", "Hispanic"))
+
+sample_df$race <- factor(sample_df$race)
+sample_df$id <- factor(sample_df$id)
+sample_df$name <- as.character(sample_df$name)
+
+sample_df
+```
+
+
+## Converting between types
+
+You can convert factors into strings.
+
+::: {.fragment}
+```{r}
+#| echo: true
+
+sample_df$race
+```
+:::
+
+::: {.fragment}
+Type this: 
+:::
+
+::: {.fragment}
+```{r, eval=F}
+#| echo: true
+as.character(sample_df$race)
+```
+:::
+
+
+
+## Converting between types
+
+You can convert factors into strings.
+
+```{r}
+#| echo: true
+
+sample_df$race
+```
+Type this: 
+
+```{r}
+#| echo: true
+as.character(sample_df$race)
+```
+
+::: {.fragment}
+You can convert strings into factors
+:::
+
+:::{.fragment}
+```{r}
+#| echo: true
+sample_df$name
+```
+:::
+
+::: {.fragment}
+Type this:
+:::
+
+::: {.fragment}
+```{r, eval=F}
+#| echo: true
+as.factor(sample_df$race)
+```
+:::
+
+
+## Converting between types
+
+You can convert factors into strings.
+
+```{r}
+#| echo: true
+
+sample_df$race
+```
+Type this: 
+
+```{r}
+#| echo: true
+as.character(sample_df$race)
+```
+
+You can convert strings into factors
+
+```{r}
+#| echo: true
+sample_df$name
+```
+
+Type this:
+
+```{r}
+#| echo: true
+as.factor(sample_df$race)
+```
+
+
+## Converting between types
+
+You **cannot** convert factors into numbers.
+
+::: {.fragment}
+```{r}
+#| echo: true
+sample_df$id
+```
+:::
+
+::: {.fragment}
+Type this out:
+:::
+
+::: {.fragment}
+```{r, eval=F}
+#| echo: true
+as.numeric(sample_df$id)
+```
+:::
+
+## Converting between types
+
+You **cannot** convert factors into numbers.
+
+```{r}
+#| echo: true
+sample_df$id
+```
+
+Type this out:
+
+```{r}
+#| echo: true
+as.numeric(sample_df$id)
+```
+::: {.fragment}
+You'll need to convert the factor into a character FIRST. Then you can convert to numeric.
+:::
+
+::: {.fragment}
+```{r}
+#| echo: true
+as.numeric(as.character(sample_df$id))
+```
+:::
+
+## Vectors
+
+A **vector** is a sequence of data elements of the same basic type. The parts that consist of a vector are called **components** or **elements**.
+
+```{r}
+#| echo: TRUE
+vec1 <- c(1,4,6,8,10)
+vec1
+```
+
+::: {.fragment}
+A vector `vec1` is explicitly constructed by the combine function called `c()`.
+:::
+
+::: {.fragment}
+Elements in vectors can be addressed by standard [i] indexing
+:::
+
+::: {.fragment}
+```{r}
+#| echo: TRUE
+vec1[4]
+```
+:::
+
+## Data frames
+
+If you’re used to working with spreadsheets, then data frames will make the most sense to you in R.
+
+::: {.notes}
+This is how to create a data frame from vectors. You don’t have to fully understand this at this point– the data you’ll be working with will come pre-structured if you’re importing spreadsheets.
+
+But this is what’s happening. A set of vectors are being created and a function called data.frame() joins them together into a data frame structure.
+:::
+
+```{.r code-line-numbers="|7"}
+patientID <- c(111, 208, 113, 408)
+age <- c(25, 34, 28, 52)
+sex <- c(1,2,1,1)
+diabetes <- c("Type1", "Type2", "Type1", "Type1")
+status <- c(1,2,3,1)
+
+patientdata <- data.frame(patientID, age, sex, diabetes, status)
+patientdata
+```
+
+::: {.fragment}
+What if we only want to focus on columns: `patientID` and `age`?
+:::
+
+## Pull elements from a dataframe
+
+A data frame is like the game Battleship.
+```{r}
+#| echo: FALSE
+
+patientID <- c(111, 208, 113, 408)
+age <- c(25, 34, 28, 52)
+sex <- c(1,2,1,1)
+diabetes <- c("Type1", "Type2", "Type1", "Type1")
+status <- c(1,2,3,1)
+
+patientdata <- data.frame(patientID, age, sex, diabetes, status)
+```
+
+::: {.fragment}
+If we wanted the value in the 2nd row and 4th column, then you'd type
+:::
+
+::: {.fragment}
+```{r}
+#| echo: TRUE
+patientdata[2,4]
+```
+:::
+
+:::{.fragment}
+dataframe[row,column]
+:::
+
+:::{.fragment}
+So an entire column? Leave the value for the row blank, then.
+:::
+
+::: {.fragment}
+```{r}
+#| echo: TRUE
+patientdata[,4]
+```
+:::
+
+:::{.fragment}
+More than one row? Use the `:` which represents **through**
+:::
+
+::: {.fragment}
+```{r}
+#| echo: TRUE
+patientdata[,3:4]
+```
+:::
+
+## Dollar signs
+
+There are two ways using Base R:
+
+
+:::{.fragment}
+Using c() and brackets.
+:::
+
+::: {.fragment}
+```{r}
+#| echo: TRUE
+patientdata[c("diabetes", "status")]
+```
+:::
+
+
+:::{.fragment}
+If you want to look at a specific vector in a dataframe, then you can get to it by first typing out the dataframe object name and column name separated by a $ sign.
+:::
+
+::: {.fragment}
+```{r}
+#| echo: TRUE
+patientdata$age
+```
+:::
+
+
+
+:::{.fragment}
+Doing **math** on vectors in a dataframe:
+:::
+
+::: {.fragment}
+```{r}
+#| echo: TRUE
+mean(patientdata$age)
+```
+:::
+
+# Importing data
+
+
+The tidyverse package [readr](https://readr.tidyverse.org/) (included in the tidyverse library) is our workhorse for importing and exporting of data. There are other tidyverse specialty packages for importing and working with data like 
+
+* [jsonlite](https://cran.r-project.org/web/packages/jsonlite/vignettes/json-aaquickstart.html)
+* [readxl]([readxl](https://readxl.tidyverse.org/reference/read_excel.html)) 
+* alternatives like  [rio](https://www.rdocumentation.org/packages/rio/).
+
+## CSVs
+
+Two ways to get data from CSVs
+
+1. If you have the URL address
+    * If the csv file exists on the internet, you don’t have to download it to your local machine and then import it, you can import it to R directly from the web using the link
+2. If you have the file on your computer
+
+## CSVs
+
+**Get the URL**
+
+If you have the link to a CSV file, right click [the link](https://data.ct.gov/Health-and-Human-Services/Admissions-to-DMHAS-Addiction-Treatment-by-Town-Ye/iyru-82zq/data) of the addiction treatment data and click Copy Link Address. This data set can be found on the [Connecticut Open Data Portal](https://data.ct.gov/Health-and-Human-Services/Admissions-to-DMHAS-Addiction-Treatment-by-Town-Ye/iyru-82zq/).
+
+![](slide_images/rightclick.png?classes=shadow){width=100%}
+
+## CSVs - Import online
+
+**Use the function `read_csv()` from the package **readr**.
+
+```{r}
+#| echo: TRUE
+
+# Load the library first
+library(readr)
+
+df <- read_csv("https://data.ct.gov/api/views/iyru-82zq/rows.csv?accessType=DOWNLOAD")
+
+df
+```
+
+## CSVs - Import locally
+
+You can save a file locally in case the online link ever goes away.
+
+Download it first.
+
+When you right click on the link, instead of clicking **Copy Link Address**– this time, click **Save Link As**…
+
+![](slide_images/downloading.png?classes=shadow){width=100%}
+
+
+# Your turn
+
+Save the [data](https://data.ct.gov/Health-and-Human-Services/Admissions-to-DMHAS-Addiction-Treatment-by-Town-Ye/iyru-82zq/data) to your data folder in your project folder.
+
+After saving to the directory, click on the circle arrow on the right to refresh the files to make sure it’s there. If you did it correctly, this will work.
+
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+df_csv <- read.csv("data/Admissions_to_DMHAS_Addiction_Treatment_by_Town__Year__and_Month.csv", stringsAsFactors=F)
+
+df_csv
+```
+
+## Exporting CSVs
+
+When you’re done analyzing or transforming your data, you can save your dataframe as a CSV file with `write_csv()` from the **readr** package.
+
+```{r, eval=F}
+#| echo: TRUE
+# Pass the write_csv() function the name of the dataframe and what you want to call the file
+write_csv(df_csv, "data/transformed_data.csv")
+```
+
+::: {.fragment}
+**Exporting data frames with `NA`**
+Weird quirk alert: Exported files will include `NA`s so to replace them, pass the variable `na="whatever"`.
+:::
+
+::: {.fragment}
+```{r eval=F}
+#| echo: TRUE
+
+# This replaces the NAs with blanks
+write_csv(df_csv, "data/transformed_data.csv", na="")
+```
+:::
+
+## Excel
+
+Importing Excel is complicated, **readxl** package is needed.
+
+First, install the readxl package if you have not yet done so.
+
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+
+## If you don't have readxl installed, uncomment the line below and run it 
+#install.packages("readxl")
+library(readxl)
+```
+
+::: {.fragment}
+Unlike a csv, you can’t just copy and paste the URL for an Excel sheet.
+
+You gotta download the file first.
+:::
+
+::: {.fragment}
+Visit this link of Excel [data link](https://www.dropbox.com/scl/fi/sf7rjfsstsm1520z0xhum/StatisticsSummary.xls?dl=0&rlkey=j8frar23albdjx1b006onm48s) on Dropbox and click Download. Move it to your data folder.
+:::
+
+## Importing Excel files
+
+`read_excel()`
+
+Excel spreadsheets have multiple sheets and it’s best to explore what it looks like in Excel first because read_excel() requires specific sheets to be referred to when importing.
+
+Give it a shot with the first sheet. Notice the argument `sheet=1`.
+
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+
+df_xl <- read_excel("data/StatisticsSummary.xls", sheet=1)
+```
+
+## Importing Excel files
+
+Check it with the line below:
+
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+
+View(df_xl)
+```
+
+![](slide_images/excel_imported.png?classes=shadow){width=100%}
+
+## Dealing with ugly imports
+
+::: {.notes}
+The problem with Excel files is that people love to format it in ways that make it look nice in Excel but makes no sense in R.
+:::
+
+`read_excel()` again
+But this time we’ll add `skip=2` so it skips the first rows when bringing in the data.
+
+
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+df_xl <- read_excel("data/StatisticsSummary.xls", sheet=1, skip=2)
+```
+
+## Dealing with ugly imports
+
+```{r}
+#| echo: TRUE
+#| eval: FALSE
+View(df_xl)
+```
+
+![](slide_images/excel_imported2.png?classes=shadow){width=100%}
+
+## Dealing with ugly imports - column names
+
+```{r}
+library(readxl)
+df_xl <- read_excel("slides_data/StatisticsSummary.xls", sheet=1, skip=2)
+```
+
+Use the function **colnames()** on the dataframe to check it out.
+
+::: {.fragment}
+```{r}
+#| echo: TRUE
+colnames(df_xl)
+```
+:::
+
+::: {.fragment}
+Notice that the column names are preserved with spaces and symbols.
+:::
+
+## Dealing with ugly imports - column names
+
+So how would one refer to the data in the columns with spaces
+
+If we did it like normal with the $ to pull the column we’d try
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+head(df_xl$Other Cases)
+```
+
+::: {.fragment}
+See, spaces won’t work. This is how to deal with columns with spaces– add the back tick next to the 1 button on your keyboard.
+
+```{r}
+#| eval: TRUE
+#| echo: TRUE
+head(df_xl$`Other Cases`)
+```
+::::
+
+## Janitor to clean up column names
+
+Let's simplify the column names so there are no characters or spaces.
+
+We’re going to load a new package called **janitor**. Its job is to exclusively clean names.
+
+:::{.fragment}
+
+```{r}
+#| echo: TRUE
+#install.packages("janitor")
+
+library(janitor)
+
+df_xl <- clean_names(df_xl)
+
+colnames(df_xl)
+```
+:::
+
+:::{.notes}
+Compare the column names from this to the ones above. There are no capitalization and the spaces are replaced with _ and this will be much easier to work with in R.
+:::
+
+
+## Exporting Excel files
+
+It’s preferable to save data frames as CSVs because it’s more open and doesn’t require a paid program for others to open.
+
+But sometimes it’s more economical to push out a bunch of sheets into one workbook (that’s the perk of Excel, after all).
+
+* Using the [xlsx](http://www.sthda.com/english/wiki/writing-data-from-r-to-excel-files-xls-xlsx) package
+* [Reading and importing Excel files into R](https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r)
+
+:::{.notes}
+We won’t get into that now but if you’re curious, you can explore that in the the links below.
+:::
+
+
+## Glimpse data
+
+When you bring in a new data set, the first thing you usually always want to do is run the `glimpse()` function from the **dplyr** package on it to see what kind of data you're working with.
+
+:::{.fragment}
+```{r}
+library(dplyr)
+
+glimpse(df_xl)
+```
+:::
+
+::: {.fragment}
+We'll talk about other functions from the **dplyr** package tomorrow.
+:::
+
+## Done
+
+Take a long break, you deserve it! Go stretch!
+
