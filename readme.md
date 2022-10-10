@@ -25,7 +25,8 @@ usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
 
 
 #### Resources
--   [Slideshow of R Basics](https://r-journalism.github.io/chjr/01_intro_to_r_rstudio.html#/title-slide) (courtesy of Andrew Ba Tran)
+-   [Slideshow of R Basics](https://r-journalism.github.io/chjr/01_intro_to_r_rstudio.html#/title-slide)
+-   [Slideshow of Wrangling Data](https://r-journalism.github.io/chjr/02_wrangling_data.html#/title-slide)
 -   [Tidyverse documentation](https://www.tidyverse.org/): We'll be referring back to this a lot. Get used to reading documentation; it's an important skill!
 -   [data](data/): Some of the data we'll be using for this class is in the data folder of this repository
 -   [practice scripts](practice/): There are exercises in the practice folder that you can work on your own time
