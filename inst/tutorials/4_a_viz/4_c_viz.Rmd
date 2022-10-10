@@ -1,12 +1,12 @@
 ---
-title: "Class 2: Visualizations"
+title: "Class 4: Visualizations"
 author: "Andrew Ba Tran"
 output: 
   learnr::tutorial:
       theme: lumen
       highlight: espresso
       progressive: true
-      allow_skip: false
+      allow_skip: true
       includes:
         before_body: _navbar.html
 runtime: shiny_prerendered
@@ -751,10 +751,4 @@ See the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/index.ht
 
 ### Done!
 
-Congrats on completing the walkthroughs for Module 2!
-
-Fill in the quiz answers and be sure to participate in the discussion boards if you haven't yet.
-
-See you next time for Module 3 when we start trying to use R to obtain difficult data.
-
-
+Congrats on completing the walkthroughs for Class 4!

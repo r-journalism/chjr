@@ -26,6 +26,10 @@ title-slide-attributes:
 * group_by()
 :::
 
+## Before we begin, update your code!
+```
+remotes::install_github("r-journalism/chjr", upgrade="always", quiet=TRUE)
+```
 
 ## Importing data
 
@@ -194,6 +198,7 @@ Run this to go through the exercises
 learnr::run_tutorial("2_a_exploring", "chjr")
 ```
 
+Run through as many exercises as you can before time runs out.
 
 ## filter()
 
@@ -366,7 +371,7 @@ df %>%
 
 # Your turn
 
-Run this to go through the exercises
+Run this to go through the exercises. 
 
 ```{r}
 #| eval: FALSE
@@ -374,11 +379,7 @@ Run this to go through the exercises
 learnr::run_tutorial("2_b_filter_select", "chjr")
 ```
 
-
-```{r glimpse, warning=F, message=F, include=F}
-glimpse(df)
-```
-
+Run through as many exercises as you can in the time we set aside.
 
 ## mutate()
 
@@ -567,7 +568,7 @@ df %>%
 
 ## case_when() III
 
-```{r case_when3}
+```{r case_when3c}
 #| warning: FALSE
 #| message: FALSE
 #| echo: TRUE
@@ -592,7 +593,7 @@ df %>%
 
 ## case_when() III
 
-```{r case_when3}
+```{r case_when3a}
 #| warning: FALSE
 #| message: FALSE
 #| echo: FALSE
@@ -628,7 +629,7 @@ df %>%
 
 # Your turn
 
-Run this to go through the exercises
+Run this to go through the exercises. Get as far as you can.
 
 ```{r}
 #| eval: FALSE

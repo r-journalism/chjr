@@ -15,7 +15,7 @@
 <meta name="allow-skip" content="false" />
 <meta name="learnr-version-prerender" content="0.10.6.9000" />
 
-<title>Class 2: Tidy data and math</title>
+<title>Class 3: Tidy data and math</title>
 
 <!-- header-includes START -->
 <!-- HEAD_CONTENT -->
@@ -337,15 +337,6 @@ wide_flood</code></pre>
 <li>Which place has it worst and most recently?</li>
 </ul>
 <p>If you paginate through the results you’ll see one state in particular went from no floods in 2021 to 19 in 2022.</p>
-<div class="panel-heading tutorial-quiz-title">Quiz 1</div>
-<div class="panel panel-default tutorial-question-container">
-<div data-label="quiz1-1" class="tutorial-question panel-body">
-<div id="quiz1-1-answer_container" class="shiny-html-output"></div>
-<div id="quiz1-1-message_container" class="shiny-html-output"></div>
-<div id="quiz1-1-action_button_container" class="shiny-html-output"></div>
-<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
-</div>
-</div>
 <p>Next, we can use <code>summarize()</code> and <code>mutate()</code> to do some math to answer our first question:</p>
 <ul>
 <li>Are things worse now than they were before?</li>
@@ -374,15 +365,6 @@ flood_percent_change</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="wide_flood_summary-hint" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>The formula for percent change is (new-old)/old*100. Also remember the differences between aggregating a data frame and adding a column to an existing data frame.</code></pre>
-</div>
-<div class="panel-heading tutorial-quiz-title">Quiz 2</div>
-<div class="panel panel-default tutorial-question-container">
-<div data-label="quiz2-1" class="tutorial-question panel-body">
-<div id="quiz2-1-answer_container" class="shiny-html-output"></div>
-<div id="quiz2-1-message_container" class="shiny-html-output"></div>
-<div id="quiz2-1-action_button_container" class="shiny-html-output"></div>
-<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
-</div>
 </div>
 </div>
 <div id="section-pivot_wider-multiple" class="section level2">
@@ -464,8 +446,8 @@ fires_wide %&gt;%
 <p>There are many more functions that do more specific things, of course.</p>
 <p>But this will hopefully get you started on your way. Everything else you may have questions on how to do has probably been asked and answered out in the R online community.</p>
 </div>
-<div id="section-class-ii---part-3" class="section level2">
-<h2>Class II - Part 3</h2>
+<div id="section-class-ii---done" class="section level2">
+<h2>Class II - Done</h2>
 <p>Stop this tutorial in the <code>Render</code> tab of RStudio (press the stop button).</p>
 <p>Alright, almost there.</p>
 <p>Breath in and out. Great job!</p>
@@ -692,32 +674,6 @@ learnr:::store_exercise_cache(structure(list(label = "pivot_wider", global_setup
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz1-1", question = structure("Which state saw the biggest increase in flood disaster declarations between &#39;21 and &#39;22?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_66e1cd7", 
-    option = "WA", value = "WA", label = structure("WA", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_43fbe86", 
-    option = "MN", value = "MN", label = structure("MN", html = TRUE, class = c("html", 
-    "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_adaa838", 
-    option = "MT", value = "MT", label = structure("MT", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1e6e6da", 
-    option = "LA", value = "LA", label = structure("LA", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
-"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
-"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
-"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
-"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
-"character")), message = NULL, post_message = NULL), ids = list(
-    answer = "quiz1-1-answer", question = "quiz1-1"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 1745015654.18741, 
-    options = list()), class = c("learnr_radio", "tutorial_question"
-)), session = session)
-</script>
- 
-<script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-wide_flood_summary-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-wide_flood_summary-code-editor`)), session)
 output$`tutorial-exercise-wide_flood_summary-output` <- renderUI({
   `tutorial-exercise-wide_flood_summary-result`()
@@ -784,32 +740,6 @@ learnr:::store_exercise_cache(structure(list(label = "wide_flood_summary", globa
         params.src = "wide_flood_summary, exercise=TRUE", fig.num = 0, 
         exercise.df_print = "paged"), engine = "r", version = "4"), class = c("r", 
 "tutorial_exercise")))
-</script>
- 
-<script type="application/shiny-prerendered" data-context="server">
-learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "quiz2-1", question = structure("What&#39;s the percent change in flood disaster declarations between 2021 and 2022 so far this year", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_91670e", 
-    option = "25", value = "25", label = structure("25", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ae07a37", 
-    option = "-24.7", value = "-24.7", label = structure("-24.7", html = TRUE, class = c("html", 
-    "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1ddae30", 
-    option = "150", value = "150", label = structure("150", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cd9eedd", 
-    option = "-5", value = "-5", label = structure("-5", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
-"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
-"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
-"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
-"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
-"character")), message = NULL, post_message = NULL), ids = list(
-    answer = "quiz2-1-answer", question = "quiz2-1"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 131435935.938795, 
-    options = list()), class = c("learnr_radio", "tutorial_question"
-)), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -970,7 +900,7 @@ learnr:::store_exercise_cache(structure(list(label = "pivot_longer", global_setu
 
 <!-- begin doc-metadata -->
 <div id="doc-metadata">
-<h1 class="title toc-ignore" style="display:none;">Class 2: Tidy data and math</h1>
+<h1 class="title toc-ignore" style="display:none;">Class 3: Tidy data and math</h1>
 <h4 class="author"><em>Andrew Ba Tran</em></h4>
 </div>
 <!-- end doc-metadata -->

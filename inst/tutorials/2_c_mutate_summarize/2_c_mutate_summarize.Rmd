@@ -6,7 +6,7 @@ output:
       theme: lumen
       highlight: espresso
       progressive: true
-      allow_skip: false
+      allow_skip: true
       includes:
         before_body: _navbar.html
 runtime: shiny_prerendered
@@ -151,19 +151,6 @@ functions starts with an *g* and *s*.
 
 ```{r summarize-check}
 grade_this_code()
-```
-
-
-```{r quiz2, echo=FALSE}
-quiz(caption = "Quiz 2",
-  question("In the past 9 years, which year had the most flood disaster declarations?",
-    answer('2017'),
-    answer('2018'),
-    answer('2019', correct=T),
-    answer('2020'),
-    answer('2021'),
-    random_answer_order= FALSE
-  ))
 ```
 
 You could also add more than one variable/column to `group_by()`. You could do `group_by(year, state)` for example...

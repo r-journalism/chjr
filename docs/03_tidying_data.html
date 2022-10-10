@@ -445,7 +445,7 @@
 <section id="left_join-illustrated" class="slide level2">
 <h2>left_join() illustrated</h2>
 
-<img data-src="slide_images/left-join.gif" class="r-stretch"></section>
+<img data-src="https://ucd-cws.github.io/CABW2020_R_training/images/left-join.gif" class="r-stretch"></section>
 <section id="two-data-frames-x-and-y-but-with-different-column-names" class="slide level2">
 <h2>Two data frames: x and y but with different column names</h2>
 <div class="cell">
@@ -519,23 +519,23 @@
 <section id="extra-rows-illustrated" class="slide level2">
 <h2>Extra rows illustrated</h2>
 
-<img data-src="slide_images/left-join-extra.gif" class="r-stretch"></section>
+<img data-src="https://github.com/gadenbuie/tidyexplain/raw/main/images/left-join-extra.gif" class="r-stretch"></section>
 <section id="right_join" class="slide level2">
 <h2>right_join()</h2>
 
-<img data-src="slide_images/right-join.gif" class="r-stretch"></section>
+<img data-src="https://github.com/gadenbuie/tidyexplain/raw/main/images/right-join.gif" class="r-stretch"></section>
 <section id="full_join" class="slide level2">
 <h2>full_join()</h2>
 
-<img data-src="slide_images/full-join.gif" class="r-stretch"></section>
+<img data-src="https://github.com/gadenbuie/tidyexplain/raw/main/images/full-join.gif" class="r-stretch"></section>
 <section id="inner_join" class="slide level2">
 <h2>inner_join()</h2>
 
-<img data-src="slide_images/inner-join.gif" class="r-stretch"></section>
+<img data-src="https://github.com/gadenbuie/tidyexplain/raw/main/images/inner-join.gif" class="r-stretch"></section>
 <section id="anti_join" class="slide level2">
 <h2>anti_join()</h2>
 
-<img data-src="slide_images/anti-join.gif" class="r-stretch"></section>
+<img data-src="https://github.com/gadenbuie/tidyexplain/raw/main/images/anti-join.gif" class="r-stretch"></section>
 <section id="stringr-package" class="slide level2">
 <h2>stringr package</h2>
 
@@ -752,15 +752,489 @@
 </div>
 </div>
 </section>
-<section id="illustrated" class="slide level2" data-background-color="white" data-background-image="slide_images/parse_number.png" data-background-size="100%">
-<h2>Illustrated</h2>
-</section></section>
+<section id="parse_number-1" class="slide level2">
+<h2>parse_number()</h2>
+
+<img data-src="slide_images/parse_number.png" class="r-stretch"></section></section>
+<section>
 <section id="your-turn" class="title-slide slide level1 center">
 <h1>Your turn</h1>
 <p>Run this to go through the exercises</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>learnr<span class="sc">::</span><span class="fu">run_tutorial</span>(<span class="st">"3_a_joining"</span>, <span class="st">"chjr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Get as far as you can in the time we have!</p>
+</section>
+<section id="tidy-data" class="slide level2" data-background-color="white" data-background-image="slide_images/tidydata_1.jpg" data-background-size="100%">
+<h2>Tidy data</h2>
+</section>
+<section id="messy-data" class="slide level2" data-background-color="white" data-background-image="slide_images/tidydata_2.jpg" data-background-size="100%">
+<h2>Messy data</h2>
+</section>
+<section id="section" class="slide level2" data-background-color="white" data-background-image="slide_images/tidydata_3.jpg" data-background-size="100%">
+<h2>_</h2>
+</section>
+<section id="one-tool-similar-data-structures" class="slide level2" data-background-color="white" data-background-image="slide_images/tidydata_4.jpg" data-background-size="100%">
+<h2>One tool, similar data structures</h2>
+</section>
+<section id="multiple-tools-more-efficient" class="slide level2" data-background-color="white" data-background-image="slide_images/tidydata_5.jpg" data-background-size="100%">
+<h2>Multiple tools, more efficient</h2>
+</section>
+<section id="success" class="slide level2" data-background-color="white" data-background-image="slide_images/tidydata_6.jpg" data-background-size="100%">
+<h2>Success!</h2>
+</section>
+<section id="you-happy" class="slide level2" data-background-color="white" data-background-image="slide_images/tidydata_7.jpg" data-background-size="100%">
+<h2>You! Happy!</h2>
+</section>
+<section id="sample-data" class="slide level2">
+<h2>Sample data</h2>
+<p>(You don’t have to type this out)</p>
+<p>2 rows x 3 columns</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">x=</span><span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>),</span>
+<span id="cb62-2"><a href="#cb62-2"></a>                 <span class="at">y=</span><span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"d"</span>), <span class="at">z=</span><span class="fu">c</span>(<span class="st">"e"</span>, <span class="st">"f"</span>))</span>
+<span id="cb62-3"><a href="#cb62-3"></a></span>
+<span id="cb62-4"><a href="#cb62-4"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id x y z
+1  1 a c e
+2  2 b d f</code></pre>
+</div>
+</div>
+</section>
+<section id="wide-vs-long" class="slide level2">
+<h2>wide vs long</h2>
+
+<img data-src="slide_images/original-dfs-tidy.png" class="r-stretch"></section>
+<section id="pivot_longer-illustrated" class="slide level2">
+<h2>pivot_longer() illustrated</h2>
+
+<img data-src="https://github.com/gadenbuie/tidyexplain/raw/main/images/tidyr-pivoting.gif" class="r-stretch"></section>
+<section id="pivot_longer" class="slide level2">
+<h2>pivot_longer()</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb64-2"><a href="#cb64-2"></a></span>
+<span id="cb64-3"><a href="#cb64-3"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb64-4"><a href="#cb64-4"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>x<span class="sc">:</span>z,</span>
+<span id="cb64-5"><a href="#cb64-5"></a>               <span class="at">names_to=</span><span class="st">"key"</span>,</span>
+<span id="cb64-6"><a href="#cb64-6"></a>               <span class="at">values_to=</span><span class="st">"val"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+     id key   val  
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+1     1 x     a    
+2     1 y     c    
+3     1 z     e    
+4     2 x     b    
+5     2 y     d    
+6     2 z     f    </code></pre>
+</div>
+</div>
+</section>
+<section id="pivot_longer-1" class="slide level2">
+<h2>pivot_longer()</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb66-3"><a href="#cb66-3"></a>               <span class="at">names_to=</span><span class="st">"key"</span>,</span>
+<span id="cb66-4"><a href="#cb66-4"></a>               <span class="at">values_to=</span><span class="st">"val"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+     id key   val  
+  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+1     1 x     a    
+2     1 y     c    
+3     1 z     e    
+4     2 x     b    
+5     2 y     d    
+6     2 z     f    </code></pre>
+</div>
+</div>
+<div class="cell">
+
+</div>
+</section>
+<section id="pivot_longer-again" class="slide level2">
+<h2>pivot_longer() again</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  state ducks fish birds
+1    TX    23    6    99
+2    NY    39   30     3
+3    FL    47   20    64</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb70-2"><a href="#cb70-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>ducks<span class="sc">:</span>birds,</span>
+<span id="cb70-3"><a href="#cb70-3"></a>               <span class="at">names_to=</span><span class="st">"animals"</span>,</span>
+<span id="cb70-4"><a href="#cb70-4"></a>               <span class="at">values_to=</span><span class="st">"total"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 3
+  state animals total
+  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
+1 TX    ducks      23
+2 TX    fish        6
+3 TX    birds      99
+4 NY    ducks      39
+5 NY    fish       30
+6 NY    birds       3
+7 FL    ducks      47
+8 FL    fish       20
+9 FL    birds      64</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="pivot_longer-again-1" class="slide level2">
+<h2>pivot_longer() again</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  state ducks fish birds
+1    TX    23    6    99
+2    NY    39   30     3
+3    FL    47   20    64</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb74-3"><a href="#cb74-3"></a>               <span class="at">names_to=</span><span class="st">"animals"</span>,</span>
+<span id="cb74-4"><a href="#cb74-4"></a>               <span class="at">values_to=</span><span class="st">"totals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 3
+  state animals totals
+  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
+1 TX    ducks       23
+2 TX    fish         6
+3 TX    birds       99
+4 NY    ducks       39
+5 NY    fish        30
+6 NY    birds        3
+7 FL    ducks       47
+8 FL    fish        20
+9 FL    birds       64</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="pivot-for-math" class="slide level2">
+<h2>pivot for math</h2>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  state ducks fish birds
+1    TX    23    6    99
+2    NY    39   30     3
+3    FL    47   20    64</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb78-2"><a href="#cb78-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>ducks<span class="sc">:</span>birds,</span>
+<span id="cb78-3"><a href="#cb78-3"></a>               <span class="at">names_to=</span><span class="st">"animals"</span>,</span>
+<span id="cb78-4"><a href="#cb78-4"></a>               <span class="at">values_to=</span><span class="st">"total"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb78-5"><a href="#cb78-5"></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span> </span>
+<span id="cb78-6"><a href="#cb78-6"></a>  <span class="fu">mutate</span>(<span class="at">percent=</span></span>
+<span id="cb78-7"><a href="#cb78-7"></a>           <span class="fu">round</span>(total<span class="sc">/</span><span class="fu">sum</span>(total)<span class="sc">*</span><span class="dv">100</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 4
+# Groups:   state [3]
+  state animals total percent
+  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 TX    ducks      23    18  
+2 TX    fish        6     4.7
+3 TX    birds      99    77.3
+4 NY    ducks      39    54.2
+5 NY    fish       30    41.7
+6 NY    birds       3     4.2
+7 FL    ducks      47    35.9
+8 FL    fish       20    15.3
+9 FL    birds      64    48.9</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="pivot_wider" class="slide level2">
+<h2>pivot_wider()</h2>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a>df_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 4
+# Groups:   state [3]
+  state animals total percent
+  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 TX    ducks      23    18  
+2 TX    fish        6     4.7
+3 TX    birds      99    77.3
+4 NY    ducks      39    54.2
+5 NY    fish       30    41.7
+6 NY    birds       3     4.2
+7 FL    ducks      47    35.9
+8 FL    fish       20    15.3
+9 FL    birds      64    48.9</code></pre>
+</div>
+</div>
+</section>
+<section id="pivot_wider-1" class="slide level2">
+<h2>pivot_wider()</h2>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a>df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb82-2"><a href="#cb82-2"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span><span class="st">"animals"</span>, </span>
+<span id="cb82-3"><a href="#cb82-3"></a>              <span class="at">values_from=</span><span class="st">"percent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 5
+# Groups:   state [3]
+  state total ducks  fish birds
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 TX       23  18    NA    NA  
+2 TX        6  NA     4.7  NA  
+3 TX       99  NA    NA    77.3
+4 NY       39  54.2  NA    NA  
+5 NY       30  NA    41.7  NA  
+6 NY        3  NA    NA     4.2
+7 FL       47  35.9  NA    NA  
+8 FL       20  NA    15.3  NA  
+9 FL       64  NA    NA    48.9</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a>df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb84-2"><a href="#cb84-2"></a>  <span class="fu">select</span>(<span class="sc">-</span>total) <span class="sc">%&gt;%</span> </span>
+<span id="cb84-3"><a href="#cb84-3"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span><span class="st">"animals"</span>, </span>
+<span id="cb84-4"><a href="#cb84-4"></a>              <span class="at">values_from=</span><span class="st">"percent"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb84-5"><a href="#cb84-5"></a>  <span class="fu">mutate</span>(<span class="at">birds_fish_diff=</span></span>
+<span id="cb84-6"><a href="#cb84-6"></a>           birds<span class="sc">-</span>fish)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+# Groups:   state [3]
+  state ducks  fish birds birds_fish_diff
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
+1 TX     18     4.7  77.3            72.6
+2 NY     54.2  41.7   4.2           -37.5
+3 FL     35.9  15.3  48.9            33.6</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="pivot_wider-more-columns" class="slide level2">
+<h2>pivot_wider() more columns</h2>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a>df_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 4
+# Groups:   state [3]
+  state animals total percent
+  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 TX    ducks      23    18  
+2 TX    fish        6     4.7
+3 TX    birds      99    77.3
+4 NY    ducks      39    54.2
+5 NY    fish       30    41.7
+6 NY    birds       3     4.2
+7 FL    ducks      47    35.9
+8 FL    fish       20    15.3
+9 FL    birds      64    48.9</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a>df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb88-2"><a href="#cb88-2"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span><span class="st">"animals"</span>, </span>
+<span id="cb88-3"><a href="#cb88-3"></a>              <span class="at">values_from=</span><span class="fu">c</span>(<span class="st">"total"</span>, <span class="st">"percent"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 7
+# Groups:   state [3]
+  state total_ducks total_fish total_birds percent_ducks percent_fish percent_…¹
+  &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+1 TX             23          6          99          18            4.7       77.3
+2 NY             39         30           3          54.2         41.7        4.2
+3 FL             47         20          64          35.9         15.3       48.9
+# … with abbreviated variable name ¹​percent_birds</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="lubridate-for-dates" class="slide level2" data-background-color="white" data-background-image="slide_images/lubridate" data-background-size="100%">
+<h2>Lubridate for dates</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb90-2"><a href="#cb90-2"></a></span>
+<span id="cb90-3"><a href="#cb90-3"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">First=</span><span class="fu">c</span>(<span class="st">"Charlie"</span>, <span class="st">"Lucy"</span>, <span class="st">"Peppermint"</span>),</span>
+<span id="cb90-4"><a href="#cb90-4"></a>                   <span class="at">Last=</span><span class="fu">c</span>(<span class="st">"Brown"</span>, <span class="st">"van Pelt"</span>, <span class="st">"Patty"</span>),</span>
+<span id="cb90-5"><a href="#cb90-5"></a>                   <span class="at">birthday=</span><span class="fu">c</span>(<span class="st">"10-31-06"</span>, <span class="st">"2/4/2007"</span>, <span class="st">"June 1, 2005"</span>))</span>
+<span id="cb90-6"><a href="#cb90-6"></a></span>
+<span id="cb90-7"><a href="#cb90-7"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       First     Last     birthday
+1    Charlie    Brown     10-31-06
+2       Lucy van Pelt     2/4/2007
+3 Peppermint    Patty June 1, 2005</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb92-2"><a href="#cb92-2"></a>  <span class="fu">mutate</span>(<span class="at">birthday_clean=</span><span class="fu">mdy</span>(birthday))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       First     Last     birthday birthday_clean
+1    Charlie    Brown     10-31-06     2006-10-31
+2       Lucy van Pelt     2/4/2007     2007-02-04
+3 Peppermint    Patty June 1, 2005     2005-06-01</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="reading-dates" class="slide level2">
+<h2>Reading dates</h2>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Order of elements in date-time</strong></th>
+<th><strong>Parse function</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>year, month, day</td>
+<td><code>ymd()</code></td>
+</tr>
+<tr class="even">
+<td>year, day, month</td>
+<td><code>ydm()</code></td>
+</tr>
+<tr class="odd">
+<td>month, day, year</td>
+<td><code>mdy()</code></td>
+</tr>
+<tr class="even">
+<td>day, month, year</td>
+<td><code>dmy()</code></td>
+</tr>
+<tr class="odd">
+<td>hour, minute</td>
+<td><code>hm()</code></td>
+</tr>
+<tr class="even">
+<td>hour, minute, second</td>
+<td><code>hms()</code></td>
+</tr>
+<tr class="odd">
+<td>year, month, day, hour, minute, second</td>
+<td><code>ymd_hms()</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="accessing-date-parts" class="slide level2">
+<h2>Accessing date parts</h2>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Date component</strong></th>
+<th><strong>Function</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Year</td>
+<td><code>year()</code></td>
+</tr>
+<tr class="even">
+<td>Month</td>
+<td><code>month()</code></td>
+</tr>
+<tr class="odd">
+<td>Week</td>
+<td><code>week()</code></td>
+</tr>
+<tr class="even">
+<td>Day of year</td>
+<td><code>yday()</code></td>
+</tr>
+<tr class="odd">
+<td>Day of month</td>
+<td><code>mday()</code></td>
+</tr>
+<tr class="even">
+<td>Day of week</td>
+<td><code>wday()</code></td>
+</tr>
+<tr class="odd">
+<td>Hour</td>
+<td><code>hour()</code></td>
+</tr>
+<tr class="even">
+<td>Minute</td>
+<td><code>minute()</code></td>
+</tr>
+<tr class="odd">
+<td>Second</td>
+<td><code>ymd_hms()</code></td>
+</tr>
+<tr class="even">
+<td>Time zone</td>
+<td><code>ymd_hms()</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lubridate-in-action" class="slide level2">
+<h2>Lubridate in action</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       First     Last     birthday
+1    Charlie    Brown     10-31-06
+2       Lucy van Pelt     2/4/2007
+3 Peppermint    Patty June 1, 2005</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb96-2"><a href="#cb96-2"></a>  <span class="fu">mutate</span>(<span class="at">birthday_clean=</span><span class="fu">mdy</span>(birthday)) <span class="sc">%&gt;%</span> </span>
+<span id="cb96-3"><a href="#cb96-3"></a>  <span class="fu">mutate</span>(<span class="at">month=</span><span class="fu">month</span>(birthday_clean)) <span class="sc">%&gt;%</span> </span>
+<span id="cb96-4"><a href="#cb96-4"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">year</span>(birthday_clean)) <span class="sc">%&gt;%</span> </span>
+<span id="cb96-5"><a href="#cb96-5"></a>  <span class="fu">mutate</span>(<span class="at">week=</span><span class="fu">week</span>(birthday_clean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       First     Last     birthday birthday_clean month year week
+1    Charlie    Brown     10-31-06     2006-10-31    10 2006   44
+2       Lucy van Pelt     2/4/2007     2007-02-04     2 2007    5
+3 Peppermint    Patty June 1, 2005     2005-06-01     6 2005   22</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="recognizing-dates" class="slide level2">
+<h2>Recognizing dates</h2>
+
+<img data-src="slide_images/lubridate_ymd.png" class="r-stretch"></section></section>
+<section id="your-turn-1" class="title-slide slide level1 center">
+<h1>Your turn</h1>
+<p>Run this to go through the exercises</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a>learnr<span class="sc">::</span><span class="fu">run_tutorial</span>(<span class="st">"3_b_math_pivots"</span>, <span class="st">"chjr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Get as far as you can!</p>
 <div class="footer footer-default">
 
 </div>

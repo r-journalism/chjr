@@ -1,0 +1,2156 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>USC Center for Health Journalism</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andrew Ba Tran" />
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# USC Center for Health Journalism
+]
+.subtitle[
+## Class 4: Visualizations
+]
+.author[
+### Andrew Ba Tran
+]
+
+---
+
+
+
+
+
+
+---
+
+&lt;img src="slide_images/ggplot2_exploratory.png" width="600" /&gt;
+---
+class: inverse, center, middle
+
+### ggplot2 is based on the **grammar of graphics**, the idea that you can build every graph from the same components: a **data** set, a **coordinate system**, and **geoms**—visual marks that represent data points
+
+&lt;img src="slide_images/coords.png" width="700" /&gt;
+
+---
+class: inverse, center, middle
+
+### To display values, map variables in the data to visual properties of the geom (aesthetics) like size, color, and x and y locations.
+
+
+&lt;img src="slide_images/coords2.png" width="700" /&gt;
+
+
+---
+class: inverse, center, middle
+
+### You only need two lines of code, really. 
+
+### The rest is just extra customization.
+
+
+&lt;img src="slide_images/coords3.png" width="700" /&gt;
+
+
+---
+
+
+```r
+burgers &lt;- data.frame(employee=c("Bob", "Gene",
+                              "Linda", "Louise",
+                              "Tina"),
+                   time=c(25, 30, 60, 20, 50),
+                   age=c(42, 11, 39, 9, 13),
+                   interest=c("cooking", "music", "wine", "chaos", "horses"))
+
+burgers
+```
+
+```
+  employee time age interest
+1      Bob   25  42  cooking
+2     Gene   30  11    music
+3    Linda   60  39     wine
+4   Louise   20   9    chaos
+5     Tina   50  13   horses
+```
+
+```r
+burgers &lt;- burgers %&gt;% 
+  mutate(where="front")
+
+burgers
+```
+
+```
+  employee time age interest where
+1      Bob   25  42  cooking front
+2     Gene   30  11    music front
+3    Linda   60  39     wine front
+4   Louise   20   9    chaos front
+5     Tina   50  13   horses front
+```
+
+---
+count: false
+ 
+
+.panel1-bobs-auto[
+
+```r
+*burgers
+```
+]
+ 
+.panel2-bobs-auto[
+
+```
+  employee time age interest where
+1      Bob   25  42  cooking front
+2     Gene   30  11    music front
+3    Linda   60  39     wine front
+4   Louise   20   9    chaos front
+5     Tina   50  13   horses front
+```
+]
+
+---
+count: false
+ 
+
+.panel1-bobs-auto[
+
+```r
+burgers
+
+*ggplot(burgers, aes(x=where, y=time, fill=employee))
+```
+]
+ 
+.panel2-bobs-auto[
+
+```
+  employee time age interest where
+1      Bob   25  42  cooking front
+2     Gene   30  11    music front
+3    Linda   60  39     wine front
+4   Louise   20   9    chaos front
+5     Tina   50  13   horses front
+```
+
+![](04_visualizing_data_files/figure-html/bobs_auto_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-bobs-auto[
+
+```r
+burgers
+
+ggplot(burgers, aes(x=where, y=time, fill=employee)) +
+* geom_col(position="stack")
+```
+]
+ 
+.panel2-bobs-auto[
+
+```
+  employee time age interest where
+1      Bob   25  42  cooking front
+2     Gene   30  11    music front
+3    Linda   60  39     wine front
+4   Louise   20   9    chaos front
+5     Tina   50  13   horses front
+```
+
+![](04_visualizing_data_files/figure-html/bobs_auto_03_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-bobs-auto {
+  color: black;
+  width: 65.3333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-bobs-auto {
+  color: black;
+  width: 32.6666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-bobs-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+count: false
+ 
+
+.panel1-bobs2-auto[
+
+```r
+*burgers
+```
+]
+ 
+.panel2-bobs2-auto[
+
+```
+  employee time age interest where
+1      Bob   25  42  cooking front
+2     Gene   30  11    music front
+3    Linda   60  39     wine front
+4   Louise   20   9    chaos front
+5     Tina   50  13   horses front
+```
+]
+
+---
+count: false
+ 
+
+.panel1-bobs2-auto[
+
+```r
+burgers
+
+*ggplot(burgers, aes(x=employee, y=time, fill=employee))
+```
+]
+ 
+.panel2-bobs2-auto[
+
+```
+  employee time age interest where
+1      Bob   25  42  cooking front
+2     Gene   30  11    music front
+3    Linda   60  39     wine front
+4   Louise   20   9    chaos front
+5     Tina   50  13   horses front
+```
+
+![](04_visualizing_data_files/figure-html/bobs2_auto_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-bobs2-auto[
+
+```r
+burgers
+
+ggplot(burgers, aes(x=employee, y=time, fill=employee)) +
+* geom_col(position="stack")
+```
+]
+ 
+.panel2-bobs2-auto[
+
+```
+  employee time age interest where
+1      Bob   25  42  cooking front
+2     Gene   30  11    music front
+3    Linda   60  39     wine front
+4   Louise   20   9    chaos front
+5     Tina   50  13   horses front
+```
+
+![](04_visualizing_data_files/figure-html/bobs2_auto_03_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-bobs2-auto {
+  color: black;
+  width: 65.3333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-bobs2-auto {
+  color: black;
+  width: 32.6666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-bobs2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+class: inverse, center, middle
+
+### Layers
+
+&lt;img src="slide_images/ggplot1a.png" width="600" /&gt;
+
+---
+class: inverse, center, middle
+
+
+### Aesthetics
+
+&lt;img src="slide_images/ggplot2a.png" width="600" /&gt;
+
+
+---
+count: false
+ 
+
+.panel1-bobs3-rotate[
+
+```r
+  ggplot(burgers) +
+*   geom_point(aes(x=employee, y=time))
+```
+]
+ 
+.panel2-bobs3-rotate[
+![](04_visualizing_data_files/figure-html/bobs3_rotate_01_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-bobs3-rotate[
+
+```r
+  ggplot(burgers) +
+*   geom_point(aes(x=employee, y=time, fill=employee))
+```
+]
+ 
+.panel2-bobs3-rotate[
+![](04_visualizing_data_files/figure-html/bobs3_rotate_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-bobs3-rotate[
+
+```r
+  ggplot(burgers) +
+*   geom_point(aes(x=employee, y=time, fill=employee, color=employee))
+```
+]
+ 
+.panel2-bobs3-rotate[
+![](04_visualizing_data_files/figure-html/bobs3_rotate_03_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-bobs3-rotate[
+
+```r
+  ggplot(burgers) +
+*   geom_point(aes(x=employee, y=time, fill=employee, color=employee, size=age))
+```
+]
+ 
+.panel2-bobs3-rotate[
+![](04_visualizing_data_files/figure-html/bobs3_rotate_04_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-bobs3-rotate {
+  color: black;
+  width: 65.3333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-bobs3-rotate {
+  color: black;
+  width: 32.6666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-bobs3-rotate {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+class: inverse, center, middle
+
+### geoms
+
+Many more [geom types](https://twitter.com/search?q=geom_%20%23rstats&amp;src=typed_query&amp;f=image) for different visualizations. 
+
+&lt;img src="slide_images/ggplot3a.png" width="600" /&gt;
+
+
+---
+class: inverse, center, middle
+
+### Your turn
+
+```
+learnr::run_tutorial("4_a_viz", "chjr")
+```
+
+---
+count: false
+ 
+
+.panel1-bobs4-rotate[
+
+```r
+  ggplot(burgers) +
+*   geom_col(aes(x=employee, y=time), stat="identity")
+```
+]
+ 
+.panel2-bobs4-rotate[
+![](04_visualizing_data_files/figure-html/bobs4_rotate_01_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-bobs4-rotate[
+
+```r
+  ggplot(burgers) +
+*   geom_col(aes(x=time, y=employee), stat="identity")
+```
+]
+ 
+.panel2-bobs4-rotate[
+![](04_visualizing_data_files/figure-html/bobs4_rotate_02_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-bobs4-rotate {
+  color: black;
+  width: 65.3333333333333%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-bobs4-rotate {
+  color: black;
+  width: 32.6666666666667%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-bobs4-rotate {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+
+```r
+disney &lt;- read_csv("slides_data/disney_movies_total_gross.csv")
+
+glimpse(disney)
+```
+
+```
+Rows: 579
+Columns: 6
+$ movie_title              &lt;chr&gt; "Snow White and the Seven Dwarfs", "Pinocchio…
+$ release_date             &lt;chr&gt; "Dec 21, 1937", "Feb 9, 1940", "Nov 13, 1940"…
+$ genre                    &lt;chr&gt; "Musical", "Adventure", "Musical", "Adventure…
+$ MPAA_rating              &lt;chr&gt; "G", "G", "G", "G", "G", NA, "G", NA, "G", NA…
+$ total_gross              &lt;chr&gt; "$184,925,485", "$84,300,000", "$83,320,000",…
+$ inflation_adjusted_gross &lt;chr&gt; "$5,228,953,251", "$2,188,229,052", "$2,187,0…
+```
+
+---
+
+
+```r
+disney &lt;- read_csv("slides_data/disney_movies_total_gross.csv")
+
+glimpse(disney)
+```
+
+```
+Rows: 579
+Columns: 6
+$ movie_title              &lt;chr&gt; "Snow White and the Seven Dwarfs", "Pinocchio…
+$ release_date             &lt;chr&gt; "Dec 21, 1937", "Feb 9, 1940", "Nov 13, 1940"…
+$ genre                    &lt;chr&gt; "Musical", "Adventure", "Musical", "Adventure…
+$ MPAA_rating              &lt;chr&gt; "G", "G", "G", "G", "G", NA, "G", NA, "G", NA…
+$ total_gross              &lt;chr&gt; "$184,925,485", "$84,300,000", "$83,320,000",…
+$ inflation_adjusted_gross &lt;chr&gt; "$5,228,953,251", "$2,188,229,052", "$2,187,0…
+```
+
+
+```r
+disney &lt;- disney %&gt;% 
+  mutate(release_date=mdy(release_date),
+         total_gross=parse_number(total_gross),
+         inflation_adjusted_gross=parse_number(inflation_adjusted_gross)) 
+
+glimpse(disney)
+```
+
+```
+Rows: 579
+Columns: 6
+$ movie_title              &lt;chr&gt; "Snow White and the Seven Dwarfs", "Pinocchio…
+$ release_date             &lt;date&gt; 1937-12-21, 1940-02-09, 1940-11-13, 1946-11-…
+$ genre                    &lt;chr&gt; "Musical", "Adventure", "Musical", "Adventure…
+$ MPAA_rating              &lt;chr&gt; "G", "G", "G", "G", "G", NA, "G", NA, "G", NA…
+$ total_gross              &lt;dbl&gt; 184925485, 84300000, 83320000, 65000000, 8500…
+$ inflation_adjusted_gross &lt;dbl&gt; 5228953251, 2188229052, 2187090808, 107851057…
+```
+---
+
+
+---
+count: false
+ 
+
+.panel1-disney3-auto[
+
+```r
+*disney
+```
+]
+ 
+.panel2-disney3-auto[
+
+```
+# A tibble: 579 × 6
+   movie_title                     release_date genre    MPAA_…¹ total…² infla…³
+   &lt;chr&gt;                           &lt;date&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Snow White and the Seven Dwarfs 1937-12-21   Musical  G        1.85e8  5.23e9
+ 2 Pinocchio                       1940-02-09   Adventu… G        8.43e7  2.19e9
+ 3 Fantasia                        1940-11-13   Musical  G        8.33e7  2.19e9
+ 4 Song of the South               1946-11-12   Adventu… G        6.5 e7  1.08e9
+ 5 Cinderella                      1950-02-15   Drama    G        8.5 e7  9.21e8
+ 6 20,000 Leagues Under the Sea    1954-12-23   Adventu… &lt;NA&gt;     2.82e7  5.28e8
+ 7 Lady and the Tramp              1955-06-22   Drama    G        9.36e7  1.24e9
+ 8 Sleeping Beauty                 1959-01-29   Drama    &lt;NA&gt;     9.46e6  2.15e7
+ 9 101 Dalmatians                  1961-01-25   Comedy   G        1.53e8  1.36e9
+10 The Absent Minded Professor     1961-03-16   Comedy   &lt;NA&gt;     2.54e7  3.10e8
+# … with 569 more rows, and abbreviated variable names ¹​MPAA_rating,
+#   ²​total_gross, ³​inflation_adjusted_gross
+```
+]
+
+---
+count: false
+ 
+
+.panel1-disney3-auto[
+
+```r
+disney %&gt;%
+* ggplot(aes(x=release_date,
+*            y=inflation_adjusted_gross,
+*            color=genre))
+```
+]
+ 
+.panel2-disney3-auto[
+![](04_visualizing_data_files/figure-html/disney3_auto_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney3-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+* geom_point()
+```
+]
+ 
+.panel2-disney3-auto[
+![](04_visualizing_data_files/figure-html/disney3_auto_03_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-disney3-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-disney3-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-disney3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+class: inverse, center, middle
+
+### layers
+
+&lt;img src="slide_images/ggplot4a.png" width="600" /&gt;
+
+---
+count: false
+ 
+
+.panel1-disney4-auto[
+
+```r
+*disney
+```
+]
+ 
+.panel2-disney4-auto[
+
+```
+# A tibble: 579 × 6
+   movie_title                     release_date genre    MPAA_…¹ total…² infla…³
+   &lt;chr&gt;                           &lt;date&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Snow White and the Seven Dwarfs 1937-12-21   Musical  G        1.85e8  5.23e9
+ 2 Pinocchio                       1940-02-09   Adventu… G        8.43e7  2.19e9
+ 3 Fantasia                        1940-11-13   Musical  G        8.33e7  2.19e9
+ 4 Song of the South               1946-11-12   Adventu… G        6.5 e7  1.08e9
+ 5 Cinderella                      1950-02-15   Drama    G        8.5 e7  9.21e8
+ 6 20,000 Leagues Under the Sea    1954-12-23   Adventu… &lt;NA&gt;     2.82e7  5.28e8
+ 7 Lady and the Tramp              1955-06-22   Drama    G        9.36e7  1.24e9
+ 8 Sleeping Beauty                 1959-01-29   Drama    &lt;NA&gt;     9.46e6  2.15e7
+ 9 101 Dalmatians                  1961-01-25   Comedy   G        1.53e8  1.36e9
+10 The Absent Minded Professor     1961-03-16   Comedy   &lt;NA&gt;     2.54e7  3.10e8
+# … with 569 more rows, and abbreviated variable names ¹​MPAA_rating,
+#   ²​total_gross, ³​inflation_adjusted_gross
+```
+]
+
+---
+count: false
+ 
+
+.panel1-disney4-auto[
+
+```r
+disney %&gt;%
+* ggplot(aes(x=release_date,
+*            y=inflation_adjusted_gross,
+*            color=genre))
+```
+]
+ 
+.panel2-disney4-auto[
+![](04_visualizing_data_files/figure-html/disney4_auto_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney4-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+* geom_point()
+```
+]
+ 
+.panel2-disney4-auto[
+![](04_visualizing_data_files/figure-html/disney4_auto_03_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney4-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+  geom_point() +
+* scale_x_date(limits=c(ymd("1980-01-01"), ymd("2020-01-01")))
+```
+]
+ 
+.panel2-disney4-auto[
+![](04_visualizing_data_files/figure-html/disney4_auto_04_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-disney4-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-disney4-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-disney4-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+count: false
+ 
+
+.panel1-disney5-auto[
+
+```r
+*disney
+```
+]
+ 
+.panel2-disney5-auto[
+
+```
+# A tibble: 579 × 6
+   movie_title                     release_date genre    MPAA_…¹ total…² infla…³
+   &lt;chr&gt;                           &lt;date&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Snow White and the Seven Dwarfs 1937-12-21   Musical  G        1.85e8  5.23e9
+ 2 Pinocchio                       1940-02-09   Adventu… G        8.43e7  2.19e9
+ 3 Fantasia                        1940-11-13   Musical  G        8.33e7  2.19e9
+ 4 Song of the South               1946-11-12   Adventu… G        6.5 e7  1.08e9
+ 5 Cinderella                      1950-02-15   Drama    G        8.5 e7  9.21e8
+ 6 20,000 Leagues Under the Sea    1954-12-23   Adventu… &lt;NA&gt;     2.82e7  5.28e8
+ 7 Lady and the Tramp              1955-06-22   Drama    G        9.36e7  1.24e9
+ 8 Sleeping Beauty                 1959-01-29   Drama    &lt;NA&gt;     9.46e6  2.15e7
+ 9 101 Dalmatians                  1961-01-25   Comedy   G        1.53e8  1.36e9
+10 The Absent Minded Professor     1961-03-16   Comedy   &lt;NA&gt;     2.54e7  3.10e8
+# … with 569 more rows, and abbreviated variable names ¹​MPAA_rating,
+#   ²​total_gross, ³​inflation_adjusted_gross
+```
+]
+
+---
+count: false
+ 
+
+.panel1-disney5-auto[
+
+```r
+disney %&gt;%
+* ggplot(aes(x=release_date,
+*            y=inflation_adjusted_gross,
+*            color=genre))
+```
+]
+ 
+.panel2-disney5-auto[
+![](04_visualizing_data_files/figure-html/disney5_auto_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney5-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+* geom_point()
+```
+]
+ 
+.panel2-disney5-auto[
+![](04_visualizing_data_files/figure-html/disney5_auto_03_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney5-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+  geom_point() +
+* scale_x_date(limits=c(ymd("1980-01-01"),
+*                             ymd("2020-01-01")))
+```
+]
+ 
+.panel2-disney5-auto[
+![](04_visualizing_data_files/figure-html/disney5_auto_04_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney5-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01"))) +
+* scale_y_continuous(limits=c(0, 1000000000))
+```
+]
+ 
+.panel2-disney5-auto[
+![](04_visualizing_data_files/figure-html/disney5_auto_05_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney5-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01"))) +
+  scale_y_continuous(limits=c(0, 1000000000))
+```
+]
+ 
+.panel2-disney5-auto[
+![](04_visualizing_data_files/figure-html/disney5_auto_06_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-disney5-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-disney5-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-disney5-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+count: false
+ 
+
+.panel1-disney6-auto[
+
+```r
+*disney
+```
+]
+ 
+.panel2-disney6-auto[
+
+```
+# A tibble: 579 × 6
+   movie_title                     release_date genre    MPAA_…¹ total…² infla…³
+   &lt;chr&gt;                           &lt;date&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Snow White and the Seven Dwarfs 1937-12-21   Musical  G        1.85e8  5.23e9
+ 2 Pinocchio                       1940-02-09   Adventu… G        8.43e7  2.19e9
+ 3 Fantasia                        1940-11-13   Musical  G        8.33e7  2.19e9
+ 4 Song of the South               1946-11-12   Adventu… G        6.5 e7  1.08e9
+ 5 Cinderella                      1950-02-15   Drama    G        8.5 e7  9.21e8
+ 6 20,000 Leagues Under the Sea    1954-12-23   Adventu… &lt;NA&gt;     2.82e7  5.28e8
+ 7 Lady and the Tramp              1955-06-22   Drama    G        9.36e7  1.24e9
+ 8 Sleeping Beauty                 1959-01-29   Drama    &lt;NA&gt;     9.46e6  2.15e7
+ 9 101 Dalmatians                  1961-01-25   Comedy   G        1.53e8  1.36e9
+10 The Absent Minded Professor     1961-03-16   Comedy   &lt;NA&gt;     2.54e7  3.10e8
+# … with 569 more rows, and abbreviated variable names ¹​MPAA_rating,
+#   ²​total_gross, ³​inflation_adjusted_gross
+```
+]
+
+---
+count: false
+ 
+
+.panel1-disney6-auto[
+
+```r
+disney %&gt;%
+* ggplot(aes(x=release_date,
+*            y=inflation_adjusted_gross,
+*            color=genre))
+```
+]
+ 
+.panel2-disney6-auto[
+![](04_visualizing_data_files/figure-html/disney6_auto_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney6-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+* geom_point()
+```
+]
+ 
+.panel2-disney6-auto[
+![](04_visualizing_data_files/figure-html/disney6_auto_03_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney6-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+  geom_point() +
+* scale_x_date(limits=c(ymd("1980-01-01"),
+*                             ymd("2020-01-01")),
+*                    labels=scales::date_format("%Y"))
+```
+]
+ 
+.panel2-disney6-auto[
+![](04_visualizing_data_files/figure-html/disney6_auto_04_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney6-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+* scale_y_continuous(limits=c(0, 1000000000),
+*                    labels=scales::dollar_format())
+```
+]
+ 
+.panel2-disney6-auto[
+![](04_visualizing_data_files/figure-html/disney6_auto_05_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney6-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross,
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format())
+```
+]
+ 
+.panel2-disney6-auto[
+![](04_visualizing_data_files/figure-html/disney6_auto_06_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-disney6-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-disney6-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-disney6-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+class: inverse, center, middle
+
+### facets
+
+(also known as small multiples)
+
+---
+count: false
+ 
+
+.panel1-disney7-auto[
+
+```r
+*disney
+```
+]
+ 
+.panel2-disney7-auto[
+
+```
+# A tibble: 579 × 6
+   movie_title                     release_date genre    MPAA_…¹ total…² infla…³
+   &lt;chr&gt;                           &lt;date&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Snow White and the Seven Dwarfs 1937-12-21   Musical  G        1.85e8  5.23e9
+ 2 Pinocchio                       1940-02-09   Adventu… G        8.43e7  2.19e9
+ 3 Fantasia                        1940-11-13   Musical  G        8.33e7  2.19e9
+ 4 Song of the South               1946-11-12   Adventu… G        6.5 e7  1.08e9
+ 5 Cinderella                      1950-02-15   Drama    G        8.5 e7  9.21e8
+ 6 20,000 Leagues Under the Sea    1954-12-23   Adventu… &lt;NA&gt;     2.82e7  5.28e8
+ 7 Lady and the Tramp              1955-06-22   Drama    G        9.36e7  1.24e9
+ 8 Sleeping Beauty                 1959-01-29   Drama    &lt;NA&gt;     9.46e6  2.15e7
+ 9 101 Dalmatians                  1961-01-25   Comedy   G        1.53e8  1.36e9
+10 The Absent Minded Professor     1961-03-16   Comedy   &lt;NA&gt;     2.54e7  3.10e8
+# … with 569 more rows, and abbreviated variable names ¹​MPAA_rating,
+#   ²​total_gross, ³​inflation_adjusted_gross
+```
+]
+
+---
+count: false
+ 
+
+.panel1-disney7-auto[
+
+```r
+disney %&gt;%
+* ggplot(aes(x=release_date,
+*            y=inflation_adjusted_gross))
+```
+]
+ 
+.panel2-disney7-auto[
+![](04_visualizing_data_files/figure-html/disney7_auto_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+* geom_point()
+```
+]
+ 
+.panel2-disney7-auto[
+![](04_visualizing_data_files/figure-html/disney7_auto_03_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+* scale_x_date(limits=c(ymd("1980-01-01"),
+*                             ymd("2020-01-01")),
+*                    labels=scales::date_format("%Y"))
+```
+]
+ 
+.panel2-disney7-auto[
+![](04_visualizing_data_files/figure-html/disney7_auto_04_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+* scale_y_continuous(limits=c(0, 1000000000),
+*                    labels=scales::dollar_format())
+```
+]
+ 
+.panel2-disney7-auto[
+![](04_visualizing_data_files/figure-html/disney7_auto_05_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+* facet_wrap(~genre)
+```
+]
+ 
+.panel2-disney7-auto[
+![](04_visualizing_data_files/figure-html/disney7_auto_06_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre)
+```
+]
+ 
+.panel2-disney7-auto[
+![](04_visualizing_data_files/figure-html/disney7_auto_07_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-disney7-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-disney7-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-disney7-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+---
+class: inverse, center, middle
+
+### labels
+
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+*disney
+```
+]
+ 
+.panel2-disney7a-auto[
+
+```
+# A tibble: 579 × 6
+   movie_title                     release_date genre    MPAA_…¹ total…² infla…³
+   &lt;chr&gt;                           &lt;date&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Snow White and the Seven Dwarfs 1937-12-21   Musical  G        1.85e8  5.23e9
+ 2 Pinocchio                       1940-02-09   Adventu… G        8.43e7  2.19e9
+ 3 Fantasia                        1940-11-13   Musical  G        8.33e7  2.19e9
+ 4 Song of the South               1946-11-12   Adventu… G        6.5 e7  1.08e9
+ 5 Cinderella                      1950-02-15   Drama    G        8.5 e7  9.21e8
+ 6 20,000 Leagues Under the Sea    1954-12-23   Adventu… &lt;NA&gt;     2.82e7  5.28e8
+ 7 Lady and the Tramp              1955-06-22   Drama    G        9.36e7  1.24e9
+ 8 Sleeping Beauty                 1959-01-29   Drama    &lt;NA&gt;     9.46e6  2.15e7
+ 9 101 Dalmatians                  1961-01-25   Comedy   G        1.53e8  1.36e9
+10 The Absent Minded Professor     1961-03-16   Comedy   &lt;NA&gt;     2.54e7  3.10e8
+# … with 569 more rows, and abbreviated variable names ¹​MPAA_rating,
+#   ²​total_gross, ³​inflation_adjusted_gross
+```
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+* ggplot(aes(x=release_date,
+*            y=inflation_adjusted_gross))
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+* geom_point()
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_03_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+* scale_x_date(limits=c(ymd("1980-01-01"),
+*                             ymd("2020-01-01")),
+*                    labels=scales::date_format("%Y"))
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_04_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+* scale_y_continuous(limits=c(0, 1000000000),
+*                    labels=scales::dollar_format())
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_05_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+* facet_wrap(~genre)
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_06_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+* labs(title="Disney animated movie gross profit")
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_07_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+* labs(subtitle="Adjusted for inflation")
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_08_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+* labs(y="", x="")
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_09_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+* labs(caption="Data: Source Goes Here")
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_10_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney7a-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+  labs(caption="Data: Source Goes Here")
+```
+]
+ 
+.panel2-disney7a-auto[
+![](04_visualizing_data_files/figure-html/disney7a_auto_11_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-disney7a-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-disney7a-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-disney7a-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+class: inverse, center, middle
+
+### themes
+
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+*disney
+```
+]
+ 
+.panel2-disney8-auto[
+
+```
+# A tibble: 579 × 6
+   movie_title                     release_date genre    MPAA_…¹ total…² infla…³
+   &lt;chr&gt;                           &lt;date&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Snow White and the Seven Dwarfs 1937-12-21   Musical  G        1.85e8  5.23e9
+ 2 Pinocchio                       1940-02-09   Adventu… G        8.43e7  2.19e9
+ 3 Fantasia                        1940-11-13   Musical  G        8.33e7  2.19e9
+ 4 Song of the South               1946-11-12   Adventu… G        6.5 e7  1.08e9
+ 5 Cinderella                      1950-02-15   Drama    G        8.5 e7  9.21e8
+ 6 20,000 Leagues Under the Sea    1954-12-23   Adventu… &lt;NA&gt;     2.82e7  5.28e8
+ 7 Lady and the Tramp              1955-06-22   Drama    G        9.36e7  1.24e9
+ 8 Sleeping Beauty                 1959-01-29   Drama    &lt;NA&gt;     9.46e6  2.15e7
+ 9 101 Dalmatians                  1961-01-25   Comedy   G        1.53e8  1.36e9
+10 The Absent Minded Professor     1961-03-16   Comedy   &lt;NA&gt;     2.54e7  3.10e8
+# … with 569 more rows, and abbreviated variable names ¹​MPAA_rating,
+#   ²​total_gross, ³​inflation_adjusted_gross
+```
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+* ggplot(aes(x=release_date,
+*            y=inflation_adjusted_gross))
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_02_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+* geom_point()
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_03_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+* scale_x_date(limits=c(ymd("1980-01-01"),
+*                             ymd("2020-01-01")),
+*                    labels=scales::date_format("%Y"))
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_04_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+* scale_y_continuous(limits=c(0, 1000000000),
+*                    labels=scales::dollar_format())
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_05_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+* facet_wrap(~genre)
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_06_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+* labs(title="Disney animated movie gross profit")
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_07_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+* labs(subtitle="Adjusted for inflation")
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_08_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+* labs(y="", x="")
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_09_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+* labs(caption="Data: Source Goes Here")
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_10_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+  labs(caption="Data: Source Goes Here") +
+* theme(strip.background = element_rect(colour = "black", fill = "white"))
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_11_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+  labs(caption="Data: Source Goes Here") +
+  theme(strip.background = element_rect(colour = "black", fill = "white")) +
+* theme(legend.key = element_rect(fill = "white", colour = "black"))
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_12_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-disney8-auto[
+
+```r
+disney %&gt;%
+  ggplot(aes(x=release_date,
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"),
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+  labs(caption="Data: Source Goes Here") +
+  theme(strip.background = element_rect(colour = "black", fill = "white")) +
+  theme(legend.key = element_rect(fill = "white", colour = "black")) +
+* theme_minimal()
+```
+]
+ 
+.panel2-disney8-auto[
+![](04_visualizing_data_files/figure-html/disney8_auto_13_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-disney8-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-disney8-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-disney8-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+---
+
+
+&lt;img src="slide_images/ggplot2_masterpiece.png" width="600" /&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

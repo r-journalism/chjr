@@ -6,7 +6,7 @@ output:
       theme: lumen
       highlight: espresso
       progressive: true
-      allow_skip: false
+      allow_skip: true
       includes:
         before_body: _navbar.html
 runtime: shiny_prerendered

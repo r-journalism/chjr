@@ -1,5 +1,5 @@
 ---
-title: "Class 2: Joining"
+title: "Class 3: Joining"
 author: "Andrew Ba Tran"
 output: 
   learnr::tutorial:
@@ -535,7 +535,7 @@ Great job so far.
 
 Before we try out more math we'll need to learn more techniques to transform the data.
 
-## Class II - Part 2
+## Class III - Part 2
 
 Stop this tutorial in the `Render` tab of RStudio (press the stop button).
 

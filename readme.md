@@ -27,6 +27,8 @@ usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
 #### Resources
 -   [Slideshow of R Basics](https://r-journalism.github.io/chjr/01_intro_to_r_rstudio.html#/title-slide)
 -   [Slideshow of Wrangling Data](https://r-journalism.github.io/chjr/02_wrangling_data.html#/title-slide)
+-   [Slideshow of Tidying data](https://r-journalism.github.io/chjr/03_tidying_data.html)
+-   [Slideshow of Vizualizing data](https://r-journalism.github.io/chjr/04_visualizing_data.html)
 -   [Tidyverse documentation](https://www.tidyverse.org/): We'll be referring back to this a lot. Get used to reading documentation; it's an important skill!
 -   [data](data/): Some of the data we'll be using for this class is in the data folder of this repository
 -   [practice scripts](practice/): There are exercises in the practice folder that you can work on your own time
@@ -49,9 +51,13 @@ usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
 - `learnr::run_tutorial("2_c_mutate_summarize", "chjr")`
 
 #### Day 3: Transforming data
-
+- [Slides](https://r-journalism.github.io/chjr/03_tidying_data.html)
+- `learnr::run_tutorial("3_a_joining", "chjr")`
+- `learnr::run_tutorial("3_b_math_pivots", "chjr")`
 
 #### Day 4: Visualizing data
-
+- [Slides](https://r-journalism.github.io/chjr/04_visualizing_data.html)
+- `learnr::run_tutorial("2_a_viz", "chjr")`
+- `learnr::run_tutorial("2_b_exploratory_viz", "chjr")`
 
 

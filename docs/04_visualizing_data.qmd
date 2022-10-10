@@ -1,0 +1,17 @@
+---
+title: "Joining and Tidying<br /><br /><br />"
+author: "2022 Data Health Fellowship"
+format:
+  revealjs: 
+    theme: beige
+title-slide-attributes:
+    data-background-image: "slide_images/usc.jpg"
+    data-background-size: contain
+    data-background-opacity: "number"
+---
+
+
+```{r}
+
+```
+

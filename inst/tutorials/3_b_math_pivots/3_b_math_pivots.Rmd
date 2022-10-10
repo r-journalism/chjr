@@ -1,5 +1,5 @@
 ---
-title: "Class 2: Tidy data and math"
+title: "Class 3: Tidy data and math"
 author: "Andrew Ba Tran"
 output: 
   learnr::tutorial:
@@ -225,17 +225,6 @@ But we can now answer one of our questions:
 
 If you paginate through the results you'll see one state in particular went from no floods in 2021 to 19 in 2022.
 
-```{r quiz1, echo=FALSE}
-quiz(caption = "Quiz 1",
-  question("Which state saw the biggest increase in flood disaster declarations between '21 and '22?",
-    answer('WA'),
-    answer('MN', correct=T),
-    answer('MT'),
-    answer('LA'),
-    random_answer_order= TRUE
-  ))
-```
-
 Next, we can use `summarize()` and `mutate()` to do some math to answer our first question:
 
 * Are things worse now than they were before? 
@@ -274,17 +263,6 @@ The formula for percent change is (new-old)/old*100. Also remember the differenc
 grade_this_code()
 ```
 
-
-```{r quiz2, echo=FALSE}
-quiz(caption = "Quiz 2",
-  question("What's the percent change in flood disaster declarations between 2021 and 2022 so far this year",
-    answer('25'),
-    answer('-24.7', correct=T),
-    answer('150'),
-    answer('-5'),
-    random_answer_order= TRUE
-  ))
-```
 
 ## pivot_wider() multiple
 
@@ -393,7 +371,7 @@ There are many more functions that do more specific things, of course.
 
 But this will hopefully get you started on your way. Everything else you may have questions on how to do has probably been asked and answered out in the R online community.
 
-## Class II - Part 3
+## Class II - Done
 
 Stop this tutorial in the `Render` tab of RStudio (press the stop button).
 
