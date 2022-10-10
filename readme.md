@@ -35,7 +35,22 @@ usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
 -   To practice creating and working with vectors and doing simple variable assignment, use [R-Basics.Rmd](practice/R-Basics.Rmd)
 -   To practice importing and the basics of data analysis (sorting, filtering, aggregating), use [Importing-and-intro-to-data-analysis.Rmd](practice/Importing-and-intro-to-data-analysis.Rmd)
 
-#### Day 1 walkthroughs
+#### Day 1: Intro to R and RStudio
+- [Slides]((https://r-journalism.github.io/chjr/01_intro_to_r_rstudio.html)
 - `learnr::run_tutorial("1_intro_a", "chjr")`
 - `learnr::run_tutorial("1_intro_b", "chjr")`
 - `learnr::run_tutorial("1_intro_c", "chjr")`
+
+#### Day 2: Wrangling data
+- [Slides]((https://r-journalism.github.io/chjr/02_wrangling_data.html)
+- `learnr::run_tutorial("2_a_exploring", "chjr")`
+- `learnr::run_tutorial("2_b_filter_select", "chjr")`
+- `learnr::run_tutorial("2_c_mutate_summarize", "chjr")`
+
+#### Day 3: Transforming data
+
+
+#### Day 4: Visualizing data
+
+
+
