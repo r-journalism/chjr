@@ -12,7 +12,7 @@ Load the tidyverse set of packages. **Always load your packages at the top of yo
 
 ```
 
-Next up, load the csv `mcd_opioid_deaths.csv` (in the data folder) into your environment. Remember that you have to tell RStudio where the file is, relative to your .RProj file. You also have to assign it to a variable so that it can be stored in your environment.
+Next up, load the csv `mcd_opioid_deaths.csv` (in the same practice folder) into your environment. Remember that you have to tell RStudio where the file is, relative to your .RProj file. You also have to assign it to a variable so that it can be stored in your environment.
 
 ```{r}
 
