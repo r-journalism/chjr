@@ -1,0 +1,241 @@
+---
+title: "04_viz"
+output: html_document
+---
+
+```{r bobsog}
+library(tidyverse)
+library(lubridate)
+
+burgers <- data.frame(employee=c("Bob", "Gene",
+                              "Linda", "Louise",
+                              "Tina"),
+                   time=c(25, 30, 60, 20, 50),
+                   age=c(42, 11, 39, 9, 13),
+                   interest=c("cooking", "music", "wine", "chaos", "horses"))
+
+burgers
+
+burgers <- burgers %>% 
+  mutate(where="front")
+
+burgers
+```
+
+```{r bobs}
+burgers
+
+ggplot(burgers, aes(x=where, y=time, fill=employee)) + 
+  geom_col(position="stack") 
+```
+
+```{r bobs2}
+burgers
+
+ggplot(burgers, aes(x=employee, y=time, fill=employee)) + 
+  geom_col(position="stack")
+```
+
+```{r bobs3}
+  ggplot(burgers) + 
+    geom_point(aes(x=employee, y=time))
+```
+
+```{r bobs3a}
+  ggplot(burgers) + 
+    geom_point(aes(x=employee, y=time, fill=employee))
+```
+
+```{r bobs3b}
+  ggplot(burgers) + 
+    geom_point(aes(x=employee, y=time, fill=employee, color=employee))
+```
+
+
+```{r bobs3c}
+  ggplot(burgers) + 
+    geom_point(aes(x=employee, y=time, fill=employee, color=employee, size=age))
+```
+ 
+
+```{r, eval=F}
+learnr::run_tutorial("4_a_viz", "chjr")
+```
+
+```{r bobs4}
+  ggplot(burgers) + 
+    geom_col(aes(x=employee, y=time), stat="identity")
+```
+
+
+```{r bobs4a}
+  ggplot(burgers) + 
+     geom_col(aes(x=time, y=employee), stat="identity")
+```
+
+
+```{r disney}
+disney <- read_csv("../docs/slides_data/disney_movies_total_gross.csv")
+# if you get a file not found error, comment the line above and uncomment the line below
+#disney <- read_csv("docs/slides_data/disney_movies_total_gross.csv")
+
+glimpse(disney)
+```
+
+```{r adjust}
+disney <- disney %>% 
+  mutate(release_date=mdy(release_date),
+         total_gross=parse_number(total_gross),
+         inflation_adjusted_gross=parse_number(inflation_adjusted_gross)) 
+
+glimpse(disney)
+```
+
+```{r disney3}
+disney %>% 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross,
+             color=genre)) +
+  geom_point() 
+```
+
+### layers
+
+```{r disney4}
+library(lubridate)
+
+disney %>% 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross, 
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), ymd("2020-01-01")))
+```
+
+```{r disney5}
+disney %>% 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross, 
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01"))) +
+  scale_y_continuous(limits=c(0, 1000000000)) 
+
+```
+
+```{r disney6}
+disney %>% 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross, 
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) 
+
+```
+
+
+### Your turn
+
+```{r eval=F}
+learnr::run_tutorial("4_a_viz", "chjr")
+```
+
+Go through Exercise 2!
+
+
+
+### facets
+
+(also known as small multiples)
+
+```{r disney7, eval=F}
+disney %>% 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre)
+
+```
+
+### Your turn
+
+```{r, eval=F}
+learnr::run_tutorial("4_a_viz", "chjr")
+```
+
+Go through the two exercises in the **Facets** section.
+
+
+### labels
+
+
+```{r disney7a}
+disney %>% 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+  labs(caption="Data: Source Goes Here")
+
+```
+
+### Your turn
+
+```{r eval=F}
+learnr::run_tutorial("4_a_viz", "chjr")
+```
+
+Go through the **Labels** section.
+
+
+
+### themes
+
+
+```{r disney8}
+disney %>% 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+  labs(caption="Data: Source Goes Here") +
+  theme(strip.background = element_rect(colour = "black", fill = "white")) +
+  theme(legend.key = element_rect(fill = "white", colour = "black")) +
+  theme_minimal()
+```
+---
+
+
+### Your turn
+
+```{r, eval=F}
+learnr::run_tutorial("4_b_exploratory_viz", "chjr")
+```
+
+

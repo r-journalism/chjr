@@ -1,0 +1,443 @@
+---
+title: "03_tidy"
+output: html_document
+---
+
+## Let's start out with two data frames: x and y
+
+```{r dfs1}
+x <- data.frame(id=c(1,2,3), x=c("x1", "x2", "x3"))
+
+x
+```
+
+```{r dfs2}
+y <- data.frame(id=c(1,2,4), y=c("y1", "y2", "y4"))
+
+y
+```
+
+## Two data frames
+
+## left_join()
+
+
+```{r two_dataframes}
+library(dplyr)
+
+left_join(x, y)
+```
+
+## Two data frames: x and y but with different column names
+
+```{r dfs_again}
+x <- data.frame(id=c(1,2,3), x=c("x1", "x2", "x3"))
+
+x
+```
+
+
+```{r dfs_again2}
+#| echo: TRUE
+y <- data.frame(new_id=c(1,2,4), y=c("y1", "y2", "y4"))
+
+y
+```
+
+```{r left2_join}
+left_join(x, y, by=c("id"="new_id"))
+```
+
+## Watch out for repeated data
+
+```{r left3}
+x <- data.frame(id=c(1,2,3), 
+                x=c("x1", "x2", "x3"))
+
+x
+```
+
+```{r left4}
+y <- data.frame(id=c(1,2,4,2), 
+                y=c("y1", "y2", "y4", "y5"))
+
+y
+```
+
+```{r}
+#| echo: TRUE
+left_join(x, y)
+```
+
+
+## stringr functions
+
+* `str_to_upper()` `str_to_lower()` `str_to_title()`
+* `str_trim()` `str_squish()`
+* `str_c()`
+* `str_detect()`
+* `str_subset()`
+* `str_sub()`
+
+```{r str_to}
+library(stringr)
+
+test_text <- "tHiS iS A rANsOM noTE!"
+```
+
+```{r}
+#| echo: TRUE
+str_to_upper(test_text)
+```
+
+```{r}
+#| echo: TRUE
+str_to_lower(test_text)
+```
+
+```{r}
+#| echo: TRUE
+str_to_title(test_text)
+```
+
+
+## Trimming strings
+
+```{r trim}
+test_text <- "  trim both   "
+
+test_text 
+```
+
+```{r}
+#| echo: TRUE
+str_trim(test_text, side="both")
+```
+
+
+```{r}
+#| echo: TRUE
+str_trim(test_text, side="left")
+```
+
+
+```{r}
+#| echo: TRUE
+str_trim(test_text, side="right")
+```
+
+
+```{r}
+#| echo: TRUE
+messy_text <- "  sometimes  you get   this "
+```
+
+
+```{r}
+#| echo: TRUE
+str_squish(messy_text)
+```
+
+## Combining strings
+
+```{r str_c}
+text_a <- "one"
+
+text_b <- "two"
+
+text_a
+
+text_b
+```
+
+```{r}
+#| echo: TRUE
+str_c(text_a, text_b)
+```
+
+```{r}
+str_c(text_a, text_b, sep="-")
+```
+
+```{r}
+str_c(text_a, text_b, sep=" and a ")
+```
+
+
+```{r}
+str_c(text_a, " and a ", text_b)
+```
+
+## Extracting strings
+
+```{r extract}
+test_text <- "Hello world"
+
+test_text 
+```
+
+
+```{r}
+str_sub(test_text, start = 6)
+```
+
+
+```{r}
+str_sub(test_text, end = 5) <- "Howdy"
+
+test_text
+```
+
+```{r}
+cn <- "Kemp County, Georgia"
+
+cn 
+
+str_replace(cn, " County, .*", "")
+```
+
+
+## parse_number()
+
+(from the readr package)
+
+```{r parse}
+library(readr)
+messy_numbers <- c("$5.00", "9,343,200", "6.0%")
+
+messy_numbers
+```
+
+```{r}
+parse_number(messy_numbers)
+```
+
+# Your turn
+
+Run this to go through the exercises
+
+```{r, eval=F}
+learnr::run_tutorial("3_a_joining", "chjr")
+```
+
+Get as far as you can in the time we have! 
+
+2 rows x 3 columns
+
+```{r dfs2}
+df <- data.frame(id=c(1,2), x=c("a", "b"),
+                 y=c("c", "d"), z=c("e", "f"))
+
+df
+```
+
+## pivot_longer()
+
+```{r left9}
+library(tidyr)
+
+df %>% 
+  pivot_longer(cols=x:z,
+               names_to="key",
+               values_to="val")
+```
+
+
+```{r left20}
+df %>% 
+  pivot_longer(cols=2:4,
+               names_to="key",
+               values_to="val")
+```
+
+
+```{r left30}
+df <- data.frame(state=c("TX", "NY", "FL"),
+                 ducks=c(23, 39, 47),
+                 fish=c(6,30,20),
+                 birds=c(99,3,64))
+```
+
+## pivot_longer() again
+
+```{r}
+df
+```
+
+```{r}
+df %>% 
+  pivot_longer(cols=ducks:birds,
+               names_to="animals",
+               values_to="total")
+```
+
+## pivot_longer() again
+
+```{r}
+df
+```
+
+```{r}
+#| echo: TRUE
+df %>% 
+  pivot_longer(cols=2:4,
+               names_to="animals",
+               values_to="totals")
+```
+
+
+```{r math1}
+df <- data.frame(state=c("TX", "NY", "FL"),
+                 ducks=c(23, 39, 47),
+                 fish=c(6,30,20),
+                 birds=c(99,3,64))
+```
+
+```{r}
+df
+```
+
+```{r}
+#| echo: TRUE
+df %>% 
+  pivot_longer(cols=ducks:birds,
+               names_to="animals",
+               values_to="total") %>% 
+  group_by(state) %>% 
+  mutate(percent=
+           round(total/sum(total)*100,1))
+```
+
+
+## pivot_wider()
+
+```{r wider}
+df_long <- df %>% 
+  pivot_longer(cols=ducks:birds,
+               names_to="animals",
+               values_to="total") %>% 
+  group_by(state) %>% 
+  mutate(percent=
+           round(total/sum(total)*100,1))
+```
+
+```{r}
+df_long
+```
+
+## pivot_wider()
+
+```{r}
+df_long %>% 
+  pivot_wider(names_from="animals", 
+              values_from="percent")
+```
+
+```{r}
+df_long %>% 
+  select(-total) %>% 
+  pivot_wider(names_from="animals", 
+              values_from="percent") %>% 
+  mutate(birds_fish_diff=
+           birds-fish)
+```
+
+## pivot_wider() more columns
+
+```{r widera}
+df_long <- df %>% 
+  pivot_longer(cols=ducks:birds,
+               names_to="animals",
+               values_to="total") %>% 
+  group_by(state) %>% 
+  mutate(percent=
+           round(total/sum(total)*100,1))
+```
+
+```{r}
+
+df_long
+```
+
+```{r}
+df_long %>% 
+  pivot_wider(names_from="animals", 
+              values_from=c("total", "percent")) 
+
+```
+
+
+## Lubridate for dates 
+
+
+
+```{r dates2}
+library(lubridate)
+
+df <- data.frame(First=c("Charlie", "Lucy", "Peppermint"),
+                   Last=c("Brown", "van Pelt", "Patty"),
+                   birthday=c("10-31-06", "2/4/2007", "June 1, 2005"))
+
+df
+```
+
+```{r}
+df %>% 
+  mutate(birthday_clean=mdy(birthday))
+```
+
+
+## Reading dates
+
+| **Order of elements in date-time**     | **Parse function** |
+|----------------------------------------|----------------|
+| year, month, day                       | `ymd()`          |
+| year, day, month                       | `ydm()`          |
+| month, day, year                       | `mdy()`          |
+| day, month, year                       | `dmy()`          |
+| hour, minute                           | `hm()`           |
+| hour, minute, second                   | `hms()`          |
+| year, month, day, hour, minute, second | `ymd_hms()`      |
+
+## Accessing date parts
+
+| **Date component** | **Function**  |
+|----------------|-----------|
+| Year           | `year()`    |
+| Month          | `month()`   |
+| Week           | `week()`    |
+| Day of year    | `yday()`    |
+| Day of month   | `mday()`    |
+| Day of week    | `wday()`    |
+| Hour           | `hour()`    |
+| Minute         | `minute()`  |
+| Second         | `ymd_hms()` |
+| Time zone      | `ymd_hms()` |
+
+## Lubridate in action
+
+```{r dates3}
+df
+```
+
+```{r}
+df %>% 
+  mutate(birthday_clean=mdy(birthday)) %>% 
+  mutate(month=month(birthday_clean)) %>% 
+  mutate(year=year(birthday_clean)) %>% 
+  mutate(week=week(birthday_clean))
+```
+
+
+# Your turn
+
+Run this to go through the exercises
+
+```{r, eval=F}
+learnr::run_tutorial("3_b_math_pivots", "chjr")
+```
+
+Get as far as you can!
+
+
+
