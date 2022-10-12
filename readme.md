@@ -32,7 +32,8 @@ usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
 -   [Tidyverse documentation](https://www.tidyverse.org/): We'll be referring back to this a lot. Get used to reading documentation; it's an important skill!
 -   [data](data/): Some of the data we'll be using for this class is in the data folder of this repository
 -   [practice scripts](practice/): There are exercises in the practice folder that you can work on your own time
-
+-   [weird ggplots](https://docs.google.com/presentation/d/1KZooYWyeE0DtMmuD5hGGern0zqixIh49OC304UtYSkM/edit)
+-   [ggplot2 code gallery](https://r-graph-gallery.com/ggplot2-package.html)
 
 #### Practice
 -   To practice creating and working with vectors and doing simple variable assignment, use [R-Basics.Rmd](practice/R-Basics.Rmd)
