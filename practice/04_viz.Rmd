@@ -220,7 +220,7 @@ disney %>%
                      labels=scales::date_format("%Y")) +
   scale_y_continuous(limits=c(0, 1000000000),
                      labels=scales::dollar_format()) +
-  facet_wrap(~genre) +
+  facet_wrap(vars(genre, MPAA_rating), ncol=4) +
   labs(title="Disney animated movie gross profit") +
   labs(subtitle="Adjusted for inflation") +
   labs(y="", x="") +

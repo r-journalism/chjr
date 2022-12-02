@@ -455,7 +455,7 @@ When importing that data in from a spreadsheet, R will most often interpret it a
 # Your turn
 
 ```
-learnr::run_tutorial("class_prep_pt2", "chjr")
+learnr::run_tutorial("1_intro_b", "chjr")
 ```
 
 Click on "Factors" on the left and run through the exercises in that specific section.
