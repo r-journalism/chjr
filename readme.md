@@ -61,4 +61,7 @@ usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
 - `learnr::run_tutorial("2_a_viz", "chjr")`
 - `learnr::run_tutorial("2_b_exploratory_viz", "chjr")`
 
+#### Extra:
+
+- Tidycensus [page](https://r-journalism.github.io/chjr/tidycensus.html) | [code](https://github.com/r-journalism/chjr/blob/main/inst/tutorials/tidycensus/tidycensus.Rmd)
 
