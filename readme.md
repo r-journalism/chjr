@@ -64,4 +64,5 @@ usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
 #### Extra:
 
 - Tidycensus [page](https://r-journalism.github.io/chjr/tidycensus.html) | [code](https://github.com/r-journalism/chjr/blob/main/inst/tutorials/tidycensus/tidycensus.Rmd)
+- Spatial analysis [page](https://r-journalism.github.io/chjr/spatial_analysis.html) | [code](https://github.com/r-journalism/chjr/blob/main/inst/tutorials/spatial_analysis/spatial_analysis.Rmd)
 

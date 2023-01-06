@@ -1,0 +1,459 @@
+---
+title: "Spatial analysis"
+output: html_document
+---
+
+### Let's wrangle census data again
+
+You will need to fill in some blank code, but the answers are [here](https://github.com/r-journalism/chjr/blob/main/inst/tutorials/spatial_analysis/spatial_analysis.Rmd).
+
+1. Open up your "tidycensus" project in RStudio.
+
+2. Then, create a new .rmd file and call it "spatial_analysis" and save it as "spatial_analysis"
+
+3. Create a new R code chunk and put these lines in and run it (plug in your census api key)
+
+```{r library, eval=F}
+library(tidyverse)
+library(tidycensus)
+library(sf)
+
+census_api_key("YOUR API KEY GOES HERE", install=TRUE)
+```
+
+```{r library2, echo=F, results='hide'}
+library(tidycensus)
+library(tidyverse)
+library(sf)
+```
+
+### Advanced spatial analysis
+
+We're going to analyze traffic stop data. 
+
+We're going to use a new package for mapping called **sf**.
+
+First, we'll pull race population data from the census for New Haven county. We'll reuse our [code](https://github.com/r-journalism/chjr/blob/main/inst/tutorials/tidycensus/tidycensus.Rmd) from before! But we want to bring in geometry data this time so we can map it.
+
+Fill in the blanks and this time add the argument `geometry=TRUE` at the end of the `get_acs()` function to get the shapefile.
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code and run it.
+
+```{r nh1, eval=F}
+
+nh <- get_acs(geography = "?????",
+              variables = c("White"="B02001_002",
+                            "Black"="B02001_003",
+                            "Asian"="B02001_005",
+                            "Native American"="B02001_004",
+                            "Hispanic"="B03002_012" ),
+              state = "??",
+              county = "??????",
+              year = 2019,
+              summary_var = "B02001_001",
+              survey = "acs5",
+              ??????????????????) %>% 
+  mutate(percent=round(estimate/summary_est*100,1)) %>% 
+  filter(variable=="White") %>% 
+  mutate(majority=case_when(
+    percent >50 ~ "White",
+    TRUE ~ "Minority"
+  ))
+
+glimpse(nh)
+```
+
+```{r nhcensus, echo=F, results='hide'}
+nh <- get_acs(geography = "tract",
+              variables = c("White"="B02001_002",
+                            "Black"="B02001_003",
+                            "Asian"="B02001_005",
+                            "Native American"="B02001_004",
+                            "Hispanic"="B03002_012" ),
+              state = "CT",
+              county = "New Haven",
+              year = 2019,
+              summary_var = "B02001_001",
+              survey = "acs5",
+              geometry=TRUE) %>% 
+  mutate(percent=round(estimate/summary_est*100,1)) %>% 
+  filter(variable=="White") %>% 
+  mutate(majority=case_when(
+    percent >50 ~ "White",
+    TRUE ~ "Minority"
+  ))
+```
+
+### Quick map
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code and run it.
+
+Do you remember 1) what function you use to initiate a visualization? and 2) the geom type to use for spatial polygons?
+
+
+```{r map1a, eval=F}
+??????(nh) + 
+  geom_??(color="white") +
+  theme_void() +
+  theme(panel.grid.major = element_line(colour = 'transparent')) +
+  labs(title="New Haven census tracts")
+```
+
+```{r map1, echo=F}
+ggplot(nh) + 
+  geom_sf(color="white") +
+  theme_void() +
+  theme(panel.grid.major = element_line(colour = 'transparent')) +
+  labs(title="New Haven census tracts")
+```
+
+
+### Grab traffic stops
+
+Let's pull some data for traffic stops from the city of Haven, which is within the New Haven county of Connecticut.
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code and run it.
+
+Do you remember the **dplyr** function to import in a csv?
+
+```{r stopsa, eval=F}
+stops <- ????_???("https://github.com/r-journalism/learn-r-journalism/raw/master/content/mapping/case_study/data/hamden_stops.csv")
+
+glimpse(stops)
+```
+
+```{r stops, echo=F, warning=F,message=F, results='hide'}
+stops <- read_csv("https://github.com/r-journalism/learn-r-journalism/raw/master/content/mapping/case_study/data/hamden_stops.csv")
+
+glimpse(stops)
+```
+
+Okay, we need to clean up the data to continue.
+
+Copy and paste the lines of code below into a new chunk and add the missing functions to make it work.
+
+```{r filteringa, eval=F}
+# removing rows that have 0 as values
+stops <- ?????(stops, InterventionLocationLatitude!=0)
+
+# Creating a race column
+stops$race <- ifelse(stops$SubjectEthnicityCode=="H", "H", stops$SubjectRaceCode)
+
+stops <- stops %>% 
+  ??????(race=????_????(
+    race=="A" ~ "Asian",
+    race=="B" ~ "Black",
+    race=="H" ~ "Hispanic",
+    race=="W" ~ "White"
+  ))
+```
+
+
+```{r filtering, echo=F}
+stops <- filter(stops, InterventionLocationLatitude!=0)
+
+# Creating a race column
+stops$race <- ifelse(stops$SubjectEthnicityCode=="H", "H", stops$SubjectRaceCode)
+stops <- stops %>% 
+  mutate(race=case_when(
+    race=="A" ~ "Asian",
+    race=="B" ~ "Black",
+    race=="H" ~ "Hispanic",
+    race=="W" ~ "White"
+  ))
+
+glimpse(stops)
+```
+
+### Map the points on top of the census tracts.
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code and run it.
+
+Use the geom type that puts in points. And in x, put in the column name from stops that has longitude and in y, put in the column name from stops that has latitude. Refer to the output above.
+
+
+```{r points1a, eval=F}
+ggplot(nh) + 
+  geom_sf(color="white") +
+  # New line of code below!
+  geom_?????(data=stops, aes(x=?????????????????????????, y=????????????????????), color="red", alpha=0.05) +
+  theme_void() +
+  theme(panel.grid.major = element_line(colour = 'transparent')) +
+  labs(title="Traffic stops in Hamden")
+```
+
+
+
+```{r points1, echo=F}
+ggplot(nh) + 
+  geom_sf(color="white") +
+  # New line of code below!
+  geom_point(data=stops, aes(x=InterventionLocationLongitude, y=InterventionLocationLatitude), color="red", alpha=0.05) +
+  theme_void() +
+  theme(panel.grid.major = element_line(colour = 'transparent')) +
+  labs(title="Traffic stops in Hamden")
+```
+
+
+Alright, it’s a start.
+
+### Deeper analysis
+
+If you have a data set with latitude and longitude information, it’s easy to just throw it on a map with a dot for every instance.
+
+But what would that tell you? You see the intensity of the cluster of dots over the area but that’s it.
+
+If there’s no context or explanation it’s a flashy visualization and that’s it.
+
+## Points in a Polygon
+
+We already have the shape file of Census tracts in Hamden.
+
+We just need to count up how many times a traffic stop occurred in each tract.
+
+**First**, let’s make sure it will match the correct coordinate reference system (CRS) as the shape file we’ve just downloaded. We’ll use the st_as_sf() function to create a new geometry with the latitude and longitude data from the stops data frame. And we’ll transform the CRS so it matches the CRS from the **nh** shape file we downloaded.
+
+The function we're using is from the **sf** package, `st_as_sf()` and `st_transform()`
+
+Copy and paste the code below into a new chunk in your rmd file and run it.
+
+```{r projection}
+# This makes sure the points are falling in the right spots on a shapefile
+
+stops_spatial <- stops %>% 
+  st_as_sf(coords=c("InterventionLocationLongitude", "InterventionLocationLatitude"), crs = "+proj=longlat") %>% 
+  st_transform(crs=st_crs(nh))
+
+glimpse(stops_spatial)
+```
+
+What happened? Well, **InterventionLocationLongitude** and **InterventionLocationLatitude** are gone from the dataframe but a new column has replaced it: **geometry**.
+
+Now we use the `st_join()` function that sees where the geometries we’ve set in **stops_spatial** fall into which polygon in **nh**.
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code by adding `st_join()` and run it.
+
+```{r spatial_joina, eval=F}
+points_in <- st_????(nh, stops_spatial, left=T)
+
+glimpse(points_in)
+```
+
+```{r spatial_join, echo=F}
+points_in <- st_join(nh, stops_spatial, left=T)
+
+glimpse(points_in)
+```
+
+
+This is great.
+
+What just happened: Every point in the original **stops** data frame now has a corresponding census tract and has been saved in the **points_in** data frame.
+
+Now, we can summarize the data by count and merge it back to the shape file and visualize it.
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code and run it.
+
+
+```{r points_dplyra, eval=F}
+by_tract <- points_in %>%
+  filter(!is.na(X)) %>% 
+  ?????_??(GEOID) %>%
+  ?????????(total=n())
+
+head(by_tract)
+```
+
+
+```{r points_dplyr, echo=T}
+by_tract <- points_in %>%
+  filter(!is.na(X)) %>% 
+  group_by(GEOID) %>%
+  summarise(total=n())
+
+head(by_tract)
+```
+
+We have enough here to visualize it.
+
+Copy and paste the code below into a new chunk in your rmd file and run it.
+
+```{r viridis}
+# If you don't have viridis installed yet, uncomment and runt he line below
+#install.packages("viridis")
+
+library(viridis)
+
+ggplot(by_tract) +
+  geom_sf(aes(fill = total), color=NA) +
+  coord_sf(datum=NA) +
+  labs(title = "Total traffic stops by Hamden police",
+       subtitle = "In 2013 and 2014",
+       caption = "Source: data.ct.gov",
+       fill = "Total stops") +
+  scale_fill_viridis(option="magma", direction=-1)
+```
+
+Pretty, but we’re unclear which part is Hamden and which are parts of other towns.
+
+That’s fine because we can layer in a tract of Hamden only with the **tigris** package.
+
+Copy and paste the code below into a new chunk in your rmd file and run it.
+
+
+```{r hamden, results='hide', message=F,warning=F}
+library(tigris)
+
+new_haven_towns <- county_subdivisions(state="CT", county="New Haven", cb=T)
+hamden_town <- filter(new_haven_towns, NAME=="Hamden")
+
+glimpse(hamden_town)
+```
+
+
+Let's map it all with the additional layer but make it transparent with a thicker border.
+
+Copy and paste the code below into a new chunk in your rmd file and run it.
+
+
+```{r hamden_tracts}
+ggplot() +
+  geom_sf(data=by_tract, aes(fill = total), color=NA) +
+  # the line below is the new shapefile we downloaded
+  geom_sf(data=hamden_town, fill=NA, color="black") +
+  coord_sf(datum=NA) +
+  labs(title = "Total traffic stops by Hamden police",
+       subtitle = "In 2013 and 2014",
+       caption = "Source: data.ct.gov",
+       fill = "Total stops") +
+  scale_fill_viridis(option="magma", direction=-1)
+```
+
+Alright, excellent.
+
+It’s much clearer now that the bulk of the traffic stops occur at the southern border of Hamden.
+
+We can go deeper by going to our joined data frame and summarize by race and adding more variables to `group_by()`
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code and run it.
+
+```{r tract_racea, eval=F}
+by_tract_race <- points_in %>%
+  filter(!is.na(X)) %>% 
+  ?????_??(GEOID, race) %>%
+  ?????????(total=n())
+
+glimpse(by_tract_race)
+```
+
+
+```{r tract_race, echo=F}
+by_tract_race <- points_in %>%
+  filter(!is.na(X)) %>% 
+  group_by(GEOID, race) %>%
+  summarise(total=n())
+
+glimpse(by_tract_race)
+```
+
+Very tidy data frame!
+
+We can repurpose the map code above and add a single line of code to facet it.
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code with the right command to make small multiples and run it.
+
+```{r faceteda, eval=F}
+ggplot() +
+  geom_sf(data=by_tract_race, aes(fill = total), color=NA) +
+  geom_sf(data=hamden_town, fill=NA, color="black") +
+  coord_sf(datum=NA) +
+  labs(title = "Total traffic stops by Hamden police",
+       subtitle = "In 2013 and 2014",
+       caption = "Source: data.ct.gov",
+       fill = "Total stops") +
+  scale_fill_viridis(option="magma", direction=-1) +
+  ?????_wrap(~race)
+```
+
+
+```{r faceted, echo=F}
+ggplot() +
+  geom_sf(data=by_tract_race, aes(fill = total), color=NA) +
+  geom_sf(data=hamden_town, fill=NA, color="black") +
+  coord_sf(datum=NA) +
+  labs(title = "Total traffic stops by Hamden police",
+       subtitle = "In 2013 and 2014",
+       caption = "Source: data.ct.gov",
+       fill = "Total stops") +
+  scale_fill_viridis(option="magma", direction=-1) +
+  facet_wrap(~race)
+```
+
+Well, that’s pretty revealing.
+
+So these are raw numbers. Let’s try to figure out the percent breakdown of drivers who are White versus those who aren’t per Census tract. We just have to wrangle `by_tract_race` data frame a little bit. We’ve done this before in previous sections.
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code and run it.
+
+```{r wrangleda, eval=F}
+by_tract_race_percent <- by_tract_race %>% 
+  mutate(type=case_when(
+    race=="White" ~ "White",
+    TRUE ~ "Minority")) %>% 
+  group_by(GEOID, type) %>% 
+  ?????????(total=sum(total)) %>% 
+  ??????(percent=round(total/sum(total, na.rm=T)*100,2)) 
+
+glimpse(by_tract_race_percent)
+
+```
+
+
+```{r wrangled, echo=F}
+by_tract_race_percent <- by_tract_race %>% 
+  mutate(type=case_when(
+    race=="White" ~ "White",
+    TRUE ~ "Minority")) %>% 
+  group_by(GEOID, type) %>% 
+  summarize(total=sum(total)) %>% 
+  mutate(percent=round(total/sum(total, na.rm=T)*100,2)) 
+
+glimpse(by_tract_race_percent)
+```
+
+We can easily plot this.
+
+Copy and paste the code below into a new chunk in your rmd file and fix the code and run it.
+
+```{r percent}
+ggplot() +
+  geom_sf(data=by_tract_race_percent, aes(fill = percent), color=NA) +
+  geom_sf(data=hamden_town, fill=NA, color="black") +
+  coord_sf(datum=NA) +
+  labs(title = "Total traffic stops by Hamden police",
+       subtitle = "In 2013 and 2014",
+       caption = "Source: data.ct.gov",
+       fill = "Percent of all stops") +
+  scale_fill_viridis(option="magma", direction=-1) +
+  facet_wrap(~type)
+```
+
+So that’s even more stark difference.
+
+What’s it tell us? Most of the stops up north are White drivers.
+
+Most of the stops in the southern part of the town, particularly by the town border, are Minority drivers.
+
+What’s one argument that could explain this?
+
+“Well, maybe that’s where minorities live.”
+
+Perhaps. But we can measure that thanks to the Census.
+
+We know the percent make up of traffic steps in Hamden.
+
+If you're curious, the next step would be to calculate the percent make up of residents in those neighborhoods and compare them.
+
+Ideally, the rate of traffic stops should match the rate of residents, right?
+
+You already have the data.
