@@ -3,7 +3,11 @@ title: "loops"
 output: html_document
 ---
 
-```{r}
+
+The answers to all the fill-in-the-blank sections can be found [here]((https://github.com/r-journalism/chjr/blob/main/inst/tutorials/loops/loops.Rmd).
+
+
+```{r, warning=F, message=F}
 library(tidyverse)
 ```
 
