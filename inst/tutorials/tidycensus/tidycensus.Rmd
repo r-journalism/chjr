@@ -395,4 +395,3 @@ sd %>%
   summarize(pop = sum(estimate, na.rm=T), evictions=sum(total_evictions, na.rm=T)) %>% mutate(evictions/pop*1000)
 ```
 
-
