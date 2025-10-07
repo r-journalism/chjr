@@ -1,0 +1,1109 @@
+[
+  {
+    "objectID": "getting_started/importing_exporting.html#csv-files",
+    "href": "getting_started/importing_exporting.html#csv-files",
+    "title": "Importing, exporting data",
+    "section": "CSV files",
+    "text": "CSV files\nComma separated files are the most common way to save spreadsheets that doesn’t require a paid program from Microsoft to open.\n\nWhat a csv file looks like\nCSV file names end with a .csv\n\n\n\nWhat a csv file looks like on the inside**\nThis explains the values separated with commas part of the file name.",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/importing_exporting.html#importing-csv-files",
+    "href": "getting_started/importing_exporting.html#importing-csv-files",
+    "title": "Importing, exporting data",
+    "section": "Importing CSV files",
+    "text": "Importing CSV files\n\nImporting CSV is part of base R, no package needed\nBut we’re going to use a package anyway, readr\n\nTwo ways to get data\n\nIf you have the URL address\n\nIf the csv file exists on the internet, you don’t have to download it to your local machine and then import it, you can import it to R directly from the web using the link\n\nIf you have the file on your computer\n\n\nGet the URL\nIf you have the link to a CSV file, right click the link of the data and click Copy Link Address. This data set can be found on the Connecticut Open Data Portal. NOTE: This data is no longer available. Download it instead from here.\n\n\n\nread.csv()\nThe Base R function to import a CSV file is read.csv(). Just put the URL address in quotation marks and add the stringsAsFactors=F (In this code we’re using the function head()– this returns 6 rows by default, but we want to look at 10, so we’ll specify that when we call the function head(data, 10))\nClick RUN CODE to import the data from a website and look at the first 10 rows.\n\n\n\n\n\n\n\n\n\n\nOther way: Download it first\nWhen you right click on the link, instead of clicking Copy Link Address– this time, click Save Link As…\n\nSave to your working directory.\nAfter saving to the directory, click on the circle arrow on the right to refresh the files to make sure it’s there.\n\n\n\nRecall: How to change directories in RStudio\nEither by typing setwd(\"/directory/where/you/want\") or by clicking in the menu up top Session &gt; Set Working Directory &gt; Choose Directory…\n\n\n\nImporting local csv data\nJust like before, except instead of the URL, it’s the name of the file.\nNote: This will only work if the working directory is set to where the csv file is.\n\n\nUsing read_csv() from the readr package\nreadr is a package that read rectangular data quickly and assumes characters are strings and not factors by default.\n\n\n\n\n\n\n\n\nAs you can see, the read_csv() function interpreted the MonthYear and Town columns as characters and not as Factors as read.csv() did.",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/importing_exporting.html#exporting-csv-files",
+    "href": "getting_started/importing_exporting.html#exporting-csv-files",
+    "title": "Importing, exporting data",
+    "section": "Exporting CSV files",
+    "text": "Exporting CSV files\nWhen you’re done analyzing or transforming your data, you can save your dataframe as a CSV file with write_csv() from the readr package.\n\n# Pass the write_csv() function the name of the dataframe and what you want to call the file\nwrite_csv(df_csv, \"transformed_data.csv\")\n\nThe file will save to your working directory, but you can specify sub directories with the function.\n\n# Pass the write_csv() function the name of the dataframe and what you want to call the file\nwrite_csv(df_csv, \"data/transformed_data.csv\")\n\n\nExporting data frames with NA\nWeird quirk alert: Exported files will include NAs so to replace them, pass the variable na=\"whatever\".\n\n# This replaces the NAs with blanks\nwrite_csv(df_csv, \"data/transformed_data.csv\", na=\"\")",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/importing_exporting.html#your-turn",
+    "href": "getting_started/importing_exporting.html#your-turn",
+    "title": "Importing, exporting data",
+    "section": "Your turn",
+    "text": "Your turn\nWhen exporting a csv, how do you get rid of NAs with the readr package?\n\nmutable ok_reponse1 = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse1 = Inputs.radio(\n  new Map([\n    ['write.csv(df_csv, \"data/transformed_data.csv\", is.na=F)', 1],\n    ['write_csv(df_csv, \"data/transformed_data.csv\", N.A=\"\")', 2],\n    ['write.csv(df_csv, \"data/transformed_data.csv\", na=\"\")', 3],\n    ['write_csv(df_csv, \"data/transformed_data.csv\", na=\"\")', 4]\n  ])\n);\nok_reponse1(reponse1, 4);",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/importing_exporting.html#importing-an-excel-file",
+    "href": "getting_started/importing_exporting.html#importing-an-excel-file",
+    "title": "Importing, exporting data",
+    "section": "Importing an Excel file",
+    "text": "Importing an Excel file\nExcel spreadsheets are unique in that they can contain multiple spreadsheets as a workbook.\n\nWhat an Excel file looks like\nExcel file names end with a .xls or .xlsx\n\n\n\nWhat an Excel file looks like on the inside\nWeird, right? Definitely difficult to parse.\n\nWhat I do sometimes (often) is save a sheet from Excel as a .csv file.\nThat’s a short cut. But if you want to be transparent and really deal with the raw data then:",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/importing_exporting.html#importing-excel-files",
+    "href": "getting_started/importing_exporting.html#importing-excel-files",
+    "title": "Importing, exporting data",
+    "section": "Importing Excel files",
+    "text": "Importing Excel files\n\nImporting Excel is complicated, readxl package is needed\nThere are more other packages that handle Excel files and can build extra sheets, but we won’t be needing them for this instance\n\nFirst, install the readxl package if you have not yet done so.\nThat will have readxl as part of the group of packages.\n\n\n\n\n\n\n\n\nUnlike a csv, you can’t just copy and paste the URL for an Excel sheet.\nYou gotta download the file first.\nVisit this link of Excel data link on Dropbox and click Download\n\nread_excel()\nExcel spreadsheets have multiple sheets and it’s best to explore what it looks like in Excel first because read_excel() requires specific sheets to be referred to when importing.\nGive it a shot with the first sheet.\ndf_xl &lt;- read_excel(\"data/StatisticsSummary.xls\", sheet=1)\nCheck it\nView(df_xl)\n\nThis isn’t right.",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/importing_exporting.html#dealing-with-ugly-data",
+    "href": "getting_started/importing_exporting.html#dealing-with-ugly-data",
+    "title": "Importing, exporting data",
+    "section": "Dealing with ugly data",
+    "text": "Dealing with ugly data\nThe problem with Excel files is that people love to format it in ways that make it look nice in Excel but makes no sense in R.\n\nread_excel() again\nBut this time we’ll add skip=2 so it skips the first rows when bringing in the data.\n\n\n\n\n\n\n\n\nMuch better\nView(df_xl)\n\nNotice that the column names are preserved with spaces and symbols.\n\n\n\n\n\n\n\n\nSo how would one refer to the data in the columns with spaces\nIf we did it like normal with the $ to pull the column we’d try\n\n\n\n\n\n\n\n\nSee, spaces won’t work. This is how to deal with columns with spaces– add the back tick next to the 1 button on your keyboard.\n\n\n\n\n\n\n\n\nIt’s some extra finger work that you might be okay with if it was in a limited basis.\nHowever, in anticipation of the work we’re going to be doing, we should go ahead and simplify the column names so there are no characters or spaces. We’re going to load a new package called janitor. Its job is to exclusively clean names.\n\n\n\n\n\n\n\n\nCompare the column names from this to the ones above. There are no capitalization and the spaces are replaced with _ and this will be much easier to work with in R.",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/importing_exporting.html#exporting-to-excel",
+    "href": "getting_started/importing_exporting.html#exporting-to-excel",
+    "title": "Importing, exporting data",
+    "section": "Exporting to Excel",
+    "text": "Exporting to Excel\nIt’s preferable to save data frames as CSVs because it’s more open and doesn’t require a paid program for others to open.\nBut sometimes it’s more economical to push out a bunch of sheets into one workbook (that’s the perk of Excel, after all).\nWe won’t get into that now but if you’re curious, you can explore that in the the links below.\n\nUsing the xlsx package\nReading and importing Excel files into R",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/importing_exporting.html#your-turn-again",
+    "href": "getting_started/importing_exporting.html#your-turn-again",
+    "title": "Importing, exporting data",
+    "section": "Your turn again",
+    "text": "Your turn again\nIf you import an Excel file and it has 5 buffer rows at the top before the real data starts, how do you deal with that using the readxl package?\n\nmutable ok_reponse2 = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse2 = Inputs.radio(\n  new Map([\n    ['read_excel(\"stats.xls\", sheet=1, row=5)', 1],\n    ['read_excel(\"stats.xls\", sheet=1, skip=5)', 2],\n    ['read_excel(\"stats.xls\", sheet=1, row=6)', 3],\n    ['read_excel(\"stats.xls\", sheet=1, row=4)', 4]\n  ])\n);\nok_reponse2(reponse2, 2);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIf you import an Excel file and it has 5 buffer rows at the top before the real data starts, how do you deal with that using the readxl package?\n\nmutable ok_reponse3 = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse3 = Inputs.radio(\n  new Map([\n    ['read_excel(\"stats.xls\", sheet=1, row=5)', 1],\n    ['read_excel(\"stats.xls\", sheet=1, skip=5)', 2],\n    ['read_excel(\"stats.xls\", sheet=1, row=6)', 3],\n    ['read_excel(\"stats.xls\", sheet=1, row=4)', 4]\n  ])\n);\nok_reponse3(reponse3, 2);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat is the function from the janitor package that eliminates spaces and lowercases the text in the column names?\n\nmutable ok_reponse4 = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse4 = Inputs.radio(\n  new Map([\n    ['janitor()', 1],\n    ['fix_columns()', 2],\n    ['make.names()', 3],\n    ['clean_names()', 4]\n  ])\n);\nok_reponse4(reponse4, 4);",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/importing_exporting.html#done",
+    "href": "getting_started/importing_exporting.html#done",
+    "title": "Importing, exporting data",
+    "section": "Done!",
+    "text": "Done!\nGreat job.",
+    "crumbs": [
+      "Getting Started",
+      "Importing, exporting data"
+    ]
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html",
+    "href": "getting_started/1_intro_a.html",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "",
+    "text": "welcome to class!"
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#welcome",
+    "href": "getting_started/1_intro_a.html#welcome",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Welcome!",
+    "text": "Welcome!\nBefore we officially get started, please be sure you have the latest versions of R and RStudio installed.\nAlso make sure you’ve installed this by running in the console:\ninstall.packages(\"usethis\")\nusethis::use_course(\"https://github.com/r-journalism/chjr/archive/master.zip\")\nReady? Okay, let’s go!"
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#tour-of-r-and-rstudio",
+    "href": "getting_started/1_intro_a.html#tour-of-r-and-rstudio",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Tour of R and RStudio",
+    "text": "Tour of R and RStudio\nR is just a programming language and can be open in any coding program like Sublime or Visual Code Studio. But we’re going to focus on using R in the environment known as RStudio because it easily shows all the different parts, like plots and objects, well.\nWhen you first open RStudio, the app is divided into three sections.\nMost sections have tabs for even more additional ways to view different sorts of things.\nThese sections can be customized and placed wherever you want through the RStudio menu options (if you’d rather the Files tab be in the top right instead of the top left, for example). Preferences &gt; Pane Layout\n\nThe tall section on the left is the console and that’s where you can type in R code to execute.\nThis code is also called commands or functions.\n\nIn the top right section, there’s the Environment tab where you can see the data or objects you are currently working on.\nAt first this section is empty because you have not loaded any data yet.\nThere’s also a tab in the top right section for History– this is where RStudio keeps track of the commands you run in the console.\n\nA viewer is on the bottom right, where there are tabs to flip through the Files and folder structure of your computer (like in Finder or Explorer), the Plots (diagrams) when they’ve been generated, your list of available R Packages, Help information etc.\n\nReproducibility: Save your scripts\nThere’s a difference between quick, on-the-fly analysis and analysis you want to rerun later on.\nThe code you type out and run in console can be copied and pasted and saved in scripts and R Markdown files. Scripts end with .R file extension and R Markdown files, which mixes both R code and Markdown code, end with .Rmd.\nR scripts versus R Markdown\nYou may hear mentions of “R Markdown” and that’s essentially the same thing as R scripts except with some enhanced formatting so that the code can be published as a pdf or a website or notebook. R scripts and R Markdown can only be opened by coding programs but the websites or PDFs generated by R Markdown can be open by non-programming people. It’s a means for communicating your results effectively to a wider audience. Compare the differences here and here.\nIn this course we’ll be alternating between typing code in the console and typing and saving code in a script. The code that’s disposable and written just for quick exploration can be and will be written in the console. Code we want to reuse and re purpose later on should be saved in a script.\n\nThese R source code files can be viewed in a Source section and pushes the console window down to accommodate.\nTo create a new script go through the menu File &gt; New File &gt; R Script or through the green plus button on the top left. This will expand the 3 windows in RStudio to 4. The script viewer will appear in the top left quadrant and push the console window into the lower left.\n\nThe file extensions for these files when saved ends with .R\nAny code we type in here can be run in the console. Hitting the Run button at the top of the script window will run the line of code on which the cursor is sitting.\nTo run multiple lines of code, highlight them and click Run.\n\nBe sure to save your scripts after you create them. And also save before running your code in case you write code that makes R crash– which will happen once in a while."
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#scripts",
+    "href": "getting_started/1_intro_a.html#scripts",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Scripts",
+    "text": "Scripts\nR is an interpreter that uses a command line based environment.\nThis means that you have to type commands, rather than use the mouse and menus.\nThis has the advantage that you do not always have to retype commands.\nYou can store your commands in files, the so-called scripts. These scripts have typically file names with the extension .R as in script.R.\nYou can open an editor window to edit these files by clicking File &gt; New or File &gt; Open file…\nYou can run (send to the console window) part of the code by selecting lines and pressing CTRL+ENTER or CMD+ENTER or click the Run button at the top of the script editor window. If you do not select anything, R will run the line your cursor is on.\nYou can always run the whole script with the function source()\nFor example, to run the entire saved script.R if it’s in the root directory of the working directory, type\n\nsource(\"script.R\")\n\nYou can also click Run all in the editor window or type CTRL+SHIFT+S or CMD+SHIFT+S"
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#project-directory-habits",
+    "href": "getting_started/1_intro_a.html#project-directory-habits",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Project directory habits",
+    "text": "Project directory habits\nYour working directory is the folder on your computer in which you are currently working. When you ask R to open a certain file, it will look in the working directory for this file, and when you tell R to save a data file or figure, it will save it in the working directory.\nBefore you start working, please set your working directory to where all your data and script files are or should be stored.\nWhen you see code in a black box throughout this class, I want you to run that code in R unless noted otherwise. You can run it in the console, I’d prefer you do so in a script so you can see your history. In the video, you’ll see me swap back and forth between coding in the console and the script. This really depends on if I’m experimenting with code quickly or if it’s something I know I should track. Often I will copy and paste code executed from the console to growing script as an afterthought. Also, be sure to read the commented out code because I try to give additional context, like tips on what to do if the command fails.\nThis is an example of setting a working directory to a manual directory on your computer.\n\n# On a mac, it'd look like this\nsetwd(\"~/projects/learn-r-journalism\")\n\n# On a PC, it might look like this\nsetwd(\"C:/Documents/learn-r-journalism\")\n\nMake sure that slashes are forward slashes and that you don’t forget the quotation marks.\nWithin RStudio, you can also set the working directory via the menu Tools &gt; Set Working Directory\n\nThe commands above, setwd() was an example of setting an absolute folder.\nThis works for you for the purposes of this class, but if you wanted to share your methodology and script in the future or if you wanted to save run the code on another computer it would likely not work because it would be looking through a folder structure that doesn’t exist on any computer except the one where the original script was written. This is not ideal for reproducibility.\nWorking directories are a tough concept. If you’re curious about learning the BEST method for setting up directories for each project you’re working on, I’ve got some documentation.\nAlso, if you’re still curious, I follow this structure for all my R projects."
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#syntax",
+    "href": "getting_started/1_intro_a.html#syntax",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Syntax",
+    "text": "Syntax\nYou must follow pretty specific syntax rules for it to work. R won’t guess for you.\n\n\nR is case-sensitive (unlike SQL) intepreted language (unlike C)\nCan enter commands at prompt &gt; or in batch\nComments are preceded by #\n\nThis is important to use often in your code for documentation\nYou’ll see it often in this course\n\nStatements are lines of code such as functions and object assignments\n\nEnters in code (as in a new line) or semi-colons will separate statements"
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#libraries",
+    "href": "getting_started/1_intro_a.html#libraries",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Libraries",
+    "text": "Libraries\nOne of the many benefits of R is that it is open source and free. This means users like you and me can create code that we use code that people in the data community created to make everyone’s lives easier.\nThese shared code snippets can help you do something as simple as combining spreadsheets in a folder or something as complicated as seasonally adjusting data in a time series.\nThey are organized in so-called packages or libraries.\nYou can do a lot of statistical analysis in R without any additional libraries— this is called base R.\nBut other users have created libraries with functions that solve common problems. R package users download only the libraries that they need for an individual project.\nTo get a list of all installed packages, go to the packages window or type library() in the console window. If the box in front of the package name is ticked in the packages window, the package is loaded and the functions within it are ready to be called.\nThere are many more packages available on the R website. If you want to install and use a package (for example, the packaged called “dplyr”) you should:\n\nInstall the package: click install packages in the packages window and type dplyr or type install.packages(\"dplyr\") in the console window.\nLoad the package: Check box in front of dplyr or type library(\"dplyr\") in the console window."
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#common-r-commands",
+    "href": "getting_started/1_intro_a.html#common-r-commands",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Common R commands",
+    "text": "Common R commands\nR can be used as a calculator.\nJust type an equation in the console window after the &gt;\nIn those code sections, the code preceded by ## is the output of the code from the lines above.\nPlease type in 10^2 + 26 into the R environment below and click Run code.\nIf you got 126 go ahead and click Submit Answer.\n\n\n\n\n\n\n\n10^2 + 26\n\n\n\nWorkspace\nYou can give numbers a name.\nBy doing so, they become so-called variables which can be used later.\nYou can assign values to an object name with either a = or &lt;-.\nThe command below sets 4 as a.\n\n\na &lt;- 4\na\n\n\n\na is now saved up in the Environment tab in RStudio.\n\nYou can do calculations with a now.\nTry multiplying a with any number.\na * _\n\n\na *\n\n\n\nIf you specify a again, it will forget what value you had before because you did not assign it to anything.\n\n\na\n\n\n\nYou can also assign a value to a using the old one\n\n\na &lt;- a + 10\na\n\n\n\nTo remove all variables from R’s memory, type\n\nrm(list=ls())\n\nor click the “clear all” broom button in the work space window."
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#objects-in-r",
+    "href": "getting_started/1_intro_a.html#objects-in-r",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Objects in R",
+    "text": "Objects in R\n\nScalars and vectors\nLike in many other programs, R organizes numbers in scalars (a single number 0-dimensional), vectors (a row of numbers, also called arrays - `-dimensional) and matrices (which we won’t get into now).\nThe a you defined was scalar.\nTo define a vector with the numbers 3,4, and 5, you need the function c() which is short for concatenate (or paste together).\n\n\nb &lt;- c(3,4,5)\nb"
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#functions",
+    "href": "getting_started/1_intro_a.html#functions",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Functions",
+    "text": "Functions\nIf you would like to compute the mean of all the elements in the vector b from the example above, you could type\nPlease type out (300+4000+50)/3 in the code tester below:\n\n\n#type in and run the code above\n\n\n\n\n\n(300+4000+50)/3\n\n\nBut when the vector is very long, this is very boring and time-consuming work.\nFunctions do things to data. R is built on them. Some functions come with R, like median() or summary() and others come as part of packages that others have created.\nWhen you use a function to compute an average, you’ll type\n\nmean(x=b)\n\nWithin the brackets you specify the arguments.\nArguments give extra information to the function. In this case, the argument x says of which set of numbers (vector) the mean should computed (namely of b).\nSometimes the name of the argument is not necessary:\n\n\nb &lt;- c(300,4000,50)\nmean(b)\n\n\n\nAlso works."
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#plots",
+    "href": "getting_started/1_intro_a.html#plots",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Plots",
+    "text": "Plots\nR can make simple graphics right away.\n\n\n# rnorm() is a base function that creates random samples from a random distribution\n\nx &lt;- rnorm(100)\n\n# plot() is a base function that charts\n\nplot(x)\n\n\n\n\nIn the first line, 100 random numbers are assigned to the variable x, which becomes a vector by this operation.\nIn the second line, all these values are plotted in the plot window."
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#not-available-data",
+    "href": "getting_started/1_intro_a.html#not-available-data",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Not available data",
+    "text": "Not available data\nWhen you work with real data, you will encounter missing values because instrumentation failed or human error.\nWhen a data is not available, you’ll often find an NA instead of a number.\n\nj &lt;- c(1,2,NA)\n\nComputing statistics of incomplete data sets is strictly not possible.\nmaybe the largest value occurred during the weekend when you didn’t measure. Therefore, R will say that it doesn’t know what the largest value of j is\n\n\nmax(j)\n\n\n\nIf you don’t mind about the missing data and want to compute the statistics anyway, you can add the argument na.rm=TRUE (Should I remove the NAs? Yes)\n\n\nmax(j, na.rm=T)\n\n\n\nNAs will also affect any sort of math if you’re not careful\n\n\nsum(j)\n# compared to\nsum(j, na.rm=T)\n\n\n\nHere are some links on how to handle NAs in your data"
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#base-r-versus-tidyverse",
+    "href": "getting_started/1_intro_a.html#base-r-versus-tidyverse",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Base R versus Tidyverse",
+    "text": "Base R versus Tidyverse\nI will often mention “Base R” and “Tidyverse” throughout the course.\nBase R is what you get when you install R and don’t install anything extra.\nEverything you do in Tidyverse– the importing and wrangling of data, as well as the visualizations– can be done with Base R. It’s just older, the syntax is trickier, and it unfortunately has huge learning curve.\nFor the purposes of this class, you’ll learn just enough Base R to get things done but we’ll spend most of our time using functions in packages that have since been created by users to make our lives easier and have a good history of support from their creators."
+  },
+  {
+    "objectID": "getting_started/1_intro_a.html#intro-pt-ii",
+    "href": "getting_started/1_intro_a.html#intro-pt-ii",
+    "title": "Class prep: Intro to R and RStudio",
+    "section": "Intro pt II",
+    "text": "Intro pt II\nStop this tutorial in the Render tab of RStudio (press the stop button).\nTake a break! Walk around. Have a snack.\nAbsorb what you’ve learned so far. It was a lot.\nWhen you’re ready to move on to pt. 2 just type this in the console of RStudio:\nlearnr::run_tutorial(\"1_intro_b\", \"chjr\")"
+  },
+  {
+    "objectID": "importing/importing_csv.html",
+    "href": "importing/importing_csv.html",
+    "title": "Importing csv files",
+    "section": "",
+    "text": "mutable ok_reponse = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse = Inputs.radio(\n  new Map([\n    [\"First choice.\", 1],\n    [\"Second choice.\", 2],\n    [\"Third choice\", 3],\n    [\"Fourth choice.\", 4]\n  ])\n);\nok_reponse(reponse, 2);\nwelcome to class!"
+  },
+  {
+    "objectID": "importing/importing_csv.html#tour-of-r-and-rstudio",
+    "href": "importing/importing_csv.html#tour-of-r-and-rstudio",
+    "title": "Importing csv files",
+    "section": "Tour of R and RStudio",
+    "text": "Tour of R and RStudio\nR is just a programming language and can be open in any coding program like Sublime or Visual Code Studio. But we’re going to focus on using R in the environment known as RStudio because it easily shows all the different parts, like plots and objects, well.\nWhen you first open RStudio, the app is divided into three sections.\nMost sections have tabs for even more additional ways to view different sorts of things.\nThese sections can be customized and placed wherever you want through the RStudio menu options (if you’d rather the Files tab be in the top right instead of the top left, for example). Preferences &gt; Pane Layout\n\nThe tall section on the left is the console and that’s where you can type in R code to execute.\nThis code is also called commands or functions.\n\nIn the top right section, there’s the Environment tab where you can see the data or objects you are currently working on.\nAt first this section is empty because you have not loaded any data yet.\nThere’s also a tab in the top right section for History– this is where RStudio keeps track of the commands you run in the console.\n\nA viewer is on the bottom right, where there are tabs to flip through the Files and folder structure of your computer (like in Finder or Explorer), the Plots (diagrams) when they’ve been generated, your list of available R Packages, Help information etc.\n\nReproducibility: Save your scripts\nThere’s a difference between quick, on-the-fly analysis and analysis you want to rerun later on.\nThe code you type out and run in console can be copied and pasted and saved in scripts and R Markdown files. Scripts end with .R file extension and R Markdown files, which mixes both R code and Markdown code, end with .Rmd.\nR scripts versus R Markdown\nYou may hear mentions of “R Markdown” and that’s essentially the same thing as R scripts except with some enhanced formatting so that the code can be published as a pdf or a website or notebook. R scripts and R Markdown can only be opened by coding programs but the websites or PDFs generated by R Markdown can be open by non-programming people. It’s a means for communicating your results effectively to a wider audience. Compare the differences here and here.\nIn this course we’ll be alternating between typing code in the console and typing and saving code in a script. The code that’s disposable and written just for quick exploration can be and will be written in the console. Code we want to reuse and re purpose later on should be saved in a script.\n\nThese R source code files can be viewed in a Source section and pushes the console window down to accommodate.\nTo create a new script go through the menu File &gt; New File &gt; R Script or through the green plus button on the top left. This will expand the 3 windows in RStudio to 4. The script viewer will appear in the top left quadrant and push the console window into the lower left.\n\nThe file extensions for these files when saved ends with .R\nAny code we type in here can be run in the console. Hitting the Run button at the top of the script window will run the line of code on which the cursor is sitting.\nTo run multiple lines of code, highlight them and click Run.\n\nBe sure to save your scripts after you create them. And also save before running your code in case you write code that makes R crash– which will happen once in a while."
+  },
+  {
+    "objectID": "importing/importing_csv.html#scripts",
+    "href": "importing/importing_csv.html#scripts",
+    "title": "Importing csv files",
+    "section": "Scripts",
+    "text": "Scripts\nR is an interpreter that uses a command line based environment.\nThis means that you have to type commands, rather than use the mouse and menus.\nThis has the advantage that you do not always have to retype commands.\nYou can store your commands in files, the so-called scripts. These scripts have typically file names with the extension .R as in script.R.\nYou can open an editor window to edit these files by clicking File &gt; New or File &gt; Open file…\nYou can run (send to the console window) part of the code by selecting lines and pressing CTRL+ENTER or CMD+ENTER or click the Run button at the top of the script editor window. If you do not select anything, R will run the line your cursor is on.\nYou can always run the whole script with the function source()\nFor example, to run the entire saved script.R if it’s in the root directory of the working directory, type\n\nsource(\"script.R\")\n\nYou can also click Run all in the editor window or type CTRL+SHIFT+S or CMD+SHIFT+S"
+  },
+  {
+    "objectID": "importing/importing_csv.html#project-directory-habits",
+    "href": "importing/importing_csv.html#project-directory-habits",
+    "title": "Importing csv files",
+    "section": "Project directory habits",
+    "text": "Project directory habits\nYour working directory is the folder on your computer in which you are currently working. When you ask R to open a certain file, it will look in the working directory for this file, and when you tell R to save a data file or figure, it will save it in the working directory.\nBefore you start working, please set your working directory to where all your data and script files are or should be stored.\nWhen you see code in a black box throughout this class, I want you to run that code in R unless noted otherwise. You can run it in the console, I’d prefer you do so in a script so you can see your history. In the video, you’ll see me swap back and forth between coding in the console and the script. This really depends on if I’m experimenting with code quickly or if it’s something I know I should track. Often I will copy and paste code executed from the console to growing script as an afterthought. Also, be sure to read the commented out code because I try to give additional context, like tips on what to do if the command fails.\nThis is an example of setting a working directory to a manual directory on your computer.\n\n# On a mac, it'd look like this\nsetwd(\"~/projects/learn-r-journalism\")\n\n# On a PC, it might look like this\nsetwd(\"C:/Documents/learn-r-journalism\")\n\nMake sure that slashes are forward slashes and that you don’t forget the quotation marks.\nWithin RStudio, you can also set the working directory via the menu Tools &gt; Set Working Directory\n\nThe commands above, setwd() was an example of setting an absolute folder.\nThis works for you for the purposes of this class, but if you wanted to share your methodology and script in the future or if you wanted to save run the code on another computer it would likely not work because it would be looking through a folder structure that doesn’t exist on any computer except the one where the original script was written. This is not ideal for reproducibility.\nWorking directories are a tough concept. If you’re curious about learning the BEST method for setting up directories for each project you’re working on, I’ve got some documentation.\nAlso, if you’re still curious, I follow this structure for all my R projects."
+  },
+  {
+    "objectID": "importing/importing_csv.html#syntax",
+    "href": "importing/importing_csv.html#syntax",
+    "title": "Importing csv files",
+    "section": "Syntax",
+    "text": "Syntax\nYou must follow pretty specific syntax rules for it to work. R won’t guess for you.\n\n\nR is case-sensitive (unlike SQL) intepreted language (unlike C)\nCan enter commands at prompt &gt; or in batch\nComments are preceded by #\n\nThis is important to use often in your code for documentation\nYou’ll see it often in this course\n\nStatements are lines of code such as functions and object assignments\n\nEnters in code (as in a new line) or semi-colons will separate statements"
+  },
+  {
+    "objectID": "importing/importing_csv.html#libraries",
+    "href": "importing/importing_csv.html#libraries",
+    "title": "Importing csv files",
+    "section": "Libraries",
+    "text": "Libraries\nOne of the many benefits of R is that it is open source and free. This means users like you and me can create code that we use code that people in the data community created to make everyone’s lives easier.\nThese shared code snippets can help you do something as simple as combining spreadsheets in a folder or something as complicated as seasonally adjusting data in a time series.\nThey are organized in so-called packages or libraries.\nYou can do a lot of statistical analysis in R without any additional libraries— this is called base R.\nBut other users have created libraries with functions that solve common problems. R package users download only the libraries that they need for an individual project.\nTo get a list of all installed packages, go to the packages window or type library() in the console window. If the box in front of the package name is ticked in the packages window, the package is loaded and the functions within it are ready to be called.\nThere are many more packages available on the R website. If you want to install and use a package (for example, the packaged called “dplyr”) you should:\n\nInstall the package: click install packages in the packages window and type dplyr or type install.packages(\"dplyr\") in the console window.\nLoad the package: Check box in front of dplyr or type library(\"dplyr\") in the console window."
+  },
+  {
+    "objectID": "importing/importing_csv.html#common-r-commands",
+    "href": "importing/importing_csv.html#common-r-commands",
+    "title": "Importing csv files",
+    "section": "Common R commands",
+    "text": "Common R commands\nR can be used as a calculator.\nJust type an equation in the console window after the &gt;\nIn those code sections, the code preceded by ## is the output of the code from the lines above.\nPlease type in 10^2 + 26 into the R environment below and click Run code.\n\n\n\n\n\n\n\n\n\n\n\n\nWorkspace\nYou can give numbers a name.\nBy doing so, they become so-called variables which can be used later.\nYou can assign values to an object name with either a = or &lt;-.\nThe command below sets 4 as a.\n\n\n\n\n\n\n\n\na is now saved up in the Environment tab in RStudio.\n\nYou can do calculations with a now.\nTry multiplying a with any number.\na * _\n\n\n\n\n\n\n\n\nIf you specify a again, it will forget what value you had before because you did not assign it to anything.\n\n\n\n\n\n\n\n\nYou can also assign a value to a using the old one\n\n\n\n\n\n\n\n\nTo remove all variables from R’s memory, type\n\n\n\n\n\n\n\n\nor click the “clear all” broom button in the work space window."
+  },
+  {
+    "objectID": "importing/importing_csv.html#objects-in-r",
+    "href": "importing/importing_csv.html#objects-in-r",
+    "title": "Importing csv files",
+    "section": "Objects in R",
+    "text": "Objects in R\n\nScalars and vectors\nLike in many other programs, R organizes numbers in scalars (a single number 0-dimensional), vectors (a row of numbers, also called arrays - `-dimensional) and matrices (which we won’t get into now).\nThe a you defined was scalar.\nTo define a vector with the numbers 3,4, and 5, you need the function c() which is short for concatenate (or paste together)."
+  },
+  {
+    "objectID": "importing/importing_csv.html#functions",
+    "href": "importing/importing_csv.html#functions",
+    "title": "Importing csv files",
+    "section": "Functions",
+    "text": "Functions\nIf you would like to compute the mean of all the elements in the vector b from the example above, you could type\nPlease type out (300+4000+50)/3 in the code tester below:\n\n\n\n\n\n\nBut when the vector is very long, this is very boring and time-consuming work.\nFunctions do things to data. R is built on them. Some functions come with R, like median() or summary() and others come as part of packages that others have created.\nWhen you use a function to compute an average, you’ll type\n\nmean(x=b)\n\nWithin the brackets you specify the arguments.\nArguments give extra information to the function. In this case, the argument x says of which set of numbers (vector) the mean should computed (namely of b).\nSometimes the name of the argument is not necessary:\n\n\n\n\n\n\n\n\nAlso works."
+  },
+  {
+    "objectID": "importing/importing_csv.html#plots",
+    "href": "importing/importing_csv.html#plots",
+    "title": "Importing csv files",
+    "section": "Plots",
+    "text": "Plots\nR can make simple graphics right away.\n\n\n\n\n\n\n\n\n\nIn the first line, 100 random numbers are assigned to the variable x, which becomes a vector by this operation.\nIn the second line, all these values are plotted in the plot window."
+  },
+  {
+    "objectID": "importing/importing_csv.html#not-available-data",
+    "href": "importing/importing_csv.html#not-available-data",
+    "title": "Importing csv files",
+    "section": "Not available data",
+    "text": "Not available data\nWhen you work with real data, you will encounter missing values because instrumentation failed or human error.\nWhen a data is not available, you’ll often find an NA instead of a number.\n\n\n\n\n\n\n\n\nComputing statistics of incomplete data sets is strictly not possible.\nmaybe the largest value occurred during the weekend when you didn’t measure. Therefore, R will say that it doesn’t know what the largest value of j is\n\n\n\n\n\n\n\n\nIf you don’t mind about the missing data and want to compute the statistics anyway, you can add the argument na.rm=TRUE (Should I remove the NAs? Yes)\n\nmax(j, na.rm=T)\n\nNAs will also affect any sort of math if you’re not careful\n\n\n\n\n\n\n\n\nHere are some links on how to handle NAs in your data"
+  },
+  {
+    "objectID": "importing/importing_csv.html#base-r-versus-tidyverse",
+    "href": "importing/importing_csv.html#base-r-versus-tidyverse",
+    "title": "Importing csv files",
+    "section": "Base R versus Tidyverse",
+    "text": "Base R versus Tidyverse\nI will often mention “Base R” and “Tidyverse” throughout the course.\nBase R is what you get when you install R and don’t install anything extra.\nEverything you do in Tidyverse– the importing and wrangling of data, as well as the visualizations– can be done with Base R. It’s just older, the syntax is trickier, and it unfortunately has huge learning curve.\nFor the purposes of this class, you’ll learn just enough Base R to get things done but we’ll spend most of our time using functions in packages that have since been created by users to make our lives easier and have a good history of support from their creators."
+  },
+  {
+    "objectID": "chjr.html",
+    "href": "chjr.html",
+    "title": "chjr",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "chjr.html#quarto",
+    "href": "chjr.html#quarto",
+    "title": "chjr",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#intro",
+    "href": "wrangling/explore_arrange.html#intro",
+    "title": "Exploring, arrange, count",
+    "section": "Intro",
+    "text": "Intro\nIn this lesson, we’re going to start exploring data with the package dplyr.\n\nIt’s designed to work with data frames, which is what journalists are used to\nGreat for data exploration and transformation\nIntuitive to write and easy to read, especially when using the “chaining” syntax of pipes\n\nThese are the functions/data analysis verbs we’ll be going over:\n\nfilter()\nselect()\narrange()\nmutate()\nsummarize() plus group_by()\n\nFirst, let’s bring in the data.",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#importing",
+    "href": "wrangling/explore_arrange.html#importing",
+    "title": "Exploring, arrange, count",
+    "section": "Importing",
+    "text": "Importing\nWe’re going to play around with historical FEMA disaster declaration data.\nFirst steps when analyzing data in R.\nBring in the appropriate packages.\nLet’s start out with tidyverse which is a suite of packages that are consistently used to import, wrangle, and visualize data. It’s one package that installs, like nearly a dozen other ones such as readr, dplyr, tidyr and ggplot2. The lubridate package is for dealing with dates.\nAnd we’ll also need to bring the data in.\nYou can download it and import it locally, but if it’s a csv, you can just link to it and R will download it for you in the function.\nUse the function from the readr package to import the csv from the URL. (This will take several moments to download, it’s a big file)\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction starts with an r. two words separated with a “_”\n\n\n\n\n\n\nlibrary(dplyr)\nlibrary(readr)\nlibrary(lubridate)\n\n#https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2\ndf &lt;- read_csv(\"https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv\")\nlibrary(dplyr)\nlibrary(readr)\nlibrary(lubridate)\n\n#https://www.fema.gov/openfema-data-page/disaster-declarations-summaries-v2\ndf &lt;- read_csv(\"https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv\")",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#exploring-steps",
+    "href": "wrangling/explore_arrange.html#exploring-steps",
+    "title": "Exploring, arrange, count",
+    "section": "Exploring steps",
+    "text": "Exploring steps\nWhat to do when you first get a data set? Poke around and see what you’re working with.\nUse the function on the df object you imported into your R environment.\nWe want to look at all the columns available to work with in the data. In Excel, you could just open up the file and click and scroll around but this time we want to do it within the R environment.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nStarts with a g Also, don’t forget that functions need parentheses.\n\n\n\n\n\n\nglimpse(df)\nglimpse(df)",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#range",
+    "href": "wrangling/explore_arrange.html#range",
+    "title": "Exploring, arrange, count",
+    "section": "Range",
+    "text": "Range\nAlright, we know that there are 28 different columns and more than 67,000 rows (each one a different disaster declaration) in this data set. That’s a lot to work with!\nWe also see in the &lt;&gt; what type of data is within each of the columns (you can’t mix).\n\n&lt;chr&gt; for characters or strings\n&lt;dbl&gt; for numbers\n&lt;dttm&gt; for date times\n\nSo glimpse() only gave us a sample of the first few values in each column.\nNext, we can drill down into individual columns we’re interested in.\nincidentBeginDate could be useful if we want to track incidents overtime.\nWe should check how far back and how recent the incidents are.\nUse a function on the df object to determine the range of dates for incidents.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction starts with an r. Also, in Base R, to focus on a single column in a data frame, you need a dollar sign between the data frame name and column name\n\n\n\n\n\n\nrange(df$incidentBeginDate)\nrange(df$incidentBeginDate)",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#table",
+    "href": "wrangling/explore_arrange.html#table",
+    "title": "Exploring, arrange, count",
+    "section": "Table",
+    "text": "Table\nDid any other columns catch your eye?\nHopefully incidentType did.\nLet’s next get a sense of what type of disasters are listed in this data set.\nIn Base R, the quick way to do this is to use the function table() around a column and data frame.\nTry using the function below on the column incidentType\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nIn Base R, you need a special character between the data frame name and column name\n\n\n\n\n\n\ntable(df$incidentType)\ntable(df$incidentType)",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#count",
+    "href": "wrangling/explore_arrange.html#count",
+    "title": "Exploring, arrange, count",
+    "section": "Count",
+    "text": "Count\nAlright, you can see Biological, Chemical, Coastal Storm, etc…\nIt might take sometime to figure out which is the most… Since it’s ordered alphabetical.\nSo table() is a quick exploratory command from Base R but if you want to save it as a dataframe, then the dplyr method is better.\nUse the count() function on df. Because we’re using a function from the dplyr library, which is part of the tidyverse suite of packages, then we don’t need to use a $ to focus on the specific column incidentType.\nThe function is structured so that the first argument in the function is always the data frame and second one is the column in the data frame, separated with a comma.\nTry the count() function here on the incidentType column of df.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nThese are how tidy functions are structured: function_name(dataframe_name, column_name)\n\n\n\n\n\n\nincident_types &lt;- count(df, incidentType)\n\nincident_types\nincident_types &lt;- count(df, incidentType)\n\nincident_types\n\n\n\n\n\n\n\n\n\nOkay, great. The default new column is named “n”.\nWe can change that by adding an extra argument to the count() function: name=\"name_of_column\"\nFill out the code below but call the new column you’re creating “total”.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nYou’re passing it a string so make sure the column name is in between quotation marks\n\n\n\n\n\n\nincident_types &lt;- count(df, incidentType, name=\"total\")\n\nincident_types\nincident_types &lt;- count(df, incidentType, name=\"total\")\n\nincident_types",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#arrange",
+    "href": "wrangling/explore_arrange.html#arrange",
+    "title": "Exploring, arrange, count",
+    "section": "Arrange",
+    "text": "Arrange\nGreat! Now we’re looking at table instead of a cluster of incident types.\nThis is much easier to scan.\nBut we’re still dealing with alphabetically sorted incidents.\nWe need to look at which disaster types have occurred most often over time.\nWe’re going to use a new function called arrange()\nWe have the new object data frame with the counts of incidents that you called incident_types.\nWe just need to use the arrange() function on the dataframe, specifically the new column you created called total.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nIs your first argument in arrange() the name of the newer dataframe you created using count()?\nAlso, you don’t need to put “total” in quotation marks this time! Because column names aren’t strings. They’re objects.\n\n\n\n\n\n\nincident_types_arranged &lt;- arrange(incident_types, total)\n\nincident_types_arranged\nincident_types_arranged &lt;- arrange(incident_types, total)\n\nincident_types_arranged\n\n\n\n\n\n\n\n\n\n\nArrange descending\nOkay, this isn’t what we wanted. This is going in ascending order, aka, least to most.\nWe need most to least!\nSo we need to adjust the arrange() function with the desc() function wrapped around the column you’re sorting on.\nYou’re nesting functions.\nAdjust your code from before but use the desc() formula, too.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nIs your first argument in arrange() the name of the newer dataframe you created using count()?\nAlso, you don’t need to put “total” in quotation marks this time! Because column names aren’t strings. They’re objects.\n\n\n\n\n\n\nincident_types_arranged &lt;- arrange(incident_types, desc(total))\n\nincident_types_arranged\nincident_types_arranged &lt;- arrange(incident_types, desc(total))\n\nincident_types_arranged\n\n\n\n\n\n\n\n\n\nGreat job!\nWe see that Severe Storms are the most-common disaster types declared.\nThen, hurricanes and floods.",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#pipes",
+    "href": "wrangling/explore_arrange.html#pipes",
+    "title": "Exploring, arrange, count",
+    "section": "Pipes",
+    "text": "Pipes\nPipes is |&gt; which represents “and then.”\nIt allows you to daisy chain functions to transform data in a more readable format. It’s very popular and more languages are implementing it. It works only if a function is structured in a way that the first argument is always the dataframe it’s altering. For example:\n\nHere’s the code that got you to this point:\n\ndf &lt;- read_csv(\"https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv\")\n\nincident_types &lt;- count(df, incidentType, name=\"total\")\nincident_types_arranged &lt;- arrange(incident_types, desc(total))",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#without-pipes",
+    "href": "wrangling/explore_arrange.html#without-pipes",
+    "title": "Exploring, arrange, count",
+    "section": "Without Pipes",
+    "text": "Without Pipes",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/explore_arrange.html#with-pipes",
+    "href": "wrangling/explore_arrange.html#with-pipes",
+    "title": "Exploring, arrange, count",
+    "section": "With Pipes",
+    "text": "With Pipes",
+    "crumbs": [
+      "Wranging Data",
+      "Exploring, arrange, count"
+    ]
+  },
+  {
+    "objectID": "wrangling/mutate_summarize.html#mutate",
+    "href": "wrangling/mutate_summarize.html#mutate",
+    "title": "Mutating and summarizing data",
+    "section": "Mutate",
+    "text": "Mutate\nAlright, so if you paginate to the right through the columns and look at declarationDate, you can see the data is VERY recent.\nOkay, let’s see if we can do some analysis on this.\nHave there been there more flood disaster declarations over time?\nWe should extract the year from the declarationDate and count those up.\nTo create a new column in a data frame, you’ll use the dplyr verb mutate().\nYou just need to name the column you want to create and then pass it some function, formula, or object.\nWe’re going to use the year() function from the lubridate package.\nThis extracts the year from a date type. Try it below.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction starts with an r. Also, in Base R, to focus on a single column in a data frame, you need a dollar sign between the data frame name and column name\n\n\n\n\n\n\nfloods_adjusted &lt;- floods |&gt; \n  mutate(year=year(declarationDate)) \n\nfloods_adjusted |&gt; \n  select(year, declarationDate)\nfloods_adjusted &lt;- floods |&gt; \n  mutate(year=year(declarationDate)) \n\nfloods_adjusted |&gt; \n  select(year, declarationDate)",
+    "crumbs": [
+      "Wranging Data",
+      "Mutating and summarizing data"
+    ]
+  },
+  {
+    "objectID": "wrangling/mutate_summarize.html#summarize",
+    "href": "wrangling/mutate_summarize.html#summarize",
+    "title": "Mutating and summarizing data",
+    "section": "Summarize",
+    "text": "Summarize\nI’ve shown you how to count up rows within groups with count().\nWhat if we wanted to go beyond counts?\nAnd maybe find the average deaths or median cost by type of disaster?\nOr we could drill down and find the average deaths by disaster broken out by state to see which one had the most?\nTo do that we’ll need to use a couple of dplyr verbs: group_by() and summarize().\nSummarizing data in R typically takes two steps: 1) Group the rows based on some value in the data, 2) Summarize those groups by counting the rows or doing math on values.\nThe Group and Summarize combo can be confusing. Here’s a video from Christian McDonald that explains it with candy.\nSo the group_by() and summarize() functions do the aggregation process in two steps.\nFirst we use group_by() to tell R which columns we want to group our data by - these are the higher level of aggregation columns so in our case will be the year of data.\nThen we need to determine the number of declarations each year. We do this using summarize(), and we’ll specify in the function that we want to do to the data. We’re going to use the n() function which is just “number of.”\nHere’s how it looks. Try using those two new functions below.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunctions starts with an g and s.\n\n\n\n\n\n\nfloods |&gt; \n  mutate(year=year(declarationDate)) |&gt; \n  group_by(year) |&gt; \n  summarize(total=n())\nfloods |&gt; \n  mutate(year=year(declarationDate)) |&gt; \n  group_by(year) |&gt; \n  summarize(total=n())\n\n\n\n\n\n\n\n\n\nYou could also add more than one variable/column to group_by(). You could do group_by(year, state) for example…",
+    "crumbs": [
+      "Wranging Data",
+      "Mutating and summarizing data"
+    ]
+  },
+  {
+    "objectID": "wrangling/mutate_summarize.html#case_when",
+    "href": "wrangling/mutate_summarize.html#case_when",
+    "title": "Mutating and summarizing data",
+    "section": "case_when()",
+    "text": "case_when()\n\nWhy didn’t we use fyDeclared?\nSome of you may be wondering why we created a new column year when we already had fyDeclared that had years as values.\nBecause that stands for Fiscal Year the disaster was declared.\nFiscal years are offset and end on September 30 because of budgetary reasons.\nSo any disasters that occur after September 30 are slotted in the next fiscal year. That’s not accurate for what we’re trying to measure.\nLet me show you how off our analysis would be if we used fyDeclared instead of creating a new column.\nWe’re going to use a dplyr function called case_when() which is used within the mutate() function.\nIt’s a powerful way to vectorize multiple if/else statements.\nWhat we want to do is create a new column called year_match that will indicate if the year column we created from declarationDate matches the value in the fyDeclared column.\nIf it matches, then mark it “Match” otherwise mark it as “Not a match”.\nThe syntax is a little tricky but check it out below.\nFill in the new function name below:\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction starts with an c.\n\n\n\n\n\n\nfloods_match &lt;- floods_adjusted |&gt; \n  mutate(year_match=\n           case_when(year==fyDeclared ~ \"Match\",\n                     TRUE ~ \"Not a match\"\n  )) |&gt; \n  group_by(year_match) |&gt; \n  summarize(total=n())\n\nfloods_match\nfloods_match &lt;- floods_adjusted |&gt; \n  mutate(year_match=\n           case_when(year==fyDeclared ~ \"Match\",\n                     TRUE ~ \"Not a match\"\n  )) |&gt; \n  group_by(year_match) |&gt; \n  summarize(total=n())\n\nfloods_match\n\n\n\n\n\n\n\n\n\nThe TRUE ~ \"Not a match\" is essentially, “if none of the criteria fit from above, then fill the rest out as ‘Not a match’”.\nSo there are more than 1,400 disasters that occurred on a fiscal year that didn’t line up with the actual year.",
+    "crumbs": [
+      "Wranging Data",
+      "Mutating and summarizing data"
+    ]
+  },
+  {
+    "objectID": "wrangling/mutate_summarize.html#pull",
+    "href": "wrangling/mutate_summarize.html#pull",
+    "title": "Mutating and summarizing data",
+    "section": "Pull",
+    "text": "Pull\nWhat’s the percent of that in the data?\nYou could just pop the numbers you generated into a calculator and come up with the value but this data set is updated regularly so the number is going to change!\nLet’s just script it out now so you can get the number really quickly in the future.\nIt’s a time investment to set it up but it’ll save you time in the long run.\nFirst, we need to take out the number for “Not a match”\nWe’ll use a function called pull() that will isolate the values from whatever column you indicate.\nTry it below.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction starts with an p.\n\n\n\n\n\n\nfloods_match_count &lt;- floods_match |&gt; \n  filter(year_match==\"Not a match\") |&gt; \n  pull(total)\n\nfloods_match_count\nfloods_match_count &lt;- floods_match |&gt; \n  filter(year_match==\"Not a match\") |&gt; \n  pull(total)\n\nfloods_match_count\n\n\n\n\n\n\n\n\n\nWe have that number isolated so let’s use that with the nrow() function you learned earlier to get the denominator you need to establish the percent.\nWe’ll also use a new function round() to get a prettier number that doesn’t have so many trailing digits after the decimal.\nIt works like this: round(4.12423212311, 1) with the first argument being the number or numbers you’re working with and the second argument is the digits after the decimal you want to keep. So the command above would give you 4.1.\nLet’s script out our math:\n\n\n\n\n\n\n\n\nAlright, we aren’t going to use this for our story because it isn’t significant or relevant to any story but it’s for our own knowledge.\nThere’s going to be so many calculations you come up with that won’t end up in the story.\nIt’s just like reporting. You gather as much research and talk to as many people as you can and then decide what’s most important.\nBut you have to do the leg work to build up that sense of confidence in what you’re writing.\n\nWhat’s the story?\nPut it all together from the beginning with pipes and verbs you’ve learned\nWhich year had the most floods declarations?\n\nExerciseSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nannual_floods &lt;- df |&gt; \n  filter(incidentType==\"Flood\") |&gt; \n  mutate(year=year(declarationDate)) |&gt; \n  group_by(year) |&gt; \n  summarize(total=n()) |&gt; \n  arrange(desc(total))\n\nannual_floods\nannual_floods &lt;- df |&gt; \n  filter(incidentType==\"Flood\") |&gt; \n  mutate(year=year(declarationDate)) |&gt; \n  group_by(year) |&gt; \n  summarize(total=n()) |&gt; \n  arrange(desc(total))\n\nannual_floods",
+    "crumbs": [
+      "Wranging Data",
+      "Mutating and summarizing data"
+    ]
+  },
+  {
+    "objectID": "visualizing/exploratory_viz.html#putting-it-all-together",
+    "href": "visualizing/exploratory_viz.html#putting-it-all-together",
+    "title": "Exploratory data visualization",
+    "section": "Putting it all together",
+    "text": "Putting it all together\nUsually we’d next go over all the different geom_ visualizations you can create using a single data set.\n\nA ggplot2 tutorial for beautiful plotting in R\n\nBut we’re going to use more real-life data that I think will be relevant to your journalism.\nThe data set is raw deaths data from San Diego. It’s a combination of 1997-2019 data from San Diego’s data portal and 2020 data from a public information request on MuckRock.\nDownloads this data san_diego.csv and place it in your project folder.\nMake sure you’ve got the proper libraries loaded.\n\nReady for the code?\n\nlibrary(tidyverse)\nlibrary(janitor)\nlibrary(lubridate)\n\nsd &lt;- read_csv(\"data/san_diego.csv\")\n\nsd &lt;- clean_names(sd)\n\nsd_adjusted &lt;- sd |&gt; \n  mutate(death_date=mdy(death_date)) |&gt; \n  mutate(month=month(death_date, label=TRUE, abbr=TRUE)) \n\n\n\n\n\n\n\n\n\nAlright, I’ve cleaned it up for you.\nThere’s some really great data here. It’s got gender, race, and several levels of manner of death stretching back to 1997 and through possibly October of 2020.\nLet’s start summarizing the data so we can start looking for trends.\n\n\nExercise 7\nCan you count up the number of deaths by manner_of_death by month and year, please?\n\n\n\n\n\n\n\n\n\n\nsd_month &lt;- sd_adjusted |&gt; \n  count(year, month, manner_of_death, name=\"deaths\") |&gt; \n  mutate(date=mdy(paste0(month, \" 1, \", year)))\n\nsd_month\nsd_month &lt;- sd_adjusted |&gt; \n  count(year, month, manner_of_death, name=\"deaths\") |&gt; \n  mutate(date=mdy(paste0(month, \" 1, \", year)))\n\nsd_month\n\n\n\n\n\n\nHint: count / deaths\n\n\n\nExercise 8\nNow, fill in the blank below to create a line chart for each type of death\n\n\n\n\n\n\n\n\n\n\nsd_month |&gt; \n  ggplot(aes(x=date, y=deaths, color=manner_of_death, group=manner_of_death)) +\n  geom_line() +\n  labs(title=\"Monthly deaths in San Diego\",\n       caption=\"Source; San Diego Medical Examiner\")\nsd_month |&gt; \n  ggplot(aes(x=date, y=deaths, color=manner_of_death, group=manner_of_death)) +\n  geom_line() +\n  labs(title=\"Monthly deaths in San Diego\",\n       caption=\"Source; San Diego Medical Examiner\")\n\n\n\n\n\nAlright, a little messy. We can see some overall growing trend in one category, but that’s it.\nPerhaps looking at the data by month is too granular. Let’s step back and aggregate by year.\n\n\nBy year\nI went ahead and created a new sd_year dataframe counting up the deaths by year (while excluding October, November, and December) so we can compare prior years to this year.\n\n\n\n\n\n\n\n\n\n\nExercise 9\nOkay, your turn to make a chart.\nMake me a faceted chart that breaks out all the individual manner_of_death into its own chart, small-multiple style.\n\n\n\n\n\n\n\n\n\n\nsd_year |&gt; ggplot(aes(x=year, y=deaths)) +\n  geom_col() +\n  facet_wrap(vars(manner_of_deaths), ncol=4)\nsd_year |&gt; ggplot(aes(x=year, y=deaths)) +\n  geom_col() +\n  facet_wrap(vars(manner_of_deaths), ncol=4)\n\n\n\n\n\nAlright, now we’re getting somewhere.\nLooks like accidents have been trending up year over year.\nIf we focus on 2020, it looks like Natural causes have increased. But it also increased in 2019.\nSuicides actually look down this year compared to prior years.\nHm…\nWhat else can we do?\nWe can try to measure Excess Deaths\nAverage each month by every year prior to 2020 and compare it to 2020’s trend line.\nI’ll give you the code again.\nWe’re going to use a function called case_when to create a new column called year_type. If the year is 2020, then it will be “2020” otherwise it will be “1997-2020”. And then we find the average number of deaths for each month for those two groups.\n\n\n\n\n\n\n\n\nLooking very smooth.\nLet’s chart it.\n\n\nExercise 10\nCan you please create a faceted line chart of the data above? But with year_type as two different lines?\nFill in the three blanks to generate the chart.\n\n\n\n\n\n\n\n\n\n\nggplot(sd_group, aes(x=month, y=avg_deaths, color=year_type, group=year_type)) +\n  geom_line() +\n  facet_wrap(vars(manner_of_death), scales=\"free_y\", ncol=2)\nggplot(sd_group, aes(x=month, y=avg_deaths, color=year_type, group=year_type)) +\n  geom_line() +\n  facet_wrap(vars(manner_of_death), scales=\"free_y\", ncol=2)\n\n\nGreat.\nNow there’s some interesting trend in July and August, right?\nAnd it shows that maybe the last month of data is so low. It’s possible that the data for the month is incomplete and should be excluded from analysis.\nHow about we come up with a number for the nutgraf of a story?\nHow many more accidental cause deaths are there in 2020 compared to the historical average?\nExclude September since it seems so off\nHere’s a look at the dataframe you can estimate this with.\n\n\n\n\n\n\n\n\nWhat code do you put below to fill out this sentence:\n“There were X% more accidental deaths in 2020 so far than the historical average in San Diego”\nhint: you’ll need filter(), pivot_wider(), group_by(), summarize(), mutate(), and math\n\n\n\n\n\n\n\n\nGood job!\n\n\nFurther exploratory visual analysis\nAlright, comparing 2020 to the average from previous years seems to be a good decision.\nSome interesting trends that we could actually write about are surfacing.\nLet’s compare that overall instead of by month.\nHere’s the code. We’re also excluding September based on what we discovered in the chart above.\n\n\n\n\n\n\n\n\n\n\nExercise 11\nRun the code below with manner_of_death as x and avg_deaths as y.\nThen swap them.\nWhich do you prefer and why?\n\n\n\n\n\n\n\n\n\n\nggplot(sd_group_compare, aes(x=manner_of_death, y=avg_deaths, fill=year_type)) +\n  geom_bar(position=\"dodge\", stat=\"identity\") \nggplot(sd_group_compare, aes(x=manner_of_death, y=avg_deaths, fill=year_type)) +\n  geom_bar(position=\"dodge\", stat=\"identity\") \n\n\n\n\n\nAlright, before we go, I want to clean things up some.\nI want to get rid of the manners of death that have barely any and I want to reorder the labels so that it’s in alphabetical order.\n\n\nExercise 12\nTake a look at the code below. Absorb it.\nThen generate the code and see what pops up.\n\n\n\n\n\n\n\n\n\n\nStory\nSo, what do you think the story is?\nIn San Diego, accidents are way up, suicides are slightly up, and meanwhile homicides are down.\nWhat can we do next?\nWell, dig into the accidents, perhaps, and see if there’s any explanation for the huge increase.\nAlright, congratulations on going on this exploratory data visualization journey.\nSome of the answers won’t appear right away unless you poke around and look at the data in as many ways as possible.",
+    "crumbs": [
+      "Visualizing Data",
+      "Exploratory data visualization"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "tidying/joining.html#intro",
+    "href": "tidying/joining.html#intro",
+    "title": "Joining data",
+    "section": "Intro",
+    "text": "Intro\nWe’ve done some basic exploring of the FEMA disaster declaration data.\nBut there are only so many different ways to slice the data based on the variables in the original data set.\nSo we have to be creative and think of what other variables we can add.\nLast time, we added some decades categories using the case_when() and mutate() functions.\nBut let’s go even further by adding an additional data set.\nLet’s bring in county population data from the U.S. Census so we can estimate how many people were affected by different disasters.\nFor this exercise, the data’s already pre-loaded but these are the commands to bring it in yourself using the excellent package called tidycensus (you’ll need to sub in your own Census API key). Usually, you’d have to search for and download this from data.census.gov and do some manual cleaning up before using. But using this package that interfaces with the Census API using the lines of code below gives you the data cleaned up and in a tidy format.\n\n# this is the code to bring in the data but it's already preloaded in this tutorial\nlibrary(tidycensus)\ncensus_api_key(\"API_KEY_GOES_HERE\")\n\ncounty_pop &lt;- get_acs(geography=\"county\", variables=\"B01003_001\", year=2022)\n\nLet’s take a moment to talk about the significance of tidy data. It’s the prefix to a lot of the packages and functions we’re using in this class. But it’s also a philosophy when approaching the structure of data.\nThere’s an ideal structure for how to stack your data.\nAnd that’s with\n\nEach variable is in its own column\nEach case is in its own row\nEach value is in its own cell\n\nLet’s take a look at the new county_pop data frame we imported from the Census API.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe function starts with a g\n\n\n\n\n\n\nglimpse(county_pop)\nglimpse(county_pop)\n\n\n\n\n\n\n\n\n\nPay attention to the column names and what kind of data is in each column.\nNext, let’s take a look at our original FEMA data set.\n\n\n\n\n\n\n\n\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe function starts with a g\n\n\n\n\n\n\nglimpse(df)\nglimpse(df)\n\n\n\n\n\n\n\n\n\nIn each data set, which columns share the most similarity for locations?\n\nmutable ok_reponse2 = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse2 = Inputs.radio(\n  new Map([\n    [\"GEOID in df and placeCode in county_pop\", 1],\n    [\"designatedArea in df and NAME in county_pop\", 2],\n    [\"variable in county_pop and id in df\", 3],\n    [\"estimate in county_pop and disasterNumber in county_pop\", 4]\n  ])\n);\nok_reponse2(reponse2, 2);",
+    "crumbs": [
+      "Tidying Data",
+      "Joining data"
+    ]
+  },
+  {
+    "objectID": "tidying/joining.html#joins",
+    "href": "tidying/joining.html#joins",
+    "title": "Joining data",
+    "section": "Joins",
+    "text": "Joins\nA join combines two data sets by adding the columns of one data set alongside the columns of the other, usually some of the rows of the second data set along with some rows of the first data set.\nA successful join requires something consistent between two data sets to match on: keys.\nThe function that’s used most often is left_join() because you have one main data set you’d like to supplement with additional columns.\nHere’s how that looks in action:\n\n\n\n\n\n\n\n\n\nThe function works like this:\nIf the two data frames you want to join have the same name:\nleft_join(data_frame1, data_frame2, by=\"shared_column_name\")\nIf the two data frames you want to join have different names:\nleft_join(data_frame1, data_frame2, by=c(\"df1_column\"=\"df_2_column\"))\nNotice that the c() argument in the second example is different from how we’ve used it before as combine. The = column matching operator is specific to _join() functions. Type ?left_join() in the R console to see all the other arguments you can use.\nNow there are a few other joins that have their uses.\n\nright_join()\nfull_join()\nsemi_join()\nanti_join()\n\nSo let’s try to create a new dataframe object starting with the disaster declarations of df.\nIf you looked at the two dataframes in the last exercise, you saw that there were similarities in the county names.\n\n\n\n\n\n\n\n\nTry the left_join() function below using the correct syntax and columns you identified.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nLook at the example on how to join data frames with different column names above.\n\n\n\n\n\n\njoined &lt;- left_join(df, county_pop, by=c(\"designatedArea\"=\"NAME\"))\n                    \nglimpse(joined)              \njoined &lt;- left_join(df, county_pop, by=c(\"designatedArea\"=\"NAME\"))\n                    \nglimpse(joined)              \n\n\n\n\n\n\n\n\n\nAlright, did this work?\nWe started out with 24 columns in df and now have 28 in the newly created joined data frame.\nSo columns were added. But did the data come with it?\nWhen you scroll to the bottom of the glimpse() output you see a bunch of NAs.\n\n\n\n\n\n\n\n\n\n\nSo what happened?\nlet’s take a closer look at the first five data points in the two columns we joined on:\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nDon’t forget the operator that represents “through”\n\n\n\n\n\n\ndf |&gt; \n  select(designatedArea) |&gt; \n  slice(1:5) |&gt; \n  pull(designatedArea)\n\ncounty_pop |&gt; \n  select(NAME) |&gt; \n  slice(1:5) |&gt; \n  pull(NAME)\ndf |&gt; \n  select(designatedArea) |&gt; \n  slice(1:5) |&gt; \n  pull(designatedArea)\n\ncounty_pop |&gt; \n  select(NAME) |&gt; \n  slice(1:5) |&gt; \n  pull(NAME)\n\n\n\n\n\n\n\n\n\nAlright, so even though they both contain county names the syntax is completely different.\nThe df data frame has parentheses around “County” and the county_pop data frame has a comma followed by the state names.\nThis is why the join ultimately failed.\nIt’s quite deceptive. You ran the code and didn’t get an error.\nThis is why it’s so important to get into the habit of checking for NAs after a join or inspecting the new data frame.\nFailed joins have thrown off many data analyses and will continue to do so.\nHow to join these data sets\nThe best way to join data is using a uniform identification number.\nFor the Census, they have standardized county numbers called GEOIDS. These geographical entities also exist for census tracts and states and other Census boundaries.\nSo the county_pop data frame has a column called GEOID – that’s perfect!\nIt looks like df has a column called fipsCountyCode but if you joined on those two columns, you’d still fail.\nThat’s because GEOID in county_pop is 5 characters wide and fipsCountyCode in df is 3 characters wide.\nData is rarely ready to join straight out the box.\nIt will take some more wrangling to get these data sets to join.\nIf you’ve had some experience with working with Census data then you know a county GEOID has 5 characters.\nTherefore we need to transform fipsCountyCode in df by adding fipsStateCode in front of it.\nTo do that, we’ll use a new function from a new package, stringr.",
+    "crumbs": [
+      "Tidying Data",
+      "Joining data"
+    ]
+  },
+  {
+    "objectID": "tidying/joining.html#stringr-intro",
+    "href": "tidying/joining.html#stringr-intro",
+    "title": "Joining data",
+    "section": "stringr intro",
+    "text": "stringr intro\nThere are many wonderful functions in the stringr package that you do things like detect patterns, see if strings start with with a pattern, or split or join or substitute strings.\nIn this instance, we need to combine strings.\nWe’ll use the str_c() function. Get it? It’s short for String Combine.\nUsing mutate() we’ll also name the new column the same one in the county_pop so it’s easier to join.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction starts with an s.\n\n\n\n\n\n\ndf_new &lt;- df |&gt; \n  mutate(GEOID=str_c(fipsStateCode, fipsCountyCode))\n\ndf_new |&gt; \n  select(fipsStateCode, fipsCountyCode, GEOID) |&gt; \n  glimpse()\ndf_new &lt;- df |&gt; \n  mutate(GEOID=str_c(fipsStateCode, fipsCountyCode))\n\ndf_new |&gt; \n  select(fipsStateCode, fipsCountyCode, GEOID) |&gt; \n  glimpse()\n\n\n\n\n\n\n\n\n\nAlright! Now let’s join df_new and county_pop like before.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nLook at the example on how to join data frames with different column names above.\n\n\n\n\n\n\njoined_new &lt;- left_join(df_new, county_pop, by=\"GEOID\")\n                    \nglimpse(joined_new)              \njoined_new &lt;- left_join(df_new, county_pop, by=\"GEOID\")\n                    \nglimpse(joined_new)              \n\n\n\n\n\n\n\n\n\nAha! We did it!\nLet’s do some quick analysis on it.",
+    "crumbs": [
+      "Tidying Data",
+      "Joining data"
+    ]
+  },
+  {
+    "objectID": "tidying/joining.html#summarize",
+    "href": "tidying/joining.html#summarize",
+    "title": "Joining data",
+    "section": "Summarize",
+    "text": "Summarize\nNow that we have population data with every declared disaster, let’s see which 5 disaster type affected the most people in 2021 (sorted high to low).\nFill in the missing code.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis is a summation of all the functions you’ve used so far!\n\n\n\n\n\n\njoined_new |&gt; \n  mutate(year=year(incidentBeginDate)) |&gt; \n  filter(year==2021) |&gt; \n  group_by(incidentType) |&gt; \n  summarize(population=sum(estimate, na.rm=T)) |&gt; \n  arrange(desc(population)) |&gt; \n  slice(1:5)\njoined_new |&gt; \n  mutate(year=year(incidentBeginDate)) |&gt; \n  filter(year==2021) |&gt; \n  group_by(incidentType) |&gt; \n  summarize(population=sum(estimate, na.rm=T)) |&gt; \n  arrange(desc(population)) |&gt; \n  slice(1:5)\n\n\n\n\n\n\n\n\n\n\nTypes of data\n\nCategorical variables are descriptive labels given to individual records, assigning them to different groups. The simplest categorical data is dichotomous, meaning that there are just two possible groups — in an election, for instance, people either voted, or they did not. More commonly, there are multiple categories. When analyzing traffic accidents, for example, you might consider the day of the week on which each incident occurred, giving seven possible categories.\nContinuous data is richer, consisting of numbers that can have a range of values on a sliding scale. When working with weather data, for instance, continuous variables might include temperature and amount of rainfall.\n\nWe also often need to consider date and time, which can be treated as continuous, like a sequence of years; or categorical, like the days of the week. A common task in data stories is to consider how the values for a variable or variables have changed over time.\n\n\nInterviewing data\nThe goal is to get used to asking questions of data by performing the following basic operations with the functions you’ve learned:\n\nSort: Largest to smallest, oldest to newest, alphabetical etc.\nFilter: Select a defined subset of the data.\nSummarize: Derive one value from a series of other values to produce a summary statistic. Examples include:\n\nCount. The number of records.\nSum. Add the values of a continuous variable.\nMean (aka average). The sum of values for a continuous variable divided by the count.\nMedian. The value in the middle, if the values for a continuous variable are sorted in ascending or descending order of magnitude.\nMax, Min. The largest and smallest value for a continuous value, respectively.\n\nMath: Move the summarized data into a new sheet for additional analysis\n\nOften you will group by a categorical variable first, and then summarize a continuous variable for each category.\nLet’s try to summarize a different way. We added up the population for all incident types in 2021.\nBut this time, let’s find the average and median population affected by all incident types in the entire data set.\nArrange it high to low (on avg_pop) and slice out the top 5 rows.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nthe function to find average is mean()\n\n\n\n\n\n\njoined_new |&gt; \n  group_by(incidentType) |&gt; \n  summarize(declarations=n(),\n            avg_pop=mean(estimate, na.rm=T),\n            median_pop=median(estimate, na.rm=T)) |&gt; \n  arrange(desc(avg_pop)) |&gt; \n  slice(1:5)\njoined_new |&gt; \n  group_by(incidentType) |&gt; \n  summarize(declarations=n(),\n            avg_pop=mean(estimate, na.rm=T),\n            median_pop=median(estimate, na.rm=T)) |&gt; \n  arrange(desc(avg_pop)) |&gt; \n  slice(1:5)\n\n\n\n\n\nPretty interesting, right?\nI don’t know if this could lead to a story because the top three incident types that affected the highest average amount of people occurred so rarely.\n\nNewsroom math\nNearly every news story that involves data analysis can be derived from one these formulas.\n\nDifference\n\nx - y\n\nPercent\n\nx / (x + y) * 100\n\nPercent change\n\n(new - old)/old * 100\n\nPer Capita\n\nx / population * some multiplier to raise result to a round number\n\n\nSo let’s say we want to write a story about Kentucky flooding.\nOne thing we can ask is what has changed? Have things gotten worse or have things improved?\nLet’s wrangle the data so we can easily answer that.\nWe’ll need to only compare the current months of 2022 with the past months (otherwise we’d be comparing 12 months of data in 2021 to 8 in 2022 which would be misleading).\n\njoined_new |&gt; \n  filter(state==\"KY\") |&gt; \n  filter(incidentType==\"Flood\") |&gt; \n  mutate(year=year(incidentBeginDate)) |&gt; \n  # extracting months\n  mutate(month=month(incidentBeginDate)) |&gt; \n  # only paying attention to months in current year of data set\n  filter(month %in% c(1:8)) |&gt; \n  filter(year==2020 | year==2021 | year==2022) |&gt; \n  group_by(year) |&gt; \n  summarize(declarations=n(),\n            avg_pop=mean(estimate, na.rm=T),\n            median_pop=median(estimate, na.rm=T))\n\nTo answer the quiz, use this exercise box below.\nHow many more county Flood declarations were there in Kentucky in 2021 compared to 2022?\n\nmutable ok_reponse = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse = Inputs.radio(\n  new Map([\n    [\"3\", 1],\n    [\"30\", 2],\n    [\"-19\", 3],\n    [\"-5\", 4]\n  ])\n);\nok_reponse(reponse, 2);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat’s the percent change between county flood declarations in Kentucky between 2022 and 2021?\n\nmutable ok_reponse = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse = Inputs.radio(\n  new Map([\n    [\"-60\", 1],\n    [\"60\", 2],\n    [\"50\", 3],\n    [\"-100\", 4]\n  ])\n);\nok_reponse(reponse, 2);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGreat job so far.\nBefore we try out more math we’ll need to learn more techniques to transform the data.",
+    "crumbs": [
+      "Tidying Data",
+      "Joining data"
+    ]
+  },
+  {
+    "objectID": "tidying/joining.html#newsroom-math",
+    "href": "tidying/joining.html#newsroom-math",
+    "title": "Joining data",
+    "section": "Newsroom math",
+    "text": "Newsroom math\nNearly every news story that involves data analysis can be derived from one these formulas.\n\nDifference\n\nx - y\n\nPercent\n\nx / (x + y) * 100\n\nPercent change\n\n(new - old)/old * 100\n\nPer Capita\n\nx / population * some multiplier to raise result to a round number\n\n\nSo let’s say we want to write a story about Kentucky flooding.\nOne thing we can ask is what has changed? Have things gotten worse or have things improved?\nLet’s wrangle the data so we can easily answer that.\nWe’ll need to only compare the current months of 2022 with the past months (otherwise we’d be comparing 12 months of data in 2021 to 8 in 2022 which would be misleading).\n\njoined_new |&gt; \n  filter(state==\"KY\") |&gt; \n  filter(incidentType==\"Flood\") |&gt; \n  mutate(year=year(incidentBeginDate)) |&gt; \n  # extracting months\n  mutate(month=month(incidentBeginDate)) |&gt; \n  # only paying attention to months in current year of data set\n  filter(month %in% c(1:8)) |&gt; \n  filter(year==2020 | year==2021 | year==2022) |&gt; \n  group_by(year) |&gt; \n  summarize(declarations=n(),\n            avg_pop=mean(estimate, na.rm=T),\n            median_pop=median(estimate, na.rm=T))\n\nTo answer the quiz, use this exercise box below.\nHow many more county Flood declarations were there in Kentucky in 2021 compared to 2022?\n\nmutable ok_reponse = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse = Inputs.radio(\n  new Map([\n    [\"3\", 1],\n    [\"30\", 2],\n    [\"-19\", 3],\n    [\"-5\", 4]\n  ])\n);\nok_reponse(reponse, 2);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat’s the percent change between county flood declarations in Kentucky between 2022 and 2021?\n\nmutable ok_reponse = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse = Inputs.radio(\n  new Map([\n    [\"-60\", 1],\n    [\"60\", 2],\n    [\"50\", 3],\n    [\"-100\", 4]\n  ])\n);\nok_reponse(reponse, 2);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGreat job so far.\nBefore we try out more math we’ll need to learn more techniques to transform the data.",
+    "crumbs": [
+      "Tidying Data",
+      "Joining data"
+    ]
+  },
+  {
+    "objectID": "tidying/math_pivots.html#tidyr",
+    "href": "tidying/math_pivots.html#tidyr",
+    "title": "Pivoting data",
+    "section": "tidyr",
+    "text": "tidyr\nYou need to understand the basics of math to tell a story.\nLet’s say you’re looking at this data because some local disaster occurred and you want to answer the question:\n\nAre things worse now than they were before?\nWhich place has it worst and most recently?\n\nBecause you can go visit that place and find victims to anchor the story narratively\n\n\nBeing able to come up with types of questions and answer them yourself using raw data will help you stand apart from the competition.\nBecause you’re working with raw data intended for use by an agency for one thing, you’ll need to be able to reshape the data so you can do your own analysis, which will include math (such as difference, percents, percent change, and per capita).\nOne advanced technique for transforming data you’ll learn in this section is from the tidyr package.\n\npivot_wider()\npivot_longer()\n\nNow, these used to be called gather() and spread() but the language is a bit clearer now.\nPivots in R mean something else entirely than pivots in Excel.\nIn Excel, pivot tables are used to group and summarize data.\nIn R, you pivot data as in you reshape it. This way you can do math easier across all rows.\nHere’s how it works (pay attention to the colors):\n\n\n\n\n\n\n\n\n\nLet’s start with this data that we last ended up with.\nBut this time comment comment out the second line so we include all states with floods this time.\nAnd in the 10th line, add “state” as a second argument in the group_by() option after “year”.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nUse a # to comment out. Also, you don’t need quotations around column names in group_by() unless there’s a space in the column names. Multiple arguments in group_by() are separated by a comma.\n\n\n\n\n\n\nlong_flood &lt;- joined_new |&gt; \n  filter(incidentType==\"Flood\") |&gt; \n  mutate(year=year(incidentBeginDate)) |&gt; \n  # extracting months\n  mutate(month=month(incidentBeginDate)) |&gt; \n  # only paying attention to months in current year of data set\n  filter(month %in% c(1:8)) |&gt; \n  filter(year==2020 | year==2021 | year==2022) |&gt; \n  group_by(year, state) |&gt; \n  summarize(declarations=n(),\n            avg_pop=mean(estimate, na.rm=T),\n            median_pop=median(estimate, na.rm=T))\n\nlong_flood\nlong_flood &lt;- joined_new |&gt; \n  filter(incidentType==\"Flood\") |&gt; \n  mutate(year=year(incidentBeginDate)) |&gt; \n  # extracting months\n  mutate(month=month(incidentBeginDate)) |&gt; \n  # only paying attention to months in current year of data set\n  filter(month %in% c(1:8)) |&gt; \n  filter(year==2020 | year==2021 | year==2022) |&gt; \n  group_by(year, state) |&gt; \n  summarize(declarations=n(),\n            avg_pop=mean(estimate, na.rm=T),\n            median_pop=median(estimate, na.rm=T))\n\nlong_flood\n\n\n\n\n\n\n\n\n\nOkay, we have tidy data! Each variable is in its own column. Each case is in its own row and each value is in its own cell.\nThis makes it easier to mutate and manipulate (and is also the preferable data structure for most data viz tools).\nHowever, if we wanted to compare 2020 declaration counts to 2021 and 2022 in each state, that would be difficult.",
+    "crumbs": [
+      "Tidying Data",
+      "Pivoting data"
+    ]
+  },
+  {
+    "objectID": "tidying/math_pivots.html#pivot_wider",
+    "href": "tidying/math_pivots.html#pivot_wider",
+    "title": "Pivoting data",
+    "section": "pivot_wider()",
+    "text": "pivot_wider()\nSo we need to turn this long data into wide data using pivot_wider()\nYou need to identify what column you want to pull the new column names from and which column the values are stored in (“year” and “declarations” respectively. In this specific circumstance (“pivot_”) you’ll need to put the column names in quotation marks.\nWe’ll also need to drop the avg_pop and median_pop columns or else the pivot will fail.\nTo drop columns, you use the - subtract sign in the select() function.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nIn this instance, you do need to put the column names in quotation marks.\n\n\n\n\n\n\nwide_flood &lt;- long_flood |&gt; \n  select(-avg_pop, -median_pop) |&gt; \n  pivot_wider(names_from=\"year\",\n              values_from=\"declarations\")\n\nwide_flood\nwide_flood &lt;- long_flood |&gt; \n  select(-avg_pop, -median_pop) |&gt; \n  pivot_wider(names_from=\"year\",\n              values_from=\"declarations\")\n\nwide_flood\n\n\n\n\n\n\n\n\n\nGreat job! We can clearly see most states had flooding in only one year.\nKentucky had 50 in 2021 and 20 in 2022 (Okay, the number may change in 2022 depending on when you pull this data and how unlucky Kentucky continues to be).\nWe knew that from our last section but now we can see that it’s the only state that had floods in both years.\nBut we can now answer one of our questions:\n\nWhich place has it worst and most recently?\n\nIf you paginate through the results you’ll see one state in particular went from no floods in 2021 to 19 in 2022.\nNext, we can use summarize() and mutate() to do some math to answer our first question:\n\nAre things worse now than they were before?\n\nNote: Because the column names we care about starts with a number, we need to surround the column names like `this` in the code. The key to the left of the 1 on the keyboard. This is also what you’d have to do if the column names had spaces in them.\nAdd up all the floods by year with summarize and then add a column that calculates the percent change between 2022 and 2021.\nDon’t forget to add the argument that ignores any NA values in the sum() formula.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe formula for percent change is (new-old)/old*100. Also remember the differences between aggregating a data frame and adding a column to an existing data frame.\n\n\n\n\n\n\nflood_percent_change &lt;- wide_flood |&gt; \n  summarize(`2020`=sum(`2020`, na.rm=T),\n            `2021`=sum(`2021`, na.rm=T),\n            `2022`=sum(`2022`, na.rm=T)) |&gt; \n  mutate(percent_change=(round((`2022`-`2021`)/`2021`*100,1)))\n\nflood_percent_change\nflood_percent_change &lt;- wide_flood |&gt; \n  summarize(`2020`=sum(`2020`, na.rm=T),\n            `2021`=sum(`2021`, na.rm=T),\n            `2022`=sum(`2022`, na.rm=T)) |&gt; \n  mutate(percent_change=(round((`2022`-`2021`)/`2021`*100,1)))\n\nflood_percent_change",
+    "crumbs": [
+      "Tidying Data",
+      "Pivoting data"
+    ]
+  },
+  {
+    "objectID": "tidying/math_pivots.html#pivot_wider-multiple",
+    "href": "tidying/math_pivots.html#pivot_wider-multiple",
+    "title": "Pivoting data",
+    "section": "pivot_wider() multiple",
+    "text": "pivot_wider() multiple\nWhat’s really powerful about pivot_wider() is the option to be able to draw values from more than one column.\nAdjust the code below:\n\nDelete the -avg_pop argument in line 2 (and the comma)\nin values_from, instead of “declarations” type in `c(“declarations”, “avg_pop”)\n\nSee what happens. Also, type it in, don’t copy and paste otherwise you’ll run into syntax issues.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nBe careful about syntax. Also, you still want to pull names from “year”\n\n\n\n\n\n\nwide_flood_more &lt;- long_flood |&gt; \n  select(-median_pop) |&gt; \n  pivot_wider(names_from=\"year\",\n              values_from=c(\"declarations\", \"avg_pop\"))\n\nwide_flood_more\nwide_flood_more &lt;- long_flood |&gt; \n  select(-median_pop) |&gt; \n  pivot_wider(names_from=\"year\",\n              values_from=c(\"declarations\", \"avg_pop\"))\n\nwide_flood_more\n\n\n\n\ngradethis::grade_this_code()\ngradethis::grade_this_code()\n\n\n\n\n\n\nYou’ll have to paginate a bit but you can see that the declarations and average are now prefixes to the _2021 etc years.\nYou could also bring in the median values this way if you want.\nOkay, now that we know how to make long data to wide, let’s convert wide data to long.",
+    "crumbs": [
+      "Tidying Data",
+      "Pivoting data"
+    ]
+  },
+  {
+    "objectID": "tidying/math_pivots.html#pivot_longer",
+    "href": "tidying/math_pivots.html#pivot_longer",
+    "title": "Pivoting data",
+    "section": "pivot_longer()",
+    "text": "pivot_longer()\nSometimes you’ll get data that looks like this:\n\n\n\n\n\n\n\n\nThese are the declared fire disasters in each county since 1956.\nA state or column in one row and every column after is a different year of data.\nThis is not tidy data. Every year should be its own row. This is fine if we want to calculate changes between individual years.\nBut if we wanted to visualize this, we’d need to transform it long.\nWe want to increase the number of rows and decrease the number of columns.\nWe’ll use the pivot_longer() function which needs:\n\nWhat columns to focus on cols=\nWhat to name the column with the names of the columns names_to=\nWhat to name the column with the values values_to=\n\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nMake sure you name the arguments correctly.\n\n\n\n\n\n\nfires_wide |&gt; \n  pivot_longer(cols=`1967`:`2022`,\n               names_to=\"year\",\n               values_to=\"declarations\")\nfires_wide |&gt; \n  pivot_longer(cols=`1967`:`2022`,\n               names_to=\"year\",\n               values_to=\"declarations\")\n\n\n\n\n\n\n\n\n\nAlright! We did it!\nYou now have a handle on all the biggest verbs used to wrangle and transform data.\nThere are many more functions that do more specific things, of course.\nBut this will hopefully get you started on your way. Everything else you may have questions on how to do has probably been asked and answered out in the R online community.",
+    "crumbs": [
+      "Tidying Data",
+      "Pivoting data"
+    ]
+  },
+  {
+    "objectID": "tidying/index.html",
+    "href": "tidying/index.html",
+    "title": "chjr2024",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "USC Center for Health Data Journalism R lessons",
+    "section": "",
+    "text": "Andrew Ba Tran andrew.tran@washpost.com and John Harden john.harden@washpost.com",
+    "crumbs": [
+      "USC Center for Health Data Journalism R lessons"
+    ]
+  },
+  {
+    "objectID": "index.html#getting-started",
+    "href": "index.html#getting-started",
+    "title": "USC Center for Health Data Journalism R lessons",
+    "section": "Getting Started",
+    "text": "Getting Started\nLearning to code with a language like R takes some time and effort on your part. We’ll be covering a lot of foundation material this week, and sometimes this can feel like a firehouse of obscure information (e.g. what is an atomic vector and how is that different from a list) that you don’t know what to do with yet. If you feel that way, that’s OK! You will most likely have to go back and look this stuff up again. But it will help you get started today as we start flexing those coding muscles. This site is a resource for you to refer back to.\nYou should expect to feel some frustration, because everybody does. Frustration is OK so long as you can persevere through it. When you finally solve the problem and your code works it’s a GREAT feeling.",
+    "crumbs": [
+      "USC Center for Health Data Journalism R lessons"
+    ]
+  },
+  {
+    "objectID": "index.html#get-the-files",
+    "href": "index.html#get-the-files",
+    "title": "USC Center for Health Data Journalism R lessons",
+    "section": "Get the files",
+    "text": "Get the files",
+    "crumbs": [
+      "USC Center for Health Data Journalism R lessons"
+    ]
+  },
+  {
+    "objectID": "index.html#before-we-move-on-run-these-lines-in-console",
+    "href": "index.html#before-we-move-on-run-these-lines-in-console",
+    "title": "USC Center for Health Data Journalism R lessons",
+    "section": "Before we move on, run these lines in console",
+    "text": "Before we move on, run these lines in console\ninstall.packages(c(\"usethis\", \"tidyverse\", \"remotes\"))\n\nusethis::use_course(\"https://github.com/r-journalism/chjr_24_class/archive/master.zip\")\nThis will download the class files that will accompany the in-person part of the course.\n\nDay 1: Intro to R and RStudio\n\nSlides\nIntro to R and RStudio\nSyntax and R Basics\nImporting, exporting data\n\n\n\nDay 2: Wrangling data\n\nSlides\nExploring, arrange, count\nFilter, Select\nMutating and summarizing data\n\n\n\nDay 3: Transforming data\n\nSlides\nJoining data\nPivoting data\n\n\n\nDay 4: Visualizing data\n\nSlides\nVisualizing data\nExploratory data visualization\n\n\n\nPractice\n\nTo practice creating and working with vectors and doing simple variable assignment, use R-Basics.Rmd\nTo practice importing and the basics of data analysis (sorting, filtering, aggregating), use Importing-and-intro-to-data-analysis.Rmd\n\n\n\nResources\n\nSlideshow of R Basics\nSlideshow of Wrangling Data\nSlideshow of Tidying data\nSlideshow of Vizualizing data\nTidyverse documentation: We’ll be referring back to this a lot. Get used to reading documentation; it’s an important skill!\npractice scripts: There are exercises in the practice folder that you can work on your own time\nweird ggplots\nggplot2 code gallery",
+    "crumbs": [
+      "USC Center for Health Data Journalism R lessons"
+    ]
+  },
+  {
+    "objectID": "visualizing/viz.html#data-introduction",
+    "href": "visualizing/viz.html#data-introduction",
+    "title": "Visualizing data",
+    "section": "Data Introduction",
+    "text": "Data Introduction\nBefore we begin, let’s bring in the data we’ve been working with.\n\ndf &lt;- read_csv(\"https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv\")\n\ndf_new &lt;- df |&gt; \n  mutate(GEOID=str_c(fipsStateCode, fipsCountyCode))\n\ncounty_pop &lt;- read_csv(\"data/county_population.csv\")\n\njoined_new &lt;- left_join(df_new, county_pop, by=\"GEOID\") |&gt; \n  mutate(year=year(incidentBeginDate))\n\nLet’s take a look at what were working with. Check out joined_new with the usual function we use:\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction starts with an g.\n\n\n\n\n\n\nglimpse(joined_new)\nglimpse(joined_new)\n\n\n\n\n\n\n\n\n\nOkay, let’s transform the data like we did before.\nCan you count up how many disasters there have been per year? Not total disasters. Individual disasters.\nCall the new column “total”.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nYou only need to add one new line. The function starts with a c and don’t forget to name the column you’re creating. year should be the second argument in the function.\n\n\n\n\n\n\nannual_disasters &lt;- joined_new |&gt; \n  count(incidentType, year, name=\"total\") \n  \nannual_disasters\nannual_disasters &lt;- joined_new |&gt; \n  count(incidentType, year, name=\"total\") \n  \nannual_disasters\n\n\n\n\n\n\n\n\n\nAlright, we’ve got a lot of data going back decades.\nThe benefit of working quickly with data in R is how you can quickly visualize it to spot any trends.\nLet’s do that.\nBut before we do, let’s create another data frame specifically for fires.\nFilter incidentType for “Fire”, please.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe function starts with a f and don’t forget ==\n\n\n\n\n\n\nannual_fires &lt;- annual_disasters  |&gt; \n  filter(incidentType==\"Fire\")\n\nannual_fires\nannual_fires &lt;- annual_disasters  |&gt; \n  filter(incidentType==\"Fire\")\n\nannual_fires",
+    "crumbs": [
+      "Visualizing Data",
+      "Visualizing data"
+    ]
+  },
+  {
+    "objectID": "visualizing/viz.html#grammar-of-graphics",
+    "href": "visualizing/viz.html#grammar-of-graphics",
+    "title": "Visualizing data",
+    "section": "Grammar of Graphics",
+    "text": "Grammar of Graphics\nThe grammar of graphics lets you approach visualizations structurally, letting you combine and swap out graphical elements into figures that display data meaningfully.\nIt takes two lines of code.\nThis is what the code and chart looks like.\nRun the code below.\n\n\n\n\n\n\n\n\nBasically, every of a chart can created using these aesthetic components and mapping them:\n\nMapping data to aesthetics\nAesthetic\n\nThe visual property of a graph\nPosition, shape, color, etc.\n\nData\n\nA column in a data set\n\n\nHere’s are the core components of the chart above:\n\n\n\nData\n\n\nAesthetic\n\n\nGraphic/Geometry\n\n\n\n\nYear\n\n\nPosition (x-axis) \n\n\nColumn\n\n\n\n\nTotal disasters\n\n\nPosition (y-axis)\n\n\nPoint\n\n\n\n\nHere’s how the data was mapped in ggplot2 code from the annual_fires data frame:\n\n\n\nData\n\n\naes()\n\n\ngeom\n\n\n\n\nyear\n\n\nx\n\n\ngeom_col()\n\n\n\n\ntotal\n\n\ny\n\n\ngeom_col()\n\n\n\n\n\nggplot() template\nHere’s the dataframe called annual_fires as a reminder:\n\n\n\n\n\n\n\n\nOkay, now that you see where all the pieces come from, here’s how ggplot() works.\nAt its core you need to tell it what data you’re using, what type of visual geometry you want to use, and what variables you want represented from the data.\nImportant: We have to use + signs between each line, not |&gt;. This is because ggplot() was created before the tidyverse piping method was established.\n\n\n\n\n\n\nGrammatical layers\nWhen constructing charts, so far we know about data, aesthetics, and geometries.\nThink of these components as layers.\n\n\n\n\n\nAdd them to foundational ggplot() with +\nThese are all the arguments we can enhance the data viz with.\nChange the colors of the viz based on a column. Or the size of the shape.\nOr the opacity or the gradient.\nPossible aesthetics\n\nWe can also swap out the different geometry types.\nIf you don’t want a bar, you can use a line. Or a point.\nYou can even use shapefiles.\nPossible geoms\n\n\n\n\n\nTHERE ARE SO MANY GEOMS for different visualizations. Here are the official ones.\nTry the code from above again but this time use geom_point() and then try it with geom_line()\n\n\n\n\n\n\n\n\nYou can really start to see the power of cycling quickly through different chart styles to see which one is most effective at telling the story you want to tell.\nSo after you have the very basic elements needed to create a chart, you can build and style it with more layers.\nBecause the defaults are rarely what you want and effective dataviz comes from small decisions you make along the way.\n\n\nAdditional layers\nThere are many of other grammatical layers we can use to describe graphs.\nWe sequentially add layers onto the foundational ggplot() plot to create complex figures.\n\n\n\n\n\nScales change the properties of the variable mapping.\nHere are a few examples:\n\n\n\nExample layer\n\n\nWhat it does\n\n\n\n\nscale_x_continuous()\n\n\nMake the x-axis continuous\n\n\n\n\nscale_x_continuous(breaks = 1:5) \n\n\nManually specify axis ticks\n\n\n\n\nscale_x_date()\n\n\nConsiders x-axis dates\n\n\n\n\nscale_color_gradient()\n\n\nUse a gradient\n\n\n\n\nscale_fill_viridis_d()\n\n\nFill with discrete viridis colors\n\n\n\n\nCheck out the x-axis.\n\n\nExercise 2\nNow add scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) to the bottom of the code.\n\n\n\n\n\n\n\n\n\n\nggplot(data=annual_fires) +\n  geom_col(aes(x=year, y=total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022)\nggplot(data=annual_fires) +\n  geom_col(aes(x=year, y=total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022)\n\n\n\ngradethis::grade_this_code()\n\nfunction (check_env) \n{\n    if (is_empty_code(check_env[[\".user_code\"]])) {\n        return(grade_code_is_empty())\n    }\n    check_env[[\".__correct\"]] &lt;- correct\n    check_env[[\".__incorrect\"]] &lt;- incorrect\n    check_env[[\".__action\"]] &lt;- action\n    grade &lt;- with_options(list(gradethis.allow_partial_matching = allow_partial_matching, \n        gradethis.maybe_code_feedback = TRUE), grade_this({\n        .message &lt;- code_feedback()\n        if (is.null(.message)) {\n            if (\"pass\" %in% get(\".__action\")) {\n                pass(get(\".__correct\"))\n            }\n        }\n        else {\n            if (\"fail\" %in% get(\".__action\")) {\n                fail(get(\".__incorrect\"), hint = FALSE)\n            }\n        }\n        invisible(NULL)\n    })(check_env))\n    if (is.null(grade)) {\n        return(invisible(NULL))\n    }\n    class(grade) &lt;- c(\"gradethis_graded_this_code\", class(grade))\n    grade\n}\n&lt;bytecode: 0x11d852658&gt;\n&lt;environment: 0x11d84e6c8&gt;\n\n\nDo you see the difference at the bottom of the chart compared to the one above it?\nIt limited the scope of the x-axis so it didn’t go back to the ’50s anymore.\nAnd it specifically labeled the years 2010 through 2022.",
+    "crumbs": [
+      "Visualizing Data",
+      "Visualizing data"
+    ]
+  },
+  {
+    "objectID": "visualizing/viz.html#facets",
+    "href": "visualizing/viz.html#facets",
+    "title": "Visualizing data",
+    "section": "Facets",
+    "text": "Facets\nThe next possible layer allows for small multiples. It’s really neat.\nFacets show subplots for different subsets of data.\n\n\n\nExample layer\n\n\nWhat it does\n\n\n\n\nfacet_wrap(vars(incidentType))\n\n\nPlot for each disaster type\n\n\n\n\nfacet_wrap(vars(incidentType, year)) \n\n\nPlot for each disaster type/year\n\n\n\n\nfacet_wrap(…, ncol = 1)\n\n\nPut all facets in one column\n\n\n\n\nfacet_wrap(…, nrow = 1)\n\n\nPut all facets in one row\n\n\n\nThe table above shows all the different ways you can use facets– you can break it out by one extra variable or even two.\nWe’ll use the annual disasters this time so we have more than just the fires.\nBut we’ll filter it to hurricanes and fires and floods.\nAnd we can combine it with pipes before we use ggplot() it.\nAdd the facet_wrap() line on the variable incidentType (like the first example in the table above).\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe function starts with a f and don’t forget ==\n\n\n\n\n\n\nannual_disasters |&gt; \n  filter(incidentType %in% c(\"Hurricane\", \"Fire\", \"Flood\")) |&gt; \nggplot() +\n  geom_col(mapping=aes(x= year, y= total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) +\n  facet_wrap(vars(incidentType))\nannual_disasters |&gt; \n  filter(incidentType %in% c(\"Hurricane\", \"Fire\", \"Flood\")) |&gt; \nggplot() +\n  geom_col(mapping=aes(x= year, y= total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) +\n  facet_wrap(vars(incidentType))\n\n\n\n\n\n\n\n\n\nAlright, looks like the x-axis labels are getting a little crowded.\nWe can’t even read it!\n\nTry again!\nNow, try it with ncol=1 as an additional argument in facet_wrap()\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction starts with an f. Additional arguments in a function are separated with a comma.\n\n\n\n\n\n\nannual_disasters |&gt; \n  filter(incidentType %in% c(\"Hurricane\", \"Fire\", \"Flood\")) |&gt; \nggplot() +\n  geom_col(mapping=aes(x= year, y= total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) +\n  facet_wrap(vars(incidentType), ncol=1)\nannual_disasters |&gt; \n  filter(incidentType %in% c(\"Hurricane\", \"Fire\", \"Flood\")) |&gt; \nggplot() +\n  geom_col(mapping=aes(x= year, y= total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) +\n  facet_wrap(vars(incidentType), ncol=1)\n\n\n\n\ngrade_this_code()\ngrade_this_code()",
+    "crumbs": [
+      "Visualizing Data",
+      "Visualizing data"
+    ]
+  },
+  {
+    "objectID": "visualizing/viz.html#labels",
+    "href": "visualizing/viz.html#labels",
+    "title": "Visualizing data",
+    "section": "Labels",
+    "text": "Labels\nNow we can add more customization to the chart.\nTo make it really shine!\n\n\n\nExample layer\n\n\nWhat it does\n\n\n\n\nlabs(title = “Neat title”)\n\n\nTitle\n\n\n\n\nlabs(caption = “Something”)\n\n\nCaption\n\n\n\n\nlabs(y = “Something”)\n\n\ny-axis\n\n\n\n\nlabs(color = “Type”)\n\n\nTitle of size legend\n\n\n\n\nTitle should be “Disaster declarations since 2010”\nLabel for the x-axis should be blank (aka ““) because the years are obvious\nLabel for the y-axis should be “Total”\nCaption should be “Data: FEMA”\n\nAdd those labels below:\n\nExampleHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nYou only need to call labs() once. Within parentheses, just separate the arguments with commas. You don’t use the plus signs.\n\n\n\n\n\n\nannual_disasters |&gt; \n  filter(incidentType %in% c(\"Hurricane\", \"Fire\", \"Flood\")) |&gt; \nggplot() +\n  geom_col(mapping=aes(x= year, y= total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) +\n  facet_wrap(vars(incidentType), ncol=1) +\n  labs(\n    title = \"Disaster declarations since 2010\",\n    x = \"\",\n    y = \"Total\",\n    caption= \"Data: FEMA\"\n  )\nannual_disasters |&gt; \n  filter(incidentType %in% c(\"Hurricane\", \"Fire\", \"Flood\")) |&gt; \nggplot() +\n  geom_col(mapping=aes(x= year, y= total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) +\n  facet_wrap(vars(incidentType), ncol=1) +\n  labs(\n    title = \"Disaster declarations since 2010\",\n    x = \"\",\n    y = \"Total\",\n    caption= \"Data: FEMA\"\n  )",
+    "crumbs": [
+      "Visualizing Data",
+      "Visualizing data"
+    ]
+  },
+  {
+    "objectID": "visualizing/viz.html#themes",
+    "href": "visualizing/viz.html#themes",
+    "title": "Visualizing data",
+    "section": "Themes",
+    "text": "Themes\nChange the appearance of anything in the plot.\nWhile you can customize every font, color, gradient, etc, you can set these styles up ahead of time or use the ones others have created.\nThere are many built-in themes.\n\n\n\nExample layer\n\n\nWhat it does\n\n\n\n\ntheme_grey()\n\n\nDefault grey background\n\n\n\n\ntheme_bw()\n\n\nBlack and white\n\n\n\n\ntheme_dark()\n\n\nDark\n\n\n\n\ntheme_minimal()\n\n\nMinimal\n\n\n\nTry out the different themes listed above in the code below.\n\n\n\n\n\n\n\n\n\nMore themes\nThere are a collections of pre-built themes online, like the ggthemes package.\nOrganizations often make their own custom themes, like the BBC.\n\n\n\nTheme adjustments\nMake theme adjustments with theme()\nThere are a billion options here!\nAdd this chunk of code in the exercise below it:\n\ntheme_bw() + \ntheme(plot.title = element_text(face = \"bold\"),\n      panel.grid = element_blank(),\n      axis.title.y = element_text(face = \"italic\"))\n\n\n\nExercise 5\n\n\n\n\n\n\n\n\n\n\nannual_disasters |&gt; \n  filter(incidentType %in% c(\"Hurricane\", \"Fire\", \"Flood\")) |&gt; \nggplot() +\n  geom_col(mapping=aes(x= year, y= total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) +\n  facet_wrap(vars(incidentType), ncol=1) +\n  labs(\n    title = \"Disaster declarations since 2010\",\n    x = \"\",\n    y = \"Total\",\n    caption= \"Data: FEMA\"\n  ) +\n  theme_bw() + \n  theme(plot.title = element_text(face = \"bold\"),\n        panel.grid = element_blank(),\n        axis.title.y = element_text(face = \"italic\"))\nannual_disasters |&gt; \n  filter(incidentType %in% c(\"Hurricane\", \"Fire\", \"Flood\")) |&gt; \nggplot() +\n  geom_col(mapping=aes(x= year, y= total)) +\n  scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) +\n  facet_wrap(vars(incidentType), ncol=1) +\n  labs(\n    title = \"Disaster declarations since 2010\",\n    x = \"\",\n    y = \"Total\",\n    caption= \"Data: FEMA\"\n  ) +\n  theme_bw() + \n  theme(plot.title = element_text(face = \"bold\"),\n        panel.grid = element_blank(),\n        axis.title.y = element_text(face = \"italic\"))\n\n\n\n\n\nThese were just a few examples of layers.\n\n\n\n\n\nSee the ggplot2 documentation for complete examples of everything you can do\n\n\nDone!",
+    "crumbs": [
+      "Visualizing Data",
+      "Visualizing data"
+    ]
+  },
+  {
+    "objectID": "visualizing/index.html",
+    "href": "visualizing/index.html",
+    "title": "chjr2024",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "wrangling/index.html",
+    "href": "wrangling/index.html",
+    "title": "chjr2024",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "wrangling/filter_select.html#filter",
+    "href": "wrangling/filter_select.html#filter",
+    "title": "Filter, Select",
+    "section": "Filter",
+    "text": "Filter\nLet’s take a look at our data frame incident_types_arranged again.\n\n\n\n\n\n\n\n\nOne disaster of note after the three biggest ones is “Biological”– but I’m going to tell you now to exclude that because those are all related to Covid-19. So consider those outliers to be excluded from your analysis.\nLet’s do that now with the filter() function from dplyr.\nYou can filter based on values in a column/vector with these logical operators:\n\n\n\nOperator\nDefinition\n\n\n\n\nx &lt; y\nLess than\n\n\nx &gt; y\nGreater than\n\n\nx == y\nEqual to\n\n\nx &lt;= y\nLess than or equal to\n\n\nx &gt;= y\nGreater than or equal to\n\n\nx != y\nNot equal to\n\n\nx %in% c(y,z)\nIn a group\n\n\nis.na(x)\nIs NA\n\n\n!is.na(x)\nIs not NA\n\n\n\nEqual signs can be confusing\n\n== tests whether the objects on either end are equal. This is often used in filtering data\n= makes an object equal to a value, which is similar to &lt;- but used within a function (can’t be used in a filter).\n\nGo ahead and take the data frame incident_types_arranged and filter out Biological from the incidentType column.\nUse the != operator which means “not equal to.”\nAssign the new datframe to a new object called incident_types_arranged_filtered.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nMake sure what you’re filtering for, if a string, is in quotation marks. Otherwise, R will think you’re looking for some object that might represent something else.\n\n\n\n\n\n\nincident_types_arranged_filtered &lt;- incident_types_arranged |&gt; \n  filter(incidentType != \"Biological\")\n\nincident_types_arranged_filtered \nincident_types_arranged_filtered &lt;- incident_types_arranged |&gt; \n  filter(incidentType != \"Biological\")\n\nincident_types_arranged_filtered \n\n\n\n\n\n\n\n\n\n\nFilter multiple values\nAlright, this one’s an amazing filtering tool and you should know about it now.\nWhat if you want to filter multiple items? Well, you’d have to use Boolean logic operators such as:\n\n& means AND, in Boolean logic\n| means OR, in Boolean logic\n! means NOT, in Boolean logic\n\nLet’s look for the Tornado and Hurricane and incidents only.\nSince we’re looking for either of those, we have to use the OR logic, or the | operator.\nThis code below needs fixing before it can run successfully.\nTry running it and deciphering the error message to fix the code.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nIs it using the right operators?\n\n\n\n\n\n\nincident_types_arranged |&gt; \n  filter(incidentType==\"Tornado\" | incidentType == \"Hurricane\") \nincident_types_arranged |&gt; \n  filter(incidentType==\"Tornado\" | incidentType == \"Hurricane\") \n\n\n\n\n\n\n\n\n\n\n\n%in%\nMakes sense?\nNow this can get unwieldy if you have a lot of different types to filter by.\nThat’s why you should create an array of the categories you want to filter by and then use the powerful %in% operator.\nLet’s look for Tornadoes, Hurricanes, and Floods. We’ll use the c() function (as in combine) to create an array of that list.\nPlug in the new operator and the object name in the code below.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nObjects don’t need to be in quotation marks.\n\n\n\n\n\n\ndisaster_array &lt;- c(\"Tornado\", \"Hurricane\", \"Flood\")\n\nincident_types_arranged |&gt; \n  filter(incidentType %in% disaster_array) \ndisaster_array &lt;- c(\"Tornado\", \"Hurricane\", \"Flood\")\n\nincident_types_arranged |&gt; \n  filter(incidentType %in% disaster_array)",
+    "crumbs": [
+      "Wranging Data",
+      "Filter, Select"
+    ]
+  },
+  {
+    "objectID": "wrangling/filter_select.html#missing-values",
+    "href": "wrangling/filter_select.html#missing-values",
+    "title": "Filter, Select",
+    "section": "Missing values",
+    "text": "Missing values\nSometimes your data will have missing values, which will trip up R when making calculations.\nTry running the code below and see the differences.\n\n\n\n\n\n\n\n\nAdding NA to anything will make the entire result NA which isn’t great. Later, we’ll talk about strategies on getting around it. But for now let’s just see if there are any in the columns we’re interested.\nIt’s also good to know if your data can actually be usable or if it’s trash.\nThe quickest way to check for NA values is with the is.na() function from Base R. You’ll need to run it on a specific column (remember $?).\nNote:  NA is different from zeroes, which means the value is actually zero. A zero is not the same as “no value”.\nUncomment and run the first line of code below and then add the comment back and uncomment the other one and run that one.\nNote: Uncomment means delete the # in front of the line of code.\n\n\n\n\n\n\n\n\nWhich one is better?\n\nmutable ok_reponse = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse = Inputs.radio(\n  new Map([\n    [\"sum(is.na(df$incidentType)) because the output is a single number\", 1],\n    [\"is.na(df$incidentType) because I want to see if every single row in the data frame has an NA value or not\", 2]\n  ])\n);\nok_reponse(reponse, 1);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAlright, so this question is pretty subjective. There are times when you’ll want to see which row in the data frame has an NA.\nBut for now, let’s just focus on the number: 0. That’s good!\nNow, we can proceed with some sense of security.",
+    "crumbs": [
+      "Wranging Data",
+      "Filter, Select"
+    ]
+  },
+  {
+    "objectID": "wrangling/filter_select.html#select",
+    "href": "wrangling/filter_select.html#select",
+    "title": "Filter, Select",
+    "section": "Select",
+    "text": "Select\nThe Base R function nrow() will tell you how many rows there are in a dataframe.\n\n\n\n\n\n\n\n\nAnd colnames() will tell you what the column names are.\n\n\n\n\n\n\n\n\nThis is relevant because sometimes you’ll want to create a data frame with a limited amount of columns.\nMaybe because it’s easier to read and scroll through or it’ll free up memory on your computer.\nThe dplyr verb you’ll need to use is select()\nYou simply insert the column names you want. And you won’t need to put the column names in quotes (unless there’s a space in the column name).\nTry it below with the correct function name.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat’s the verb?\n\n\n\n\n\n\ndf_narrow &lt;- df |&gt; \n  select(femaDeclarationString, state, declarationDate, \n         fyDeclared, designatedArea, incidentType)\n\ncolnames(df_narrow)\ndf_narrow &lt;- df |&gt; \n  select(femaDeclarationString, state, declarationDate, \n         fyDeclared, designatedArea, incidentType)\n\ncolnames(df_narrow)",
+    "crumbs": [
+      "Wranging Data",
+      "Filter, Select"
+    ]
+  },
+  {
+    "objectID": "wrangling/filter_select.html#slice",
+    "href": "wrangling/filter_select.html#slice",
+    "title": "Filter, Select",
+    "section": "Slice",
+    "text": "Slice\nOkay, for the rest of today’s class let’s see if we can look for a story from the data.\nRecently, there’s been a pretty devastating flood in North Carolina, so let’s focus on that topic.\nCan you write the code to look only at floods from mostly scratch? What the function is called and what operator you need to use and the proper syntax for the keyword you’re isolating the data frame to?\nStart with the original df object and pipe.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhat’s the verb/function that filters to flood?\nWhat is it you’re filtering for and what column are you looking in?\nQuotation marks? Case sensitivity?\n\n\n\n\n\n\nfloods &lt;- df |&gt; \n  filter(incidentType==\"Flood\")\nfloods &lt;- df |&gt; \n  filter(incidentType==\"Flood\")\n\n\n\n\n\n\n\n\n\nLet’s take a look at the five most-recent flooding declared disasters with a new function, slice()\nIf you give it a number, it will slice out that specific row in the data.\nIf you give it a range, like 1:10 it will slice out rows 1 through 10.\nGive it a try below. Get rows 1 through 5.\n\nExerciseHintSolution\n\n\n\n\n\n\n\n\n\n\n\n\n\nfunction starts with an s. Don’t forget the “:”\n\n\n\n\n\n\nrev_chron_floods &lt;- floods |&gt; \n  arrange(desc(declarationDate)) |&gt; \n  slice(1:5)\n\nrev_chron_floods\nrev_chron_floods &lt;- floods |&gt; \n  arrange(desc(declarationDate)) |&gt; \n  slice(1:5)\n\nrev_chron_floods",
+    "crumbs": [
+      "Wranging Data",
+      "Filter, Select"
+    ]
+  },
+  {
+    "objectID": "wrangling/filter_select.html#pretty-table",
+    "href": "wrangling/filter_select.html#pretty-table",
+    "title": "Filter, Select",
+    "section": "Pretty table",
+    "text": "Pretty table\nThe output above isn’t that nice or searchable. Use the datatable() function from the DT package.",
+    "crumbs": [
+      "Wranging Data",
+      "Filter, Select"
+    ]
+  },
+  {
+    "objectID": "importing/importing_excel.html",
+    "href": "importing/importing_excel.html",
+    "title": "Importing Excel files",
+    "section": "",
+    "text": "mutable ok_reponse = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse = Inputs.radio(\n  new Map([\n    [\"First choice.\", 1],\n    [\"Second choice.\", 2],\n    [\"Third choice\", 3],\n    [\"Fourth choice.\", 4]\n  ])\n);\nok_reponse(reponse, 2);\nwelcome to class!"
+  },
+  {
+    "objectID": "importing/importing_excel.html#tour-of-r-and-rstudio",
+    "href": "importing/importing_excel.html#tour-of-r-and-rstudio",
+    "title": "Importing Excel files",
+    "section": "Tour of R and RStudio",
+    "text": "Tour of R and RStudio\nR is just a programming language and can be open in any coding program like Sublime or Visual Code Studio. But we’re going to focus on using R in the environment known as RStudio because it easily shows all the different parts, like plots and objects, well.\nWhen you first open RStudio, the app is divided into three sections.\nMost sections have tabs for even more additional ways to view different sorts of things.\nThese sections can be customized and placed wherever you want through the RStudio menu options (if you’d rather the Files tab be in the top right instead of the top left, for example). Preferences &gt; Pane Layout\n\nThe tall section on the left is the console and that’s where you can type in R code to execute.\nThis code is also called commands or functions.\n\nIn the top right section, there’s the Environment tab where you can see the data or objects you are currently working on.\nAt first this section is empty because you have not loaded any data yet.\nThere’s also a tab in the top right section for History– this is where RStudio keeps track of the commands you run in the console.\n\nA viewer is on the bottom right, where there are tabs to flip through the Files and folder structure of your computer (like in Finder or Explorer), the Plots (diagrams) when they’ve been generated, your list of available R Packages, Help information etc.\n\nReproducibility: Save your scripts\nThere’s a difference between quick, on-the-fly analysis and analysis you want to rerun later on.\nThe code you type out and run in console can be copied and pasted and saved in scripts and R Markdown files. Scripts end with .R file extension and R Markdown files, which mixes both R code and Markdown code, end with .Rmd.\nR scripts versus R Markdown\nYou may hear mentions of “R Markdown” and that’s essentially the same thing as R scripts except with some enhanced formatting so that the code can be published as a pdf or a website or notebook. R scripts and R Markdown can only be opened by coding programs but the websites or PDFs generated by R Markdown can be open by non-programming people. It’s a means for communicating your results effectively to a wider audience. Compare the differences here and here.\nIn this course we’ll be alternating between typing code in the console and typing and saving code in a script. The code that’s disposable and written just for quick exploration can be and will be written in the console. Code we want to reuse and re purpose later on should be saved in a script.\n\nThese R source code files can be viewed in a Source section and pushes the console window down to accommodate.\nTo create a new script go through the menu File &gt; New File &gt; R Script or through the green plus button on the top left. This will expand the 3 windows in RStudio to 4. The script viewer will appear in the top left quadrant and push the console window into the lower left.\n\nThe file extensions for these files when saved ends with .R\nAny code we type in here can be run in the console. Hitting the Run button at the top of the script window will run the line of code on which the cursor is sitting.\nTo run multiple lines of code, highlight them and click Run.\n\nBe sure to save your scripts after you create them. And also save before running your code in case you write code that makes R crash– which will happen once in a while."
+  },
+  {
+    "objectID": "importing/importing_excel.html#scripts",
+    "href": "importing/importing_excel.html#scripts",
+    "title": "Importing Excel files",
+    "section": "Scripts",
+    "text": "Scripts\nR is an interpreter that uses a command line based environment.\nThis means that you have to type commands, rather than use the mouse and menus.\nThis has the advantage that you do not always have to retype commands.\nYou can store your commands in files, the so-called scripts. These scripts have typically file names with the extension .R as in script.R.\nYou can open an editor window to edit these files by clicking File &gt; New or File &gt; Open file…\nYou can run (send to the console window) part of the code by selecting lines and pressing CTRL+ENTER or CMD+ENTER or click the Run button at the top of the script editor window. If you do not select anything, R will run the line your cursor is on.\nYou can always run the whole script with the function source()\nFor example, to run the entire saved script.R if it’s in the root directory of the working directory, type\n\nsource(\"script.R\")\n\nYou can also click Run all in the editor window or type CTRL+SHIFT+S or CMD+SHIFT+S"
+  },
+  {
+    "objectID": "importing/importing_excel.html#project-directory-habits",
+    "href": "importing/importing_excel.html#project-directory-habits",
+    "title": "Importing Excel files",
+    "section": "Project directory habits",
+    "text": "Project directory habits\nYour working directory is the folder on your computer in which you are currently working. When you ask R to open a certain file, it will look in the working directory for this file, and when you tell R to save a data file or figure, it will save it in the working directory.\nBefore you start working, please set your working directory to where all your data and script files are or should be stored.\nWhen you see code in a black box throughout this class, I want you to run that code in R unless noted otherwise. You can run it in the console, I’d prefer you do so in a script so you can see your history. In the video, you’ll see me swap back and forth between coding in the console and the script. This really depends on if I’m experimenting with code quickly or if it’s something I know I should track. Often I will copy and paste code executed from the console to growing script as an afterthought. Also, be sure to read the commented out code because I try to give additional context, like tips on what to do if the command fails.\nThis is an example of setting a working directory to a manual directory on your computer.\n\n# On a mac, it'd look like this\nsetwd(\"~/projects/learn-r-journalism\")\n\n# On a PC, it might look like this\nsetwd(\"C:/Documents/learn-r-journalism\")\n\nMake sure that slashes are forward slashes and that you don’t forget the quotation marks.\nWithin RStudio, you can also set the working directory via the menu Tools &gt; Set Working Directory\n\nThe commands above, setwd() was an example of setting an absolute folder.\nThis works for you for the purposes of this class, but if you wanted to share your methodology and script in the future or if you wanted to save run the code on another computer it would likely not work because it would be looking through a folder structure that doesn’t exist on any computer except the one where the original script was written. This is not ideal for reproducibility.\nWorking directories are a tough concept. If you’re curious about learning the BEST method for setting up directories for each project you’re working on, I’ve got some documentation.\nAlso, if you’re still curious, I follow this structure for all my R projects."
+  },
+  {
+    "objectID": "importing/importing_excel.html#syntax",
+    "href": "importing/importing_excel.html#syntax",
+    "title": "Importing Excel files",
+    "section": "Syntax",
+    "text": "Syntax\nYou must follow pretty specific syntax rules for it to work. R won’t guess for you.\n\n\nR is case-sensitive (unlike SQL) intepreted language (unlike C)\nCan enter commands at prompt &gt; or in batch\nComments are preceded by #\n\nThis is important to use often in your code for documentation\nYou’ll see it often in this course\n\nStatements are lines of code such as functions and object assignments\n\nEnters in code (as in a new line) or semi-colons will separate statements"
+  },
+  {
+    "objectID": "importing/importing_excel.html#libraries",
+    "href": "importing/importing_excel.html#libraries",
+    "title": "Importing Excel files",
+    "section": "Libraries",
+    "text": "Libraries\nOne of the many benefits of R is that it is open source and free. This means users like you and me can create code that we use code that people in the data community created to make everyone’s lives easier.\nThese shared code snippets can help you do something as simple as combining spreadsheets in a folder or something as complicated as seasonally adjusting data in a time series.\nThey are organized in so-called packages or libraries.\nYou can do a lot of statistical analysis in R without any additional libraries— this is called base R.\nBut other users have created libraries with functions that solve common problems. R package users download only the libraries that they need for an individual project.\nTo get a list of all installed packages, go to the packages window or type library() in the console window. If the box in front of the package name is ticked in the packages window, the package is loaded and the functions within it are ready to be called.\nThere are many more packages available on the R website. If you want to install and use a package (for example, the packaged called “dplyr”) you should:\n\nInstall the package: click install packages in the packages window and type dplyr or type install.packages(\"dplyr\") in the console window.\nLoad the package: Check box in front of dplyr or type library(\"dplyr\") in the console window."
+  },
+  {
+    "objectID": "importing/importing_excel.html#common-r-commands",
+    "href": "importing/importing_excel.html#common-r-commands",
+    "title": "Importing Excel files",
+    "section": "Common R commands",
+    "text": "Common R commands\nR can be used as a calculator.\nJust type an equation in the console window after the &gt;\nIn those code sections, the code preceded by ## is the output of the code from the lines above.\nPlease type in 10^2 + 26 into the R environment below and click Run code.\n\n\n\n\n\n\n\n\n\n\n\n\nWorkspace\nYou can give numbers a name.\nBy doing so, they become so-called variables which can be used later.\nYou can assign values to an object name with either a = or &lt;-.\nThe command below sets 4 as a.\n\n\n\n\n\n\n\n\na is now saved up in the Environment tab in RStudio.\n\nYou can do calculations with a now.\nTry multiplying a with any number.\na * _\n\n\n\n\n\n\n\n\nIf you specify a again, it will forget what value you had before because you did not assign it to anything.\n\n\n\n\n\n\n\n\nYou can also assign a value to a using the old one\n\n\n\n\n\n\n\n\nTo remove all variables from R’s memory, type\n\n\n\n\n\n\n\n\nor click the “clear all” broom button in the work space window."
+  },
+  {
+    "objectID": "importing/importing_excel.html#objects-in-r",
+    "href": "importing/importing_excel.html#objects-in-r",
+    "title": "Importing Excel files",
+    "section": "Objects in R",
+    "text": "Objects in R\n\nScalars and vectors\nLike in many other programs, R organizes numbers in scalars (a single number 0-dimensional), vectors (a row of numbers, also called arrays - `-dimensional) and matrices (which we won’t get into now).\nThe a you defined was scalar.\nTo define a vector with the numbers 3,4, and 5, you need the function c() which is short for concatenate (or paste together)."
+  },
+  {
+    "objectID": "importing/importing_excel.html#functions",
+    "href": "importing/importing_excel.html#functions",
+    "title": "Importing Excel files",
+    "section": "Functions",
+    "text": "Functions\nIf you would like to compute the mean of all the elements in the vector b from the example above, you could type\nPlease type out (300+4000+50)/3 in the code tester below:\n\n\n\n\n\n\nBut when the vector is very long, this is very boring and time-consuming work.\nFunctions do things to data. R is built on them. Some functions come with R, like median() or summary() and others come as part of packages that others have created.\nWhen you use a function to compute an average, you’ll type\n\nmean(x=b)\n\nWithin the brackets you specify the arguments.\nArguments give extra information to the function. In this case, the argument x says of which set of numbers (vector) the mean should computed (namely of b).\nSometimes the name of the argument is not necessary:\n\n\n\n\n\n\n\n\nAlso works."
+  },
+  {
+    "objectID": "importing/importing_excel.html#plots",
+    "href": "importing/importing_excel.html#plots",
+    "title": "Importing Excel files",
+    "section": "Plots",
+    "text": "Plots\nR can make simple graphics right away.\n\n\n\n\n\n\n\n\n\nIn the first line, 100 random numbers are assigned to the variable x, which becomes a vector by this operation.\nIn the second line, all these values are plotted in the plot window."
+  },
+  {
+    "objectID": "importing/importing_excel.html#not-available-data",
+    "href": "importing/importing_excel.html#not-available-data",
+    "title": "Importing Excel files",
+    "section": "Not available data",
+    "text": "Not available data\nWhen you work with real data, you will encounter missing values because instrumentation failed or human error.\nWhen a data is not available, you’ll often find an NA instead of a number.\n\n\n\n\n\n\n\n\nComputing statistics of incomplete data sets is strictly not possible.\nmaybe the largest value occurred during the weekend when you didn’t measure. Therefore, R will say that it doesn’t know what the largest value of j is\n\n\n\n\n\n\n\n\nIf you don’t mind about the missing data and want to compute the statistics anyway, you can add the argument na.rm=TRUE (Should I remove the NAs? Yes)\n\nmax(j, na.rm=T)\n\nNAs will also affect any sort of math if you’re not careful\n\n\n\n\n\n\n\n\nHere are some links on how to handle NAs in your data"
+  },
+  {
+    "objectID": "importing/importing_excel.html#base-r-versus-tidyverse",
+    "href": "importing/importing_excel.html#base-r-versus-tidyverse",
+    "title": "Importing Excel files",
+    "section": "Base R versus Tidyverse",
+    "text": "Base R versus Tidyverse\nI will often mention “Base R” and “Tidyverse” throughout the course.\nBase R is what you get when you install R and don’t install anything extra.\nEverything you do in Tidyverse– the importing and wrangling of data, as well as the visualizations– can be done with Base R. It’s just older, the syntax is trickier, and it unfortunately has huge learning curve.\nFor the purposes of this class, you’ll learn just enough Base R to get things done but we’ll spend most of our time using functions in packages that have since been created by users to make our lives easier and have a good history of support from their creators."
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html",
+    "href": "getting_started/r_and_rstudio.html",
+    "title": "Intro to R and RStudio",
+    "section": "",
+    "text": "welcome to class!",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#tour-of-r-and-rstudio",
+    "href": "getting_started/r_and_rstudio.html#tour-of-r-and-rstudio",
+    "title": "Intro to R and RStudio",
+    "section": "Tour of R and RStudio",
+    "text": "Tour of R and RStudio\nR is just a programming language and can be open in any coding program like Sublime or Visual Code Studio. But we’re going to focus on using R in the environment known as RStudio because it easily shows all the different parts, like plots and objects, well.\nWhen you first open RStudio, the app is divided into three sections.\nMost sections have tabs for even more additional ways to view different sorts of things.\nThese sections can be customized and placed wherever you want through the RStudio menu options (if you’d rather the Files tab be in the top right instead of the top left, for example). Preferences &gt; Pane Layout\n\nThe tall section on the left is the console and that’s where you can type in R code to execute.\nThis code is also called commands or functions.\n\nIn the top right section, there’s the Environment tab where you can see the data or objects you are currently working on.\nAt first this section is empty because you have not loaded any data yet.\nThere’s also a tab in the top right section for History– this is where RStudio keeps track of the commands you run in the console.\n\nA viewer is on the bottom right, where there are tabs to flip through the Files and folder structure of your computer (like in Finder or Explorer), the Plots (diagrams) when they’ve been generated, your list of available R Packages, Help information etc.\n\nReproducibility: Save your scripts\nThere’s a difference between quick, on-the-fly analysis and analysis you want to rerun later on.\nThe code you type out and run in console can be copied and pasted and saved in scripts and R Markdown files. Scripts end with .R file extension and R Markdown files, which mixes both R code and Markdown code, end with .Rmd.\nR scripts versus R Markdown\nYou may hear mentions of “R Markdown” and that’s essentially the same thing as R scripts except with some enhanced formatting so that the code can be published as a pdf or a website or notebook. R scripts and R Markdown can only be opened by coding programs but the websites or PDFs generated by R Markdown can be open by non-programming people. It’s a means for communicating your results effectively to a wider audience. Compare the differences here and here.\nIn this course we’ll be alternating between typing code in the console and typing and saving code in a script. The code that’s disposable and written just for quick exploration can be and will be written in the console. Code we want to reuse and re purpose later on should be saved in a script.\n\nThese R source code files can be viewed in a Source section and pushes the console window down to accommodate.\nTo create a new script go through the menu File &gt; New File &gt; R Script or through the green plus button on the top left. This will expand the 3 windows in RStudio to 4. The script viewer will appear in the top left quadrant and push the console window into the lower left.\n\nThe file extensions for these files when saved ends with .R\nAny code we type in here can be run in the console. Hitting the Run button at the top of the script window will run the line of code on which the cursor is sitting.\nTo run multiple lines of code, highlight them and click Run.\n\nBe sure to save your scripts after you create them. And also save before running your code in case you write code that makes R crash– which will happen once in a while.",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#scripts",
+    "href": "getting_started/r_and_rstudio.html#scripts",
+    "title": "Intro to R and RStudio",
+    "section": "Scripts",
+    "text": "Scripts\nR is an interpreter that uses a command line based environment.\nThis means that you have to type commands, rather than use the mouse and menus.\nThis has the advantage that you do not always have to retype commands.\nYou can store your commands in files, the so-called scripts. These scripts have typically file names with the extension .R as in script.R.\nYou can open an editor window to edit these files by clicking File &gt; New or File &gt; Open file…\nYou can run (send to the console window) part of the code by selecting lines and pressing CTRL+ENTER or CMD+ENTER or click the Run button at the top of the script editor window. If you do not select anything, R will run the line your cursor is on.\nYou can always run the whole script with the function source()\nFor example, to run the entire saved script.R if it’s in the root directory of the working directory, type\n\nsource(\"script.R\")\n\nYou can also click Run all in the editor window or type CTRL+SHIFT+S or CMD+SHIFT+S",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#project-directory-habits",
+    "href": "getting_started/r_and_rstudio.html#project-directory-habits",
+    "title": "Intro to R and RStudio",
+    "section": "Project directory habits",
+    "text": "Project directory habits\nYour working directory is the folder on your computer in which you are currently working. When you ask R to open a certain file, it will look in the working directory for this file, and when you tell R to save a data file or figure, it will save it in the working directory.\nBefore you start working, please set your working directory to where all your data and script files are or should be stored.\nWhen you see code in a black box throughout this class, I want you to run that code in R unless noted otherwise. You can run it in the console, I’d prefer you do so in a script so you can see your history. In the video, you’ll see me swap back and forth between coding in the console and the script. This really depends on if I’m experimenting with code quickly or if it’s something I know I should track. Often I will copy and paste code executed from the console to growing script as an afterthought. Also, be sure to read the commented out code because I try to give additional context, like tips on what to do if the command fails.\nThis is an example of setting a working directory to a manual directory on your computer.\n\n# On a mac, it'd look like this\nsetwd(\"~/projects/learn-r-journalism\")\n\n# On a PC, it might look like this\nsetwd(\"C:/Documents/learn-r-journalism\")\n\nMake sure that slashes are forward slashes and that you don’t forget the quotation marks.\nWithin RStudio, you can also set the working directory via the menu Tools &gt; Set Working Directory\n\nThe commands above, setwd() was an example of setting an absolute folder.\nThis works for you for the purposes of this class, but if you wanted to share your methodology and script in the future or if you wanted to save run the code on another computer it would likely not work because it would be looking through a folder structure that doesn’t exist on any computer except the one where the original script was written. This is not ideal for reproducibility.\nWorking directories are a tough concept. If you’re curious about learning the BEST method for setting up directories for each project you’re working on, I’ve got some documentation.\nAlso, if you’re still curious, I follow this structure for all my R projects.",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#syntax",
+    "href": "getting_started/r_and_rstudio.html#syntax",
+    "title": "Intro to R and RStudio",
+    "section": "Syntax",
+    "text": "Syntax\nYou must follow pretty specific syntax rules for it to work. R won’t guess for you.\n\n\nR is case-sensitive (unlike SQL) intepreted language (unlike C)\nCan enter commands at prompt &gt; or in batch\nComments are preceded by #\n\nThis is important to use often in your code for documentation\nYou’ll see it often in this course\n\nStatements are lines of code such as functions and object assignments\n\nEnters in code (as in a new line) or semi-colons will separate statements",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#libraries",
+    "href": "getting_started/r_and_rstudio.html#libraries",
+    "title": "Intro to R and RStudio",
+    "section": "Libraries",
+    "text": "Libraries\nOne of the many benefits of R is that it is open source and free. This means users like you and me can create code that we use code that people in the data community created to make everyone’s lives easier.\nThese shared code snippets can help you do something as simple as combining spreadsheets in a folder or something as complicated as seasonally adjusting data in a time series.\nThey are organized in so-called packages or libraries.\nYou can do a lot of statistical analysis in R without any additional libraries— this is called base R.\nBut other users have created libraries with functions that solve common problems. R package users download only the libraries that they need for an individual project.\nTo get a list of all installed packages, go to the packages window or type library() in the console window. If the box in front of the package name is ticked in the packages window, the package is loaded and the functions within it are ready to be called.\nThere are many more packages available on the R website. If you want to install and use a package (for example, the packaged called “dplyr”) you should:\n\nInstall the package: click install packages in the packages window and type dplyr or type install.packages(\"dplyr\") in the console window.\nLoad the package: Check box in front of dplyr or type library(\"dplyr\") in the console window.",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#common-r-commands",
+    "href": "getting_started/r_and_rstudio.html#common-r-commands",
+    "title": "Intro to R and RStudio",
+    "section": "Common R commands",
+    "text": "Common R commands\nR can be used as a calculator.\nJust type an equation in the console window after the &gt;\nIn those code sections, the code preceded by ## is the output of the code from the lines above.\nPlease type in 10^2 + 26 into the R environment below and click Run code.\n\n\n\n\n\n\n\n\n\n\n\n\nWorkspace\nYou can give numbers a name.\nBy doing so, they become so-called variables which can be used later.\nYou can assign values to an object name with either a = or &lt;-.\nThe command below sets 4 as a.\n\n\n\n\n\n\n\n\na is now saved up in the Environment tab in RStudio.\n\nYou can do calculations with a now.\nTry multiplying a with any number.\na * _\n\n\n\n\n\n\n\n\nIf you specify a again, it will forget what value you had before because you did not assign it to anything.\n\n\n\n\n\n\n\n\nYou can also assign a value to a using the old one\n\n\n\n\n\n\n\n\nTo remove all variables from R’s memory, type\n\n\n\n\n\n\n\n\nor click the “clear all” broom button in the work space window.",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#objects-in-r",
+    "href": "getting_started/r_and_rstudio.html#objects-in-r",
+    "title": "Intro to R and RStudio",
+    "section": "Objects in R",
+    "text": "Objects in R\n\nScalars and vectors\nLike in many other programs, R organizes numbers in scalars (a single number 0-dimensional), vectors (a row of numbers, also called arrays - `-dimensional) and matrices (which we won’t get into now).\nThe a you defined was scalar.\nTo define a vector with the numbers 3,4, and 5, you need the function c() which is short for concatenate (or paste together).",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#functions",
+    "href": "getting_started/r_and_rstudio.html#functions",
+    "title": "Intro to R and RStudio",
+    "section": "Functions",
+    "text": "Functions\nIf you would like to compute the mean of all the elements in the vector b from the example above, you could type\nPlease type out (300+4000+50)/3 in the code tester below:\n\n\n\n\n\n\nBut when the vector is very long, this is very boring and time-consuming work.\nFunctions do things to data. R is built on them. Some functions come with R, like median() or summary() and others come as part of packages that others have created.\nWhen you use a function to compute an average, you’ll type\n\nmean(x=b)\n\nWithin the brackets you specify the arguments.\nArguments give extra information to the function. In this case, the argument x says of which set of numbers (vector) the mean should computed (namely of b).\nSometimes the name of the argument is not necessary:\n\n\n\n\n\n\n\n\nAlso works.",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#plots",
+    "href": "getting_started/r_and_rstudio.html#plots",
+    "title": "Intro to R and RStudio",
+    "section": "Plots",
+    "text": "Plots\nR can make simple graphics right away.\n\n\n\n\n\n\n\n\n\nIn the first line, 100 random numbers are assigned to the variable x, which becomes a vector by this operation.\nIn the second line, all these values are plotted in the plot window.",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#not-available-data",
+    "href": "getting_started/r_and_rstudio.html#not-available-data",
+    "title": "Intro to R and RStudio",
+    "section": "Not available data",
+    "text": "Not available data\nWhen you work with real data, you will encounter missing values because instrumentation failed or human error.\nWhen a data is not available, you’ll often find an NA instead of a number.\n\n\n\n\n\n\n\n\nComputing statistics of incomplete data sets is strictly not possible.\nmaybe the largest value occurred during the weekend when you didn’t measure. Therefore, R will say that it doesn’t know what the largest value of j is\n\n\n\n\n\n\n\n\nIf you don’t mind about the missing data and want to compute the statistics anyway, you can add the argument na.rm=TRUE (Should I remove the NAs? Yes)\n\nmax(j, na.rm=T)\n\nNAs will also affect any sort of math if you’re not careful\n\n\n\n\n\n\n\n\nHere are some links on how to handle NAs in your data",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/r_and_rstudio.html#base-r-versus-tidyverse",
+    "href": "getting_started/r_and_rstudio.html#base-r-versus-tidyverse",
+    "title": "Intro to R and RStudio",
+    "section": "Base R versus Tidyverse",
+    "text": "Base R versus Tidyverse\nI will often mention “Base R” and “Tidyverse” throughout the course.\nBase R is what you get when you install R and don’t install anything extra.\nEverything you do in Tidyverse– the importing and wrangling of data, as well as the visualizations– can be done with Base R. It’s just older, the syntax is trickier, and it unfortunately has huge learning curve.\nFor the purposes of this class, you’ll learn just enough Base R to get things done but we’ll spend most of our time using functions in packages that have since been created by users to make our lives easier and have a good history of support from their creators.",
+    "crumbs": [
+      "Getting Started",
+      "Intro to R and RStudio"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#characters",
+    "href": "getting_started/syntax_r_basics.html#characters",
+    "title": "Syntax and R Basics",
+    "section": "Characters",
+    "text": "Characters\nLet’s assign “apples” to m.\n\n\n\n\n\n\n\n\nTo tell R that something is a character string, you should type the text between apostrophes, otherwise R will start looking for a defined variable with the same name. See what happens.\n\n\n\n\n\n\n\n\nBecause there was no ” around pears then R assumed that pears was an object to be found in the Environment. And you were trying to also assign an object named n the same value as what you had assigned to pears. But it didn’t exist in the environment so it failed.\nThat’s why \" around characters are important.\nYou can’t do math with characters, either",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#dates",
+    "href": "getting_started/syntax_r_basics.html#dates",
+    "title": "Syntax and R Basics",
+    "section": "Dates",
+    "text": "Dates\nDates and times are complicated.\nR has to know that 3 o’clock comes after 2:59 and that February has 29 days in some years.\nThe base way to tell R that something is a date-time combination is with the function strptime() Note: This is the complicated way\n\n\n\n\n\n\n\n\nA vector is created with c() and the numbers between the quotation marks are strings, because that’s what the strptim() function requires.\nThat’s followed by the argument format that defines how the character string should be read. In this instance, the year is denoted first (%Y), then the month (%M) and second (%S). You don’t have to specify all of them, as long as the format corresponds to the character string.\nIn this course, we’ll be using a less messy way to deal with dates using the package lubridate.\n\n\n\n\n\n\n\n\nThe function ymd_hms() converted the year, month, date and hour, minutes, and seconds in the string. You can go over this in more detail on lubridate’s website.",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#factors",
+    "href": "getting_started/syntax_r_basics.html#factors",
+    "title": "Syntax and R Basics",
+    "section": "Factors",
+    "text": "Factors\nOkay, these are kinda complicated. They’re like text but in order. All R sees is the order, not the text.\n\nData structure specifying categorical (nominal) or ordered categorical (ordinal) variables\nTells R how to handle that variable in analyses\nVery important and misunderstood\nAny variable that is categorical or ordinal should usually be stored as a factor.\n\nFor example, Race might be input as “White”, “Black”, and “Hispanic”\nWhen importing that data in from a spreadsheet, R will most often interpret it as a Factor.\nRun these lines of code to create a new object, a dataframe called sample_df\n\n\n\n\n\n\n\n\n\nLet’s take a look at the structure behind a dataframe we’ve created.\nWe’ll use the function str() which is short for structure.\n\n\n\n\n\n\n\n\nR sees that the Race column is a factor variable with three levels.\nDo you see the 3 1 3 2 numbers at the end of the line?\n\n\n\n\n\n\n\n\nThis means that R groups statistics by these levels.\n\n\n\n\n\n\n\n\nInternally, R stores the integer values 1, 2, and 3, and maps the character strings in alphabetical order to these values. 1=Black, 2=Hispanic, and 3=White.\nWhy is this important to know?\nJournalists are less concerned by factors and will often find themselves converting factors to strings and characters. But when you reach the point that you are wanting to create models and linear regressions then you’ll be happy that it’s an option.\nMost odd quirks when it comes to R can be traced back to the fact that R was created by and for statisticians. R has grown a lot since then and the community has helped make it evolve to handle data the way we are more used to. But some habits die hard and are ingrained.",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#converting-between-the-different-types",
+    "href": "getting_started/syntax_r_basics.html#converting-between-the-different-types",
+    "title": "Syntax and R Basics",
+    "section": "Converting between the different types",
+    "text": "Converting between the different types\nHere’s a warning.\n\nYou can convert factors into strings.\n\n\n\n\n\n\n\n\n\n\nYou can convert strings into factors\n\n\n\n\n\n\n\n\n\n\nYou cannot convert factors into numbers.\n\n\n\n\n\n\n\n\n\nBecause R stores Factors as Integer values.\nYou must convert factors into characters first before converting it to numbers.\nSo you can nest it.\n\n\n\n\n\n\n\n\nIt’s okay if you don’t fully understand this next section. It’s pretty advanced. I give you permission to skip down to Your turn:.",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#vectors",
+    "href": "getting_started/syntax_r_basics.html#vectors",
+    "title": "Syntax and R Basics",
+    "section": "Vectors",
+    "text": "Vectors\nA vector is a sequence of data elements of the same basic type. The parts that consist of a vector are called components or elements.\n\n\n\n\n\n\n\n\nA vector vec is explicitly constructed by the concatenation function c().\n\n\n\n\n\n\n\n\nElements in vectors can be addressed by standard [i] indexing\n\n\n\n\n\n\n\n\nOne of the elements in the array is replaced with a new number.\n\n\n\n\n\n\n\n\nThis shows another useful way of creating a vector: the seq() or sequence function.",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#your-turn",
+    "href": "getting_started/syntax_r_basics.html#your-turn",
+    "title": "Syntax and R Basics",
+    "section": "Your turn",
+    "text": "Your turn\nChallenge yourself with some exercises.\n\nObjects\nAssign the number 17 to the object ub.\n\n\n\n\n\n\n\n\n\n&lt;- is the assigner code\n\n\nub &lt;- 17\n\nub\nub &lt;- 17\n\nub\n\n\n\n\n\n\n\n\nVectors\nCreate an array of numbers: 301, 978, and 101.\nAssign it to the object years.\n\n\n\n\n\n\n\n\n\n\nyears &lt;- c(301, 978, 101)\n\nyears\nyears &lt;- c(301, 978, 101)\n\nyears\n\n\n\n\n\n\n\nFunctions\nWhat’s the average of the array of numbers assigned to years”`?\n\n\n\n\n\n\n\n\n\n\nmean(years)\nmean(years)",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#classes",
+    "href": "getting_started/syntax_r_basics.html#classes",
+    "title": "Syntax and R Basics",
+    "section": "Classes",
+    "text": "Classes\nTake a look at the structure of the object burgers:\n\n\n\n\n\n\n\n\n\n\nstr(burgers)\nstr(burgers)\n\n\n\n\n\nWhat kind of class is the variable id?\n\nmutable ok_reponse = (reponse, n) =&gt; { return html`Loading...` };\nviewof reponse = Inputs.radio(\n  new Map([\n    [\"character\", 1],\n    [\"number\", 2],\n    [\"factor\", 3],\n    [\"date\", 4]\n  ])\n);\nok_reponse(reponse, 3);",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#matrices",
+    "href": "getting_started/syntax_r_basics.html#matrices",
+    "title": "Syntax and R Basics",
+    "section": "Matrices",
+    "text": "Matrices\nMatrices are two-dimensional vectors.\nIt looks like this.\n\n\n\n\n\n\n\n\nThe argument data specifies which numbers should be in the matrix.\nUse either ncol to specify the number of columns or nrow to specify the number of rows.\nMatrix operations are similar to vector operations.\nTake a look at the output. Do you notice the numbers and commas in brackets that look like [1,] or [,2]?\nIf you’ve ever played Battleship then those numbers represent coordinates in the grid. It’s always [R(ow),C(column)]. I remember it as “Let’s get ready to [Ro,Ck]\nFor example:\n\n\n\n\n\n\n\n\nThis is a Base R method to pull the value from the first row and second column in the grid, which is 3.\nElements of a matrix can be addressed in the usual way.\n\n\n\n\n\n\n\n\nWhen you want to select a whole row, you leave the spot for the column number empty and vice versa for the columns.",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#data-frames",
+    "href": "getting_started/syntax_r_basics.html#data-frames",
+    "title": "Syntax and R Basics",
+    "section": "Data frames",
+    "text": "Data frames\nIf you’re used to working with spreadsheets, then data frames will make the most sense to you in R.\nThis is how to create a data frame from vectors. You don’t have to fully understand this at this point– the data you’ll be working with will come pre-structured if you’re importing spreadsheets.\n\n\n\n\n\n\n\n\nBut this is what’s happening. A set of vectors are being created and a function called data.frame() joins them together into a data frame structure.\nWhat if we only want to columns: patientID and age?\nHow to pull elements from a data frame:\nThere are several ways, but one way is to know what number columns they are in the dataframe (kind of like the Battleship method). We know patientID and age are columns 1 and 2.\nThis is how to narrow down to those columns only:\n\n\n\n\n\n\n\n\nAnother way is if you know the column names.\nThe Base R way involves using c() and brackets.",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#dollar-signs",
+    "href": "getting_started/syntax_r_basics.html#dollar-signs",
+    "title": "Syntax and R Basics",
+    "section": "Dollar signs",
+    "text": "Dollar signs\nIf you want to look at a specific vector in a dataframe, then you can get to it by first typing out the dataframe object name and column name separated by a $ sign.\n\n\n\n\n\n\n\n\nDoing math on vectors in a dataframe:\nInstead of using mean(patientdata[,2]), you can select the column age from the patientdata data frame with the $ sign.",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#lists",
+    "href": "getting_started/syntax_r_basics.html#lists",
+    "title": "Syntax and R Basics",
+    "section": "Lists",
+    "text": "Lists\nAnother basic structure in R is a list.\nThe main advantage of lists is that the “columns” they’re not really ordered in columns any more, but are more of a collection of vectors) don’t have to be of the same length, unlike matrices and data frames.\nKind of like JSON files are structured.\n\n\n\n\n\n\n\n\nThis is how a list would appear in the work space\n\n\n\n\n\n\n\n\nHow to find out what’s in the list\n\n\n\n\n\n\n\n\nThe code above extracts data from the list\n\n\n\n\n\n\n\n\nHow to refer to and use the numbers in the example list",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#functions-applied-to-dataframes",
+    "href": "getting_started/syntax_r_basics.html#functions-applied-to-dataframes",
+    "title": "Syntax and R Basics",
+    "section": "Functions applied to dataframes",
+    "text": "Functions applied to dataframes\nLet’s start with the sample_df dataframe again below.\n\n\n\n\n\n\n\n\nThe following functions may not seem like they have much use now but we’re going to need to understand them by week 3 when we do more advanced R programming.\nlength(x) - Find out how many things there are in an object or array\n\n\n\n\n\n\n\n\nnchar(x) - If x is a string, finds how how many characters there are\n\n\n\n\n\n\n\n\ndim(x) - Gives the dimensions of x\n\n\n\n\n\n\n\n\nncol(x) - Counts the number of columns\n\n\n\n\n\n\n\n\nnrow(x) - Returns the number of rows of x\n\n\n\n\n\n\n\n\nstr(x) - Returns the structure of x\n\n\n\n\n\n\n\n\nsummary(x) - Summarizes the object as understood by R\n\n\n\n\n\n\n\n\nView(x) - A command to open the object to browse in RStudio\nThis won’t work through this browser exercise, but it’s nice to have for later when you’re working in RStudio.\n\nView(sample_df)\n\nrm(x) - Removes x",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  },
+  {
+    "objectID": "getting_started/syntax_r_basics.html#your-turn-again",
+    "href": "getting_started/syntax_r_basics.html#your-turn-again",
+    "title": "Syntax and R Basics",
+    "section": "Your turn again",
+    "text": "Your turn again\n\nPulling a column of data\nConsider this data frame burgers\n\n\n\n\n\n\n\n\nHow do you refer to the the shirt variable/column with the bracket method []?\n\n\n\n\n\n\n\n\n\n\nburgers[,4]\nburgers[,4]\n\n\n\n\n\nHow do you refer to the the shirt variable/column with $?\n\n\n\n\n\n\n\n\n\n\nburgers$shirt\nburgers$shirt\n\n\n\n\n\n\n\nPulling a row of data\nExtract entire row for Linda using [].\n\n\n\n\n\n\n\n\n\n\nburgers[2,]\nburgers[2,]\n\n\n\n\n\n\n\nConverting data classes\nConvert the id variable of the burgers data frame to numeric.\n\n\n\n\n\n\n\n\n\n\nburgers$id &lt;- as.numeric(as.character(burgers$id))\nburgers$id\nclass(burgers$id)\nburgers$id &lt;- as.numeric(as.character(burgers$id))\nburgers$id\nclass(burgers$id)\n\n\n\n\n\nNote: Is the answer the same as above (correct) or is it 1-5 (false)?",
+    "crumbs": [
+      "Getting Started",
+      "Syntax and R Basics"
+    ]
+  }
+]
