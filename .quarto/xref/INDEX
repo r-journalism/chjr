@@ -1,0 +1,59 @@
+{
+  "tidying/math_pivots.qmd": {
+    "math_pivots.html": "2b358a9d"
+  },
+  "tidying/index.qmd": {
+    "index.html": "9fd326ff"
+  },
+  "tidying/joining.qmd": {
+    "joining.html": "207675b5"
+  },
+  "index.qmd": {
+    "index.html": "a723e9a7"
+  },
+  "about.qmd": {
+    "about.html": "31f1c5de"
+  },
+  "visualizing/viz.qmd": {
+    "viz.html": "9608a370"
+  },
+  "visualizing/exploratory_viz.qmd": {
+    "exploratory_viz.html": "6def9f44"
+  },
+  "visualizing/index.qmd": {
+    "index.html": "d08d3982"
+  },
+  "wrangling/mutate_summarize.qmd": {
+    "mutate_summarize.html": "def25777"
+  },
+  "wrangling/index.qmd": {
+    "index.html": "8c28b82a"
+  },
+  "wrangling/explore_arrange.qmd": {
+    "explore_arrange.html": "0d66fbc4"
+  },
+  "wrangling/filter_select.qmd": {
+    "filter_select.html": "6390e7c7"
+  },
+  "chjr.qmd": {
+    "chjr.html": "c2a72d6c"
+  },
+  "importing/importing_excel.qmd": {
+    "importing_excel.html": "15c90044"
+  },
+  "importing/importing_csv.qmd": {
+    "importing_csv.html": "b1647f50"
+  },
+  "getting_started/r_and_rstudio.qmd": {
+    "r_and_rstudio.html": "a31b9af4"
+  },
+  "getting_started/1_intro_a.Rmd": {
+    "1_intro_a.html": "dcad7aa8"
+  },
+  "getting_started/syntax_r_basics.qmd": {
+    "syntax_r_basics.html": "c1dfbaff"
+  },
+  "getting_started/importing_exporting.qmd": {
+    "importing_exporting.html": "1ebaaf26"
+  }
+}

@@ -1,0 +1,402 @@
+---
+title: Mutating and summarizing data
+engine: knitr
+format: live-html
+webr:
+  packages:
+    - readr
+    - lubridate
+    - tidyr
+    - dplyr
+    - gradethis
+    - readxl
+    - janitor
+    - gradethis
+resources:
+  - images
+  - data
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
+
+```{webr 2}
+#| include: false
+
+#| 
+
+df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
+
+incident_types <- count(df, incidentType, name="total")
+incident_types_arranged <- arrange(incident_types, desc(total))
+
+floods <- df |> filter(incidentType=="Flood")
+floods_adjusted <- floods |> 
+  mutate(year=year(declarationDate))
+floods_match <- floods_adjusted |> 
+  mutate(year_match=
+           case_when(year==fyDeclared ~ "Match",
+                     TRUE ~ "Not a match"
+  )) |> 
+  group_by(year_match) |> 
+  summarize(total=n())
+floods_match_count <- floods_match |> 
+  filter(year_match=="Not a match") |> 
+  pull(total)
+```
+
+```{webr 3}
+#| edit: false
+#| output: false
+#| define:
+#|   - ok_reponse
+library(htmltools)
+ok_reponse <- function(reponse, n) {
+  if (is.na(reponse)) HTML("")
+  else if (reponse == n) div(HTML("Correct ✓"), style = "color: green")
+  else div(HTML("Incorrect ✗"), style = "color: red")
+}
+```
+
+## Mutate
+
+Alright, so if you paginate to the right through the columns and look at `declarationDate`, you can see the data is VERY recent. 
+
+Okay, let's see if we can do some analysis on this.
+
+**Have there been there more flood disaster declarations over time?**
+
+We should extract the year from the `declarationDate` and count those up.
+
+To create a new column in a data frame, you'll use the **dplyr** verb `mutate()`.
+
+You just need to name the column you want to create and then pass it some function, formula, or object.
+
+We're going to use the `year()` function from the **lubridate** package.
+
+This extracts the year from a date type. Try it below.
+
+::: { .panel-tabset}
+
+## Exercise
+
+
+```{webr mutate, exercise=TRUE}
+#| exercise: mutate
+floods_adjusted <- floods |> 
+  ______(year=____(declarationDate))
+
+floods_adjusted |> 
+  select(year, declarationDate)
+```
+
+## Hint
+
+::: { .hint exercise="mutate"}
+function starts with an *r*.
+Also, in Base R, to focus on a single column in a data frame, 
+you need a dollar sign between the data frame name and column name
+:::
+
+## Solution
+
+::: { .solution exercise="mutate"}
+```{webr mutate-solution}
+#| exercise: mutate
+#| solution: true
+floods_adjusted <- floods |> 
+  mutate(year=year(declarationDate)) 
+
+floods_adjusted |> 
+  select(year, declarationDate)
+```
+
+
+```{webr mutate-check}
+#| exercise: mutate
+#| check: true
+gradethis::grade_this_code()
+```
+:::
+::::
+
+
+## Summarize
+
+I've shown you how to count up rows within groups with `count()`.
+
+What if we wanted to go beyond counts? 
+
+And maybe find the average deaths or median cost by type of disaster? 
+
+Or we could drill down and find the average deaths by disaster broken out by state to see which one had the most?
+
+To do that we'll need to use a couple of **dplyr** verbs: `group_by()` and `summarize()`.
+
+Summarizing data in R typically takes two steps: 1) Group the rows based on some value in the data, 2) Summarize those groups by counting the rows or doing math on values.
+
+The Group and Summarize combo can be confusing. Here's a video from Christian McDonald that explains it [with candy](https://youtu.be/a3VNWYJoy5A).
+
+So the `group_by()` and `summarize()` functions do the aggregation process in two steps. 
+
+First we use `group_by()` to tell R which columns we want to group our data by - these are the higher level of aggregation columns so in our case will be the year of data. 
+
+Then we need to determine the number of declarations each year. We do this using `summarize()`, and we’ll specify in the function that we want to do to the data. We're going to use the `n()` function which is just "number of."
+
+Here's how it looks. Try using those two new functions below.
+
+
+::: { .panel-tabset}
+
+## Exercise
+
+```{webr summarize}
+#| exercise: summarize
+floods |> 
+  mutate(year=year(declarationDate)) |> 
+  _______(year) |> 
+  _________(total=n())
+```
+
+## Hint
+
+::: { .hint exercise="summarize"}
+functions starts with an *g* and *s*.
+:::
+
+## Solution
+
+::: { .solution exercise="summarize"}
+```{webr summarize-solution}
+#| exercise: summarize
+#| solution: true
+floods |> 
+  mutate(year=year(declarationDate)) |> 
+  group_by(year) |> 
+  summarize(total=n())
+```
+
+
+```{webr summarize-check}
+#| exercise: summarize
+#| check: true
+gradethis::grade_this_code()
+```
+
+:::
+::::
+
+You could also add more than one variable/column to `group_by()`. You could do `group_by(year, state)` for example...
+
+## case_when()
+
+### Why didn't we use fyDeclared?
+
+Some of you may be wondering why we created a new column **year** when we already had **fyDeclared** that had years as values.
+
+Because that stands for Fiscal Year the disaster was declared.
+
+Fiscal years are offset and end on September 30 because of budgetary reasons. 
+
+So any disasters that occur after September 30 are slotted in the next fiscal year. That's not accurate for what we're trying to measure.
+
+Let me show you how off our analysis would be if we used **fyDeclared** instead of creating a new column.
+
+We're going to use a **dplyr** function called `case_when()` which is used within the `mutate()` function.
+
+It's a powerful way to vectorize multiple if/else statements.
+
+What we want to do is create a new column called **year_match** that will indicate if the **year** column we created from **declarationDate** matches the value in the **fyDeclared** column.
+
+If it matches, then mark it "Match" otherwise mark it as "Not a match".
+
+The syntax is a [little tricky](https://twitter.com/allison_horst/status/1282785610273447936) but check it out below.
+
+Fill in the new function name below:
+
+::: { .panel-tabset}
+
+## Exercise
+```{webr case_when}
+#| exercise: case_when
+floods_match <- floods_adjusted |> 
+  mutate(year_match=
+           _________(year==fyDeclared ~ "Match",
+                     TRUE ~ "Not a match"
+  )) |> 
+  group_by(year_match) |> 
+  summarize(total=n())
+
+floods_match
+```
+
+## Hint
+
+::: { .hint exercise="case_when"}
+function starts with an *c*.
+:::
+
+## Solution
+
+::: { .solution exercise="case_when"}
+
+```{webr case_when-solution}
+#| exercise: case_when
+#| solution: true
+floods_match <- floods_adjusted |> 
+  mutate(year_match=
+           case_when(year==fyDeclared ~ "Match",
+                     TRUE ~ "Not a match"
+  )) |> 
+  group_by(year_match) |> 
+  summarize(total=n())
+
+floods_match
+```
+
+
+```{webr case_when-check}
+#| exercise: case_when
+#| check: true
+gradethis::grade_this_code()
+```
+
+:::
+::::
+
+The `TRUE ~ "Not a match"` is essentially, "if none of the criteria fit from above, then fill the rest out as 'Not a match'".
+
+So there are more than 1,400 disasters that occurred on a fiscal year that didn't line up with the actual year.
+
+## Pull
+
+**What's the percent of that in the data?**
+
+You could just pop the numbers you generated into a calculator and come up with the value but this data set is updated regularly so the number is going to change!
+
+Let's just script it out now so you can get the number really quickly in the future.
+
+It's a time investment to set it up but it'll save you time in the long run.
+
+First, we need to take out the number for "Not a match"
+
+We'll use a function called `pull()` that will isolate the values from whatever column you indicate.
+
+Try it below.
+
+::: { .panel-tabset}
+
+## Exercise
+
+```{webr pull}
+#| exercise: pull
+floods_match_count <- floods_match |> 
+  filter(year_match=="Not a match") |> 
+  ____(total)
+
+floods_match_count
+```
+
+## Hint
+
+::: { .hint exercise="pull"}
+function starts with an *p*.
+:::
+
+## Solution
+
+::: { .solution exercise="pull"}
+```{webr pull-solution}
+#| exercise: pull
+#| solution: true
+floods_match_count <- floods_match |> 
+  filter(year_match=="Not a match") |> 
+  pull(total)
+
+floods_match_count
+```
+
+
+```{webr pull-check} 
+#| exercise: pull
+#| check: true
+gradethis::grade_this_code()
+```
+
+:::
+::::
+
+We have that number isolated so let's use that with the `nrow()` function you learned earlier to get the denominator you need to establish the percent.
+
+We'll also use a new function `round()` to get a prettier number that doesn't have so many trailing digits after the decimal.
+
+It works like this: `round(4.12423212311, 1)` with the first argument being the number or numbers you're working with and the second argument is the digits after the decimal you want to keep. So the command above would give you 4.1.
+
+Let's script out our math:
+
+```{webr nrow2}
+#| exercise: nrow2
+total_obs <- nrow(floods)
+
+floods_match_count / total_obs * 100
+
+round(floods_match_count / total_obs * 100,1)
+```
+
+Alright, we aren't going to use this for our story because it isn't significant or relevant to any story but it's for our own knowledge.
+
+There's going to be so many calculations you come up with that won't end up in the story.
+
+It's just like reporting. You gather as much research and talk to as many people as you can and then decide what's most important.
+
+But you have to do the leg work to build up that sense of confidence in what you're writing.
+
+### What's the story?
+
+Put it all together from the beginning with pipes and verbs you've learned
+
+Which year had the most floods declarations?
+
+::: { .panel-tabset}
+
+## Exercise
+
+```{webr all_together}
+#| exercise: all_together
+annual_floods <- df |> 
+  ______(incidentType=="Flood") |> 
+  ______(year=year(declarationDate)) |> 
+  ________(year) |> 
+  _________(total=n()) |> 
+  ________(desc(total))
+
+annual_floods
+```
+
+## Solution
+
+::: { .solution exercise="all_together"}
+
+
+```{webr all_together-solution}
+#| exercise: all_together
+#| solution: true
+annual_floods <- df |> 
+  filter(incidentType=="Flood") |> 
+  mutate(year=year(declarationDate)) |> 
+  group_by(year) |> 
+  summarize(total=n()) |> 
+  arrange(desc(total))
+
+annual_floods
+```
+
+```{webr all_together-check}
+#| exercise: all_together
+#| check: true
+grade_this_code()
+```
+
+:::
+
+::::

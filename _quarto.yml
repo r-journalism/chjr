@@ -1,0 +1,41 @@
+
+project:
+  type: website
+
+website:
+  title: "CHJR 24 Learning R"
+  description: "USC Center for Health Journalism Learning R"
+  repo-url: https://github.com/r-journalism/chjr_24
+  page-navigation: true
+  sidebar:
+    contents:
+      - href: index.qmd
+      - section: Getting Started
+        contents:
+          - getting_started/r_and_rstudio.qmd
+          - getting_started/syntax_r_basics.qmd
+          - getting_started/importing_exporting.qmd
+      - section: Wranging Data
+        contents:
+          - wrangling/explore_arrange.qmd
+          - wrangling/filter_select.qmd
+          - wrangling/mutate_summarize.qmd
+      - section: Tidying Data
+        contents:
+          - tidying/joining.qmd
+          - tidying/math_pivots.qmd
+      - section: Visualizing Data
+        contents:
+          - visualizing/viz.qmd
+          - visualizing/exploratory_viz.qmd
+      - section: Advanced
+        contents:
+          - advanced/tidycensus.qmd
+      - text: "---"
+      - section: Reference
+
+
+theme:
+  light: cosmo
+  dark: darkly
+
