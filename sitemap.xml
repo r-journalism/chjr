@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/getting_started/importing_exporting.html</loc>
-    <lastmod>2024-10-08T00:35:42.857Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/getting_started/importing_exporting.html</loc>
+    <lastmod>2025-10-07T22:32:24.346Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/getting_started/1_intro_a.html</loc>
-    <lastmod>2024-10-05T03:31:24.177Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/getting_started/1_intro_a.html</loc>
+    <lastmod>2025-10-07T22:32:24.345Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/importing/importing_csv.html</loc>
-    <lastmod>2024-10-04T02:26:51.224Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/importing/importing_csv.html</loc>
+    <lastmod>2025-10-07T22:32:24.346Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/wrangling/filter_select.html</loc>
-    <lastmod>2024-10-08T05:19:30.337Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/wrangling/filter_select.html</loc>
+    <lastmod>2025-10-07T22:32:24.351Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/wrangling/index.html</loc>
-    <lastmod>2024-10-03T02:23:03.360Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/wrangling/index.html</loc>
+    <lastmod>2025-10-07T22:32:24.351Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/visualizing/index.html</loc>
-    <lastmod>2024-10-03T02:23:03.360Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/visualizing/index.html</loc>
+    <lastmod>2025-10-07T22:32:24.350Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/visualizing/viz.html</loc>
-    <lastmod>2024-10-10T05:37:26.244Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/visualizing/viz.html</loc>
+    <lastmod>2025-10-07T22:32:24.350Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/index.html</loc>
-    <lastmod>2024-10-07T15:24:10.192Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/index.html</loc>
+    <lastmod>2026-09-29T12:39:34.330Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/tidying/index.html</loc>
-    <lastmod>2024-10-03T02:23:03.360Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/tidying/index.html</loc>
+    <lastmod>2025-10-07T22:32:24.347Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/tidying/math_pivots.html</loc>
-    <lastmod>2024-10-08T00:21:32.507Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/tidying/math_pivots.html</loc>
+    <lastmod>2025-10-07T22:32:24.347Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/tidying/joining.html</loc>
-    <lastmod>2024-10-08T00:20:56.842Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/tidying/joining.html</loc>
+    <lastmod>2025-10-07T22:32:24.347Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/about.html</loc>
-    <lastmod>2024-10-03T02:23:03.358Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/about.html</loc>
+    <lastmod>2025-10-07T22:32:24.345Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/visualizing/exploratory_viz.html</loc>
-    <lastmod>2024-10-10T05:37:37.533Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/visualizing/exploratory_viz.html</loc>
+    <lastmod>2025-10-07T22:32:24.348Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/wrangling/mutate_summarize.html</loc>
-    <lastmod>2024-10-08T00:20:00.633Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/wrangling/mutate_summarize.html</loc>
+    <lastmod>2025-10-07T22:32:24.351Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/wrangling/explore_arrange.html</loc>
-    <lastmod>2024-10-08T05:08:19.289Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/wrangling/explore_arrange.html</loc>
+    <lastmod>2025-10-07T22:32:24.351Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/importing/importing_excel.html</loc>
-    <lastmod>2024-10-04T02:27:20.214Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/importing/importing_excel.html</loc>
+    <lastmod>2025-10-07T22:32:24.346Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/getting_started/r_and_rstudio.html</loc>
-    <lastmod>2024-10-06T17:26:15.863Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/getting_started/r_and_rstudio.html</loc>
+    <lastmod>2025-10-07T22:32:24.346Z</lastmod>
   </url>
   <url>
-    <loc>https://r-journalism.github.io/chjr_24/getting_started/syntax_r_basics.html</loc>
-    <lastmod>2024-10-08T00:32:25.240Z</lastmod>
+    <loc>https://r-journalism.github.io/chjr/getting_started/syntax_r_basics.html</loc>
+    <lastmod>2025-10-07T22:32:24.346Z</lastmod>
   </url>
 </urlset>
