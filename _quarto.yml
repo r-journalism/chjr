@@ -3,9 +3,9 @@ project:
   type: website
 
 website:
-  title: "CHJR 24 Learning R"
+  title: "CHJR Learning R"
   description: "USC Center for Health Journalism Learning R"
-  repo-url: https://github.com/r-journalism/chjr_24
+  repo-url: https://github.com/r-journalism/chjr
   page-navigation: true
   sidebar:
     contents:
